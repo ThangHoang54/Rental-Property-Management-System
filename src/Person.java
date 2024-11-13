@@ -1,3 +1,4 @@
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 /**
@@ -7,9 +8,8 @@ public abstract class Person {
     private String id;
     private String name;
     private Date dateOfBirth;
-    private String info_contact;
+    private String info_contact; /*Email*/
 
-    private static int count = 0;
 
     // Constructor
     public Person() {
@@ -19,18 +19,33 @@ public abstract class Person {
         info_contact = null;
     }
 
-    public Person(String name, Date dateOfBirth, String info_contact) {
-        this.id = String.valueOf(++count);
+    public Person(String id, String name, Date dateOfBirth, String info_contact) {
+        this.id = id;
         this.name = name;
         this.dateOfBirth = dateOfBirth;
         this.info_contact = info_contact;
     }
 
+    public String getId() {
+        return id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    // Setter
+    public void setId(String id) {
+        this.id = id;
+    }
     @Override
     public String toString() {
-        return "id='" + id + '\'' +
-                ", name='" + name + '\'' +
-                ", Date Of Birth=" + dateOfBirth +
-                ", info_contact ='" + info_contact;
+        // Convert Date format in form dd/mm/yyyy
+        SimpleDateFormat formatDate = new SimpleDateFormat("dd/MM/yyyy");
+        return String.format("ID: %-6s | Name: %-20s | Date of Birth: %-10s | Contact Info: %-20s",
+                id,
+                name,
+                formatDate.format(dateOfBirth),
+                info_contact);
     }
 }

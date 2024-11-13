@@ -55,12 +55,11 @@ public class ValidateInput {
                 case "retail" -> {return "Retail";}
                 case "office" -> {return "Office";}
                 case "hotel" -> {return "Hotel";}
-                case "multifamily" -> {return "Multifamily";}
-                case "industrial" -> {return "Industrial";}
-                case "special purpose" -> {return "Special Purpose";}
+                case "warehouse" -> {return "Warehouse";}
+                case "factory" -> {return "Factory";}
                 default -> {
                     System.out.println("Invalid type, " +
-                            "Please choose from those business types ((Retail, Office, Hotel, Multifamily, Industrial, Special Purpose)");
+                            "Please choose from those business types (Retail, Office, Hotel, Factory, Warehouse)");
                     type = sc.nextLine();
                 }
             }

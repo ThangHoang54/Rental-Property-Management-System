@@ -13,26 +13,45 @@ public abstract class Property {
     private Owner owner; /*reference to the owner of the property*/
     private List<Host> hosts; /*to store hosts managing this property*/
 
-    private static int count = 0;
 
     // Constructor
-    public Property() {
-        propertyID = "";
-        address = "";
-        price = 0.0;
-        status = "";
-        owner = null;
-        hosts = new ArrayList<Host>();
-    }
-
-    public Property(String address, double price, String status, Owner owner) {
-        this.propertyID = String.valueOf(++count);
+    public Property(String propertyID, String address, double price, String status, Owner owner) {
+        this.propertyID = propertyID;
         this.address = address;
         this.price = price;
         this.status = ValidateInput.validatePropertyStatus(status);
-        owner = owner;
-        hosts = new ArrayList<>();
+        this.owner = owner;
+        this.hosts = new ArrayList<Host>();
     }
 
+    // Getter
+    public String getPropertyID() {
+        return propertyID;
+    }
+    public String getAddress() {
+        return address;
+    }
+    public Owner getOwner() {
+        return owner;
+    }
+    public String getStatus() {
+        return status;
+    }
+    public double getPrice() {
+        return price;
+    }
 
+    public void addHost(Host host) {
+        hosts.add(host);
+    }
+
+    @Override
+    public String toString() {
+        return String.format("Property ID: %-6s | Address: %-30s | Pricing: $%-10.2f | Status: %-15s | Owner ID: %-6s",
+                propertyID,
+                address,
+                price,
+                status,
+                owner.getId());
+    }
 }
