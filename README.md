@@ -1,21 +1,24 @@
-# Rental-Property-Management-System
-> COSC2440 [RMIT] Assignment 1 - Build a console app
+# *Rental-Property-Management-System*
+____
+ Welcome to Rental Property Management System (version1) repository! This project is serves as the individual assignment 1
+ -Build a console app- for COSC2440 Further Programming course
 
-## Application Description
+## About the Application
+_____
 
-![img_1.png](img_1.png)
+## Key Feature
+___
 
->> Installation
-> 
+## Installation
+_____
 
->> Usage
+## Sample Data Files
+___
+
+## Addition Note
+___
+
+## Acknowledgment
+___
+
  
-
->> UI Console
-> 
-> 
-
->> Addition Note
-> 
-
-> 
