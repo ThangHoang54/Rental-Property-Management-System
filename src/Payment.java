@@ -18,11 +18,12 @@ public class Payment {
         paymentDate = null;
         paymentMethod = "";
     }
-    public Payment(double amount, Date paymentDate, String paymentMethod) {
-        this.paymentID = "PM" + (++count < 10 ? "00" : "0") + count;
+    public Payment(String id, double amount, Date paymentDate, String paymentMethod) {
+        this.paymentID = (!id.isEmpty()) ? id : ("PM" + (++count < 10 ? "00" : "0") + count);
         this.amount = amount;
         this.paymentDate = paymentDate;
         this.paymentMethod = ValidateInput.validatePaymentMethod(paymentMethod);
+        count = (!id.isEmpty()) ? Integer.parseInt(id.substring(2)) : count;
     }
 
     // Getter
@@ -37,5 +38,9 @@ public class Payment {
         return "Amount = " + amount +
                 ", Payment Date = " + formatDate.format(paymentDate) +
                 ", Payment Method = " + paymentMethod;
+    }
+
+    public String toCSV() {
+        return "j";
     }
 }

@@ -6,7 +6,6 @@ import java.util.Scanner;
 
 public class ValidateInput {
     private static Scanner sc = new Scanner(System.in);
-
     /**
      *
      * @param method - Payment method giving by user

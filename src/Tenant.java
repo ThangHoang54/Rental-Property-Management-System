@@ -11,6 +11,12 @@ public class Tenant extends Person {
     private List<Payment> paymentRecord; // to keep track of payment transactions made by the tenant
     private static int count = 0;
 
+    public Tenant(String id, String name, Date birthDate, String info_contact) {
+        super(id, name, birthDate, info_contact);
+        rentalAgreements = new ArrayList<>();
+        paymentRecord = new ArrayList<>();
+        count = Integer.parseInt(id.substring(2));
+    }
     public Tenant(String name, Date dateOfBirth, String info_contact) {
         super("TN" + (++count < 10 ? "00" : "0") + count, name, dateOfBirth, info_contact);
         rentalAgreements = new ArrayList<>();
@@ -28,5 +34,9 @@ public class Tenant extends Person {
     @Override
     public String toString() {
         return super.toString();
+    }
+
+    public String toCSV() {
+        return "j";
     }
 }

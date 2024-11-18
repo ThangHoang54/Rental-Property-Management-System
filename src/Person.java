@@ -12,13 +12,6 @@ public abstract class Person {
 
 
     // Constructor
-    public Person() {
-        id = null;
-        name = null;
-        dateOfBirth = null;
-        info_contact = null;
-    }
-
     public Person(String id, String name, Date dateOfBirth, String info_contact) {
         this.id = id;
         this.name = name;
@@ -47,5 +40,9 @@ public abstract class Person {
                 name,
                 formatDate.format(dateOfBirth),
                 info_contact);
+    }
+
+    public String toCSV() {
+        return "j";
     }
 }

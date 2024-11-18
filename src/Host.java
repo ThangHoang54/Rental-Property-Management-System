@@ -12,6 +12,14 @@ public class Host extends Person {
     private List<RentalAgreement> rentalAgreements;
     private static int count = 0;
 
+    // Constructor
+    public Host(String id, String name, Date birthDate, String info_contact) {
+        super(id, name, birthDate, info_contact);
+        propertiesManaged = new ArrayList<>();
+        cooperatingOwners = new ArrayList<>();
+        rentalAgreements = new ArrayList<>();
+        count = Integer.parseInt(id.substring(2));
+    }
     public Host(String name, Date dateOfBirth, String info_contact) {
         super("HS" + (++count < 10 ? "00" : "0") + count, name, dateOfBirth, info_contact);
         propertiesManaged = new ArrayList<Property>();
@@ -34,5 +42,9 @@ public class Host extends Person {
     @Override
     public String toString() {
         return super.toString();
+    }
+
+    public String toCSV() {
+        return "j";
     }
 }

@@ -12,6 +12,14 @@ public class Owner extends Person{
     private List<RentalAgreement> rentalAgreements; // keep track of rental agreements associated with the host
     private static int count = 0;
 
+    // Constructor
+    public Owner(String id, String name, Date birthDate, String info_contact) {
+        super(id, name, birthDate, info_contact);
+        propertiesOwned = new ArrayList<>();
+        hostsManagingProperties = new ArrayList<>();
+        rentalAgreements = new ArrayList<>();
+        count = Integer.parseInt(id.substring(2));
+    }
     public Owner(String name, Date dateOfBirth, String info_contact) {
         super("ON" + (++count < 10 ? "00" : "0") + count, name, dateOfBirth, info_contact);
         propertiesOwned = new ArrayList<Property>();
@@ -34,5 +42,9 @@ public class Owner extends Person{
     @Override
     public String toString() {
         return super.toString();
+    }
+
+    public String toCSV() {
+        return "j";
     }
 }
