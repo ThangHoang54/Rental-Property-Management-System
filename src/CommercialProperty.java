@@ -27,7 +27,7 @@ public class CommercialProperty extends Property {
 
     @Override
     public String toString() {
-        return String.format("Property ID: %-6s | Address: %-25s | Pricing: $%-10.2f | Status: %-20s | Owner ID: %-6s | Business Type: %-10s | Parking Space: %-3d | Square Footage: %-4.2f",
+        return String.format("%-12s | %-25s | $%-9.2f | %-20s | %-8s | %-15s | %-14d | %-14.2f",
                 super.getPropertyID(),
                 super.getAddress(),
                 super.getPrice(),

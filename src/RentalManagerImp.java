@@ -13,10 +13,16 @@ public class RentalManagerImp implements RentalManager {
         model_list = new DataPersistenceManager();
     }
 
+    // Add a method for save to csv file and cleanup (useful for manual resource management)
+    public void saveAndClearData() {
+        model_list.clearData();
+    }
+
     /**
-     * Loop through all rental agreement to determine is the give ID exists
-     * @param id -- ID of the Rental Agreement
-     * @return boolean
+     * Checks if a rental agreement with the specified ID exists in the list of rental agreements.
+     *
+     * @param id the ID of the rental agreement to check for
+     * @return true if a rental agreement with the specified ID exists; false otherwise
      */
     public boolean checkRentalAgreementExits(String id) {
         for (RentalAgreement a : model_list.getRentalAgreements()) {

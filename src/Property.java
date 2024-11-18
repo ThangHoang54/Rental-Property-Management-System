@@ -45,13 +45,4 @@ public abstract class Property {
         hosts.add(host);
     }
 
-    @Override
-    public String toString() {
-        return String.format("Property ID: %-6s | Address: %-30s | Pricing: $%-10.2f | Status: %-15s | Owner ID: %-6s",
-                propertyID,
-                address,
-                price,
-                status,
-                owner.getId());
-    }
 }
