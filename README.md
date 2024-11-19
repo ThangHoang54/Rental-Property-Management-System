@@ -1,7 +1,8 @@
 # Rental-Property-Management-System
-> COSC2440 [RMIT] Assignment 1 - Build a console app
+Welcome to the Rental Property Management System repository! This project serves as the
+first individual assignment for COSC2440 Further Programming (S3_3024) course.
 
-## Application Description
+## Application Description 
 _____
 
 ## Key Feature

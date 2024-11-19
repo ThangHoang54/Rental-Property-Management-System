@@ -40,7 +40,18 @@ public class Payment {
                 ", Payment Method = " + paymentMethod;
     }
 
+
+    /**
+     * Converts the Payment object to a CSV (Comma-Separated Values) string.
+     *
+     * @return a CSV formatted string representing the Payment object
+     */
     public String toCSV() {
-        return "j";
+        // Convert Date to a suitable format for CSV
+        SimpleDateFormat formatDate = new SimpleDateFormat("yyyy/MM/dd");
+        String formattedDate = (paymentDate != null) ? formatDate.format(paymentDate) : "";
+
+        // Return a CSV formatted string
+        return paymentID + "," + amount + "," + formattedDate + "," + paymentMethod;
     }
 }
