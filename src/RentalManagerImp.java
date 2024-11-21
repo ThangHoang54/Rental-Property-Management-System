@@ -1,6 +1,9 @@
-import java.io.IOException;
 import java.text.SimpleDateFormat;
-import java.util.*;
+import java.util.Scanner;
+import java.util.List;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.Comparator;
 
 /**
  *  @author <Hoàng Minh Thắng - S3999925>
@@ -36,8 +39,7 @@ public class RentalManagerImp implements RentalManager {
 
     @Override
     public void addRentalAgreement() {
-        Scanner scanner = new Scanner(System.in);
-
+        Scanner scanner = Input.getDataInput().getScanner();
 
         System.out.print("Enter Main Tenant ID: ");
         String mainTenantID = "TN" + scanner.nextLine();
@@ -186,8 +188,6 @@ public class RentalManagerImp implements RentalManager {
      * @param list - A list of all rental agreements
      */
    private static void sortRentalAgreements(List<RentalAgreement> list) {
-       list.sort((o1, o2)
-               -> o1.getAgreementID().compareTo(
-               o2.getAgreementID()));
+       list.sort(Comparator.comparing(RentalAgreement::getAgreementID));
    }
 }

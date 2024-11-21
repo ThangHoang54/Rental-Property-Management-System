@@ -1,15 +1,12 @@
-import java.util.Scanner;
-
 /**
  *  @author <Hoàng Minh Thắng - S3999925>
  */
 
 public class RentalManagerUI {
-    private final Scanner scanner;
+    // private final Scanner scanner;
 
-    public RentalManagerUI() {
-        this.scanner = new Scanner(System.in);
-    }
+    // Constructor
+    public RentalManagerUI() {}
     public void mainMenu(RentalManagerImp manager, ModelManager model) {
         while (true) {
             System.out.println("\n===== Main Menu =====");
@@ -22,7 +19,6 @@ public class RentalManagerUI {
                 case 1 -> modelsMenu(manager, model);
                 case 2 -> rentalAgreementMenu(manager, model);
                 case 0 -> {
-                    scanner.close();  // Close the scanner to avoid resource leaks
                     return; // Break the while loop and end the program
                 }
                 default -> System.out.println("Invalid option, please try again");
@@ -78,30 +74,30 @@ public class RentalManagerUI {
                 case 2 -> {
                     do {
                         System.out.print("Enter Rental Agreement ID you wish to update: ");
-                        id = scanner.nextLine();
+                        id = Input.getDataInput().getScanner().nextLine();
                     } while (manager.checkRentalAgreementExits(id)); // Ensure the ID is exist
                     manager.updateRentalAgreement(id);
                 }
                 case 3 -> {
                     do {
                         System.out.print("Enter Rental Agreement ID you wish to delete: ");
-                        id = scanner.nextLine();
+                        id = Input.getDataInput().getScanner().nextLine();
                     } while (manager.checkRentalAgreementExits(id)); // Ensure the ID is exist
                     manager.deleteRentalAgreement(id);
                 }
                 case 4 -> manager.viewAllRentalAgreements();
                 case 5 -> {
                     System.out.print("Enter appropriate Owner Name that includes Rental Agreement: ");
-                    manager.viewRentalAgreementsByOwnerName(scanner.nextLine());
+                    manager.viewRentalAgreementsByOwnerName(Input.getDataInput().getScanner().nextLine());
                 }
                 case 6 -> {
                     System.out.print("Enter appropriate Property Address: ");
-                    manager.viewRentalAgreementsByPropertyAddress(scanner.nextLine());
+                    manager.viewRentalAgreementsByPropertyAddress(Input.getDataInput().getScanner().nextLine());
                 }
                 case 7 -> {
                     do {
                         System.out.print("Enter appropriate Status that includes Rental Agreement(New/Active/Completed): ");
-                        status = scanner.nextLine();
+                        status = Input.getDataInput().getScanner().nextLine();
                     } while (!(status.equalsIgnoreCase("New") || status.equalsIgnoreCase("Active") || status.equalsIgnoreCase("Completed")));
                     manager.viewRentalAgreementsByStatus(status);
                 }
@@ -123,6 +119,10 @@ public class RentalManagerUI {
         RentalManagerUI ui = new RentalManagerUI();
         ui.mainMenu(manager, model);
 
+        // Clear all the data before ending the program
+        manager.saveAndClearData();
+        model.clearData();
+
         // Ending message
         System.out.println("Goodbye, I hope you will have the great time \u9999!!!");
         System.exit(0); // Exit terminating the current process
@@ -142,7 +142,7 @@ public class RentalManagerUI {
 
         while (true) {
             System.out.print("Please select an appropriate option: ");
-            String userInput = scanner.nextLine(); // Read the entire line
+            String userInput = Input.getDataInput().getScanner().nextLine(); // Read the entire line
             if (userInput.isEmpty() || !isInteger(userInput)
                     || (value = Integer.parseInt(userInput)) < 0
                     || value > upperBound) {
