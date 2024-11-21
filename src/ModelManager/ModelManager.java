@@ -1,9 +1,14 @@
+package ModelManager;
 import java.util.Comparator;
 import java.util.List;
 
 /**
  *  @author <Hoàng Minh Thắng - S3999925>
  */
+
+import FileManager.DataPersistenceManager;
+import model.*;
+
 public class ModelManager {
     private DataPersistenceManager model_list;
 

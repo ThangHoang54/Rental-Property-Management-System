@@ -1,3 +1,4 @@
+package RentalAgreementManager;
 import java.text.SimpleDateFormat;
 import java.util.Scanner;
 import java.util.List;
@@ -8,6 +9,11 @@ import java.util.Comparator;
 /**
  *  @author <Hoàng Minh Thắng - S3999925>
  */
+
+import FileManager.DataPersistenceManager;
+import model.*;
+import until.*;
+
 public class RentalManagerImp implements RentalManager {
     private DataPersistenceManager model_list;
 

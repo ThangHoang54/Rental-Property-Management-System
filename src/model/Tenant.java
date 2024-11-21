@@ -1,3 +1,5 @@
+package model;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -37,6 +39,34 @@ public class Tenant extends Person {
     }
 
     public String toCSV() {
-        return "j";
+        // Format the birthdate
+        SimpleDateFormat formatDate = new SimpleDateFormat("yyyy/MM/dd");
+        String formattedBirthDate = formatDate.format(super.getDateOfBirth());
+
+        // Prepare lists of IDs for rental agreements and payment
+        StringBuilder paymentIDs = new StringBuilder();
+        for (Payment payment : paymentRecord) {
+            paymentIDs.append(payment.getPaymentID()).append(";");
+        }
+
+        StringBuilder rentalAgreementIDs = new StringBuilder();
+        for (RentalAgreement rentalAgreement : rentalAgreements) {
+            rentalAgreementIDs.append(rentalAgreement.getAgreementID()).append(";");
+        }
+
+        // Remove trailing semicolons
+        if (!paymentIDs.isEmpty()) {
+            paymentIDs.setLength(paymentIDs.length() - 1);
+        } if (!rentalAgreementIDs.isEmpty()) {
+            rentalAgreementIDs.setLength(rentalAgreementIDs.length() - 1);
+        }
+
+        // Return a CSV formatted string
+        return super.getId() + "," +
+                super.getName() + "," +
+                formattedBirthDate + "," +
+                super.getInfo_contact() + "," +
+                paymentIDs + "," +
+                rentalAgreementIDs;
     }
 }

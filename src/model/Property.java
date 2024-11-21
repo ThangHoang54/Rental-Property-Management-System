@@ -1,9 +1,12 @@
+package model;
 import java.util.ArrayList;
 import java.util.List;
 
 /**
  *  @author <Hoàng Minh Thắng - S3999925>
  */
+
+import until.ValidateInput;
 
 public abstract class Property {
     private String propertyID;

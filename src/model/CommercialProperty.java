@@ -1,7 +1,8 @@
+package model;
 /**
  * @author <Hoàng Minh Thắng - S3999925>
  */
-
+import until.ValidateInput;
 public class CommercialProperty extends Property {
     private String businessType; /*(Retail, Office, Hotel, Factory, Warehouse)*/
     private int parkingSpace;
@@ -39,6 +40,15 @@ public class CommercialProperty extends Property {
     }
 
     public String toCSV() {
-        return "j";
+        // Return a CSV formatted string
+        return super.getPropertyID() + "," +
+                super.getAddress() + "," +
+                super.getPrice() + "," +
+                super.getStatus() + "," +
+                (super.getOwner() != null ? super.getOwner().getId() : "") + "," +
+                businessType + "," +
+                parkingSpace + "," +
+                squareFootage;
+
     }
 }

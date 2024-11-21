@@ -1,3 +1,5 @@
+package model;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -45,6 +47,42 @@ public class Owner extends Person{
     }
 
     public String toCSV() {
-        return "j";
+        // Format the birthdate
+        SimpleDateFormat formatDate = new SimpleDateFormat("yyyy/MM/dd");
+        String formattedBirthDate = formatDate.format(super.getDateOfBirth());
+
+        // Prepare lists of IDs for properties owned, hosts, and rental agreements
+        StringBuilder propertyIDs = new StringBuilder();
+        for (Property property : propertiesOwned) {
+            propertyIDs.append(property.getPropertyID()).append("-");
+        }
+
+        StringBuilder hostIDs = new StringBuilder();
+        for (Host host : hostsManagingProperties) {
+            hostIDs.append(host.getId()).append("-");
+        }
+
+        StringBuilder rentalAgreementIDs = new StringBuilder();
+        for (RentalAgreement rentalAgreement : rentalAgreements) {
+            rentalAgreementIDs.append(rentalAgreement.getAgreementID()).append("-");
+        }
+
+        // Remove trailing semicolons
+        if (!propertyIDs.isEmpty()) {
+            propertyIDs.setLength(propertyIDs.length() - 1);
+        } if (!hostIDs.isEmpty()) {
+            hostIDs.setLength(hostIDs.length() - 1);
+        } if (!rentalAgreementIDs.isEmpty()) {
+            rentalAgreementIDs.setLength(rentalAgreementIDs.length() - 1);
+        }
+
+        // Return a CSV formatted string
+        return super.getId() + "," +
+                super.getName() + "," +
+                formattedBirthDate + "," +
+                super.getInfo_contact() + "," +
+                propertyIDs.toString() + "," +
+                hostIDs.toString() + "," +
+                rentalAgreementIDs.toString();
     }
 }

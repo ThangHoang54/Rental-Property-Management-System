@@ -1,3 +1,4 @@
+package model;
 /**
  *  @author <Hoàng Minh Thắng - S3999925>
  */
@@ -27,7 +28,7 @@ public class ResidentialProperty extends Property {
 
     @Override
     public String toString() {
-        return String.format("Property ID: %-6s | Address: %-25s | Pricing: $%-5.2f | Status: %-20s | Owner ID: %-6s | Number of bedroom: %-2d | Include Garden: %-5b | Pet-Friendly: %-5b",
+        return String.format("%-12s | %-25s | $%-9.2f | %-20s | %-8s | %-19d | %-15b | %-12b",
                 super.getPropertyID(),
                 super.getAddress(),
                 super.getPrice(),
@@ -39,6 +40,15 @@ public class ResidentialProperty extends Property {
     }
 
     public String toCSV() {
-        return "j";
+        // Return a CSV formatted string
+        return super.getPropertyID() + "," +
+                super.getAddress() + "," +
+                super.getPrice() + "," +
+                super.getStatus() + "," +
+                (super.getOwner() != null ? super.getOwner().getId() : "") + "," +
+
+                bedrooms + "," +
+                isGardened + "," +
+                petFriendly;
     }
 }

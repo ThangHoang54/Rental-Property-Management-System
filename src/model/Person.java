@@ -1,3 +1,4 @@
+package model;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
@@ -19,12 +20,21 @@ public abstract class Person {
         this.info_contact = info_contact;
     }
 
+    // Getter
     public String getId() {
         return id;
     }
 
     public String getName() {
         return name;
+    }
+
+    public Date getDateOfBirth() {
+        return dateOfBirth;
+    }
+
+    public String getInfo_contact() {
+        return info_contact;
     }
 
     // Setter
@@ -42,7 +52,4 @@ public abstract class Person {
                 info_contact);
     }
 
-    public String toCSV() {
-        return "j";
-    }
 }

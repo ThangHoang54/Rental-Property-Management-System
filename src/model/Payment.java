@@ -1,9 +1,13 @@
+package model;
+
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
 /**
  *  @author <Hoàng Minh Thắng - S3999925>
  */
+
+import until.ValidateInput;
 
 public class Payment {
     private String paymentID;

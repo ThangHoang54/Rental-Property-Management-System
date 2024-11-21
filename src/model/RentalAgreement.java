@@ -1,3 +1,4 @@
+package model;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
@@ -5,6 +6,8 @@ import java.util.List;
 /**
  *  @author <Hoàng Minh Thắng - S3999925>
  */
+
+import until.ValidateInput;
 
 public class RentalAgreement {
     private String agreementID;

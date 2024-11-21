@@ -1,10 +1,11 @@
 /**
  *  @author <Hoàng Minh Thắng - S3999925>
  */
+import ModelManager.ModelManager;
+import RentalAgreementManager.RentalManagerImp;
+import until.Input;
 
 public class RentalManagerUI {
-    // private final Scanner scanner;
-
     // Constructor
     public RentalManagerUI() {}
     public void mainMenu(RentalManagerImp manager, ModelManager model) {

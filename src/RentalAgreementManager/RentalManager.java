@@ -1,3 +1,4 @@
+package RentalAgreementManager;
 /**
  *  @author <Hoàng Minh Thắng - S3999925>
  */
