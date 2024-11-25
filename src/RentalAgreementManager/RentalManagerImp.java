@@ -10,20 +10,23 @@ import java.util.Comparator;
  *  @author <Hoàng Minh Thắng - S3999925>
  */
 
-import FileManager.DataPersistenceManager;
+import FileManager.DataPersistenceImp;
 import model.*;
 import until.*;
 
 public class RentalManagerImp implements RentalManager {
-    private DataPersistenceManager model_list;
+    private DataPersistenceImp model_list;
 
     // Constructor
     public RentalManagerImp() {
-        model_list = new DataPersistenceManager();
+        model_list = new DataPersistenceImp();
     }
 
+    public void saveData() {
+        model_list.saveDataToCSVFile();
+    }
     // Add a method for save to csv file and cleanup (useful for manual resource management)
-    public void saveAndClearData() {
+    public void clearData() {
         model_list.clearData();
     }
 
@@ -49,7 +52,7 @@ public class RentalManagerImp implements RentalManager {
 
         System.out.print("Enter Main Tenant ID: ");
         String mainTenantID = "TN" + scanner.nextLine();
-        Tenant mainTenant = DataPersistenceManager.getTenant(model_list.getTenants(), mainTenantID);  // Assuming a method to retrieve Tenant by ID
+        Tenant mainTenant = DataPersistenceImp.getTenant(model_list.getTenants(), mainTenantID);  // Assuming a method to retrieve Tenant by ID
 
         List<Tenant> subTenants = new ArrayList<>();
         System.out.print("Enter number of Sub-Tenants: ");
@@ -58,25 +61,35 @@ public class RentalManagerImp implements RentalManager {
         for (int i = 0; i < subTenantCount; i++) {
             System.out.print("Enter Sub-Tenant ID " + (i + 1) + ": ");
             String subTenantID = "TN" + scanner.nextLine();
-            Tenant subTenant = DataPersistenceManager.getTenant(model_list.getTenants(), subTenantID);
+            Tenant subTenant = DataPersistenceImp.getTenant(model_list.getTenants(), subTenantID);
             subTenants.add(subTenant);
         }
 
-        System.out.print("Enter Property ID: ");
-        String propertyID = "PP" + scanner.nextLine();
-        Property propertyLeased = DataPersistenceManager.getProperty(model_list.getCommercialProperties(),
-                model_list.getResidentialProperties(), propertyID); // Assuming a method to retrieve Property by ID
+        Property propertyLeased = null;
+        do {
+            System.out.print("Enter Property ID: ");
+            String propertyID = scanner.nextLine();
+
+            if (propertyID.startsWith("RP")) {
+                propertyLeased = (ResidentialProperty) DataPersistenceImp.getProperty(model_list.getCommercialProperties(),
+                        model_list.getResidentialProperties(), propertyID); // Assuming a method to retrieve Property by ID
+            } else if (propertyID.startsWith("CP")) {
+                propertyLeased = (CommercialProperty) DataPersistenceImp.getProperty(model_list.getCommercialProperties(),
+                        model_list.getResidentialProperties(), propertyID); // Assuming a method to retrieve Property by ID
+            }
+        } while (propertyLeased != null);
+
 
         System.out.print("Enter Host ID: ");
         String hostID = "HS" + scanner.nextLine();
-        Host host = DataPersistenceManager.getHost(model_list.getHosts(), hostID); // Assuming a method to retrieve Host by ID
+        Host host = DataPersistenceImp.getHost(model_list.getHosts(), hostID); // Assuming a method to retrieve Host by ID
 
         System.out.print("Enter Owner ID: ");
         String ownerID = scanner.nextLine();
-        Owner owner = DataPersistenceManager.getOwner(model_list.getOwners(), ownerID); // Assuming a method to retrieve Owner by ID
+        Owner owner = DataPersistenceImp.getOwner(model_list.getOwners(), ownerID); // Assuming a method to retrieve Owner by ID
 
         System.out.print("Enter Rental Period (e.g., 'monthly'): ");
-        String period = scanner.nextLine();
+        String period = ValidateInput.validateRentalPeriod(scanner.nextLine());
 
         System.out.print("Enter Contract Date (yyyy-MM-dd): ");
         String contractDateString = scanner.nextLine();
@@ -94,10 +107,10 @@ public class RentalManagerImp implements RentalManager {
         System.out.print("Enter Status (e.g., 'New', 'Active', 'Completed'): ");
         String status = ValidateInput.validateAgreementStatus(scanner.nextLine());
 
-        // Create new Rental Agreement object
-        RentalAgreement rentalAgreement = new RentalAgreement("", mainTenant, subTenants, propertyLeased,
-                host, owner, period, contractDate, rentingFee, status
-        );
+        // Create new Rental Agreement object using Builder pattern
+        RentalAgreement rentalAgreement = new RentalAgreement.Builder("").mainTenant(mainTenant).subTenants(subTenants)
+                .propertyLeased(propertyLeased).host(host).owner(owner).period(period).contractDate(contractDate)
+                .rentingFee(rentingFee).status(status).build();
 
         // Add rentalAgreement to the list or database (depending on your implementation)
         model_list.getRentalAgreements().add(rentalAgreement); // Assuming a List<RentalAgreement> rentalAgreements
@@ -143,7 +156,7 @@ public class RentalManagerImp implements RentalManager {
         for (RentalAgreement a : agreements) {
             if (a.getOwnerName().equals(ownerName)) {
                 view++;
-                System.out.println(a.toString());
+                System.out.println(a);
             }
         }
 
@@ -164,7 +177,7 @@ public class RentalManagerImp implements RentalManager {
         for (RentalAgreement a : agreements) {
             if (a.getPropertyAddress().equals(address)) {
                 view++;
-                System.out.println(a.toString());
+                System.out.println(a);
             }
         }
 
@@ -184,7 +197,7 @@ public class RentalManagerImp implements RentalManager {
         // Loop through rentalAgreement
         for (RentalAgreement a : agreements) {
             if (a.getStatus().equalsIgnoreCase(status)) {
-                System.out.println(a.toString());
+                System.out.println(a);
             }
         }
     }

@@ -1,21 +1,22 @@
 /**
  *  @author <Hoàng Minh Thắng - S3999925>
  */
-import ModelManager.ModelManager;
+import ModelManager.ModelManagerImp;
 import RentalAgreementManager.RentalManagerImp;
+import until.ValidateInput;
 import until.Input;
 
 public class RentalManagerUI {
     // Constructor
     public RentalManagerUI() {}
-    public void mainMenu(RentalManagerImp manager, ModelManager model) {
+    public void mainMenu(RentalManagerImp manager, ModelManagerImp model) {
         while (true) {
             System.out.println("\n===== Main Menu =====");
             System.out.println("1. View Models (Tenant, Host, Owner, Residential Property, Commercial Property)");
             System.out.println("2. Manage Rental Agreements");
             System.out.println("0. Exit");
 
-            int option = validateChoice(2);
+            int option = ValidateInput.validateChoice(2);
             switch (option) {
                 case 1 -> modelsMenu(manager, model);
                 case 2 -> rentalAgreementMenu(manager, model);
@@ -26,7 +27,7 @@ public class RentalManagerUI {
             }
         }
     }
-    public void modelsMenu(RentalManagerImp manager, ModelManager model) {
+    public void modelsMenu(RentalManagerImp manager, ModelManagerImp model) {
 
         while (true) {
             System.out.println("\n===== Model Menu =====");
@@ -37,8 +38,8 @@ public class RentalManagerUI {
             System.out.println("5. View All Commercial Properties");
             System.out.println("0. Back to Main Menu");
 
-            int option = validateChoice(5);
-            System.out.println(option);
+            int option = ValidateInput.validateChoice(5);
+
             switch (option) {
                 case 1 -> model.viewAllTenants();
                 case 2 -> model.viewAllHosts();
@@ -51,7 +52,7 @@ public class RentalManagerUI {
             }
         }
     }
-    public void rentalAgreementMenu(RentalManagerImp manager, ModelManager model) {
+    public void rentalAgreementMenu(RentalManagerImp manager, ModelManagerImp model) {
         while (true) {
             // Display the Main Menu
             System.out.println("\n================== Rental Agreement Menu ====================");
@@ -64,8 +65,7 @@ public class RentalManagerUI {
             System.out.println(" 7. view All Rental Agreements by Status");
             System.out.println(" 0. Back to Main Menu");
 
-            int option = validateChoice(7);
-            System.out.println(option);
+            int option = ValidateInput.validateChoice(7);
 
             String id = ""; String status = "";
             System.out.println();
@@ -112,16 +112,25 @@ public class RentalManagerUI {
     public static void main(String[] args) {
         // Declare variable
         RentalManagerImp manager = new RentalManagerImp();
-        ModelManager model = new ModelManager();
+        ModelManagerImp model = new ModelManagerImp();
 
         // Print out welcome message
-        System.out.println("=== Welcome to Rental Agreement Management System ===\n");
+        System.out.println("=== Welcome to Rental Agreement Management System ===");
 
         RentalManagerUI ui = new RentalManagerUI();
         ui.mainMenu(manager, model);
 
+        System.out.print("Do you want to save all the data back to the file for next used (y/n)> ");
+        if (Input.getDataInput().getScanner().nextLine().toLowerCase().charAt(0) == 'y') {
+            // Save all data back to CSV file
+            manager.saveData();
+            System.out.println("Data saved successfully.");
+        } else {
+            System.out.println("Data not saved.");
+        }
+
         // Clear all the data before ending the program
-        manager.saveAndClearData();
+        manager.clearData();
         model.clearData();
 
         // Ending message
@@ -129,44 +138,4 @@ public class RentalManagerUI {
         System.exit(0); // Exit terminating the current process
     }
 
-    /**
-     * This method continuously prompts the user until a valid integer between
-     * 0 and the specified upper bound (inclusive) is entered. It validates
-     * the input to ensure it is not empty and can be parsed as an integer.
-     *
-     * @param upperBound the upper bound for the valid range of integers
-     * @return a valid integer selected by the user, which is between 0 and
-     *         the specified upper bound (inclusive)
-     */
-    private int validateChoice(int upperBound) {
-        int value = 0;
-
-        while (true) {
-            System.out.print("Please select an appropriate option: ");
-            String userInput = Input.getDataInput().getScanner().nextLine(); // Read the entire line
-            if (userInput.isEmpty() || !isInteger(userInput)
-                    || (value = Integer.parseInt(userInput)) < 0
-                    || value > upperBound) {
-                System.out.println("Invalid input. Please enter a valid integer between 0 and " + upperBound + ".");
-            } else {
-                return value; // Return the valid integer
-            }
-        }
-    }
-
-    /**
-     * Checks if the provided string can be parsed as an integer.
-     * @param str the string to be checked
-     * @return {@code true} if the string can be parsed as an integer;
-     *         {@code false} otherwise
-     * @throws NullPointerException if the input string is {@code null}
-     */
-    private static boolean isInteger(String str) {
-        try {
-            Integer.parseInt(str);
-            return true;
-        } catch (NumberFormatException e) {
-            return false;
-        }
-    }
 }

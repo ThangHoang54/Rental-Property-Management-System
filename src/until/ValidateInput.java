@@ -6,7 +6,7 @@ import java.util.Scanner;
  */
 
 public class ValidateInput {
-    private static Scanner sc = new Scanner(System.in);
+
     /**
      *
      * @param method - Payment method giving by user
@@ -20,7 +20,7 @@ public class ValidateInput {
                 default -> {
                     System.out.println("Invalid Method, " +
                             "Please choose 1 from those methods (Credit Card, Cash, Bank Transfer)");
-                    method = sc.nextLine();
+                    method = Input.getDataInput().getScanner().nextLine();
                 }
             }
         }
@@ -39,7 +39,7 @@ public class ValidateInput {
                 default -> {
                     System.out.println("Invalid Status, " +
                             "Please choose 1 from those status (Available, Rented, Under Maintenance)");
-                    status = sc.nextLine();
+                    status = Input.getDataInput().getScanner().nextLine();
                 }
             }
         }
@@ -60,7 +60,7 @@ public class ValidateInput {
                 default -> {
                     System.out.println("Invalid type, " +
                             "Please choose from those business types (Retail, Office, Hotel, Factory, Warehouse)");
-                    type = sc.nextLine();
+                    type = Input.getDataInput().getScanner().nextLine();
                 }
             }
         }
@@ -80,7 +80,7 @@ public class ValidateInput {
                 default -> {
                     System.out.println("Invalid period, " +
                             "Please choose from those period for Rental (Daily, Weekly, Fortnightly, Monthly)");
-                    period = sc.nextLine();
+                    period = Input.getDataInput().getScanner().nextLine();
                 }
             }
         }
@@ -100,9 +100,50 @@ public class ValidateInput {
                 default -> {
                     System.out.println("Invalid Method, " +
                             "Please choose 1 from those methods (New, Active, Completed)");
-                    status = sc.nextLine();
+                    status = Input.getDataInput().getScanner().nextLine();
                 }
             }
+        }
+    }
+
+    /**
+     * This method continuously prompts the user until a valid integer between
+     * 0 and the specified upper bound (inclusive) is entered. It validates
+     * the input to ensure it is not empty and can be parsed as an integer.
+     *
+     * @param upperBound the upper bound for the valid range of integers
+     * @return a valid integer selected by the user, which is between 0 and
+     *         the specified upper bound (inclusive)
+     */
+    public static int validateChoice(int upperBound) {
+        int value = 0;
+
+        while (true) {
+            System.out.print("Please select an appropriate option: ");
+            String userInput = Input.getDataInput().getScanner().nextLine(); // Read the entire line
+            if (userInput.isEmpty() || !isInteger(userInput)
+                    || (value = Integer.parseInt(userInput)) < 0
+                    || value > upperBound) {
+                System.out.println("Invalid input. Please enter a valid integer between 0 and " + upperBound + ".");
+            } else {
+                return value; // Return the valid integer
+            }
+        }
+    }
+
+    /**
+     * Checks if the provided string can be parsed as an integer.
+     * @param str the string to be checked
+     * @return {@code true} if the string can be parsed as an integer;
+     *         {@code false} otherwise
+     * @throws NullPointerException if the input string is {@code null}
+     */
+    private static boolean isInteger(String str) {
+        try {
+            Integer.parseInt(str);
+            return true;
+        } catch (NumberFormatException e) {
+            return false;
         }
     }
 }

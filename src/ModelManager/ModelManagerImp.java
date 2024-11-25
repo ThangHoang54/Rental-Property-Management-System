@@ -6,15 +6,15 @@ import java.util.List;
  *  @author <Hoàng Minh Thắng - S3999925>
  */
 
-import FileManager.DataPersistenceManager;
+import FileManager.DataPersistenceImp;
 import model.*;
 
-public class ModelManager {
-    private DataPersistenceManager model_list;
+public class ModelManagerImp implements ModelManager {
+    private DataPersistenceImp model_list;
 
     // Constructor
-    public ModelManager() {
-        model_list = new DataPersistenceManager();
+    public ModelManagerImp() {
+        model_list = new DataPersistenceImp();
     }
 
     // A method for cleanup (useful for manual resource management)
@@ -27,6 +27,7 @@ public class ModelManager {
      * 5 methods below served for display specific model (Tenant, Host, Owner, Residential/Commercial Property)
      * in the console
      */
+    @Override
     public void viewAllTenants() {
         List<Tenant> tenants = model_list.getTenants();
         sortTenant(tenants);
@@ -43,6 +44,7 @@ public class ModelManager {
             System.out.println(t.toString()); // Display info on the terminal
         }
     }
+    @Override
     public void viewAllHosts() {
         List<Host> hosts = model_list.getHosts();
         sortHost(hosts);
@@ -58,6 +60,7 @@ public class ModelManager {
             System.out.println(h.toString()); // Display info on the terminal
         }
     }
+    @Override
     public void viewAllOwners() {
         List<Owner> owners = model_list.getOwners();
         sortOwner(owners);
@@ -73,6 +76,7 @@ public class ModelManager {
             System.out.println(owner.toString()); // Display info on the terminal
         }
     }
+    @Override
     public void viewAllResidentialProperties() {
         List<ResidentialProperty> residentialProperties = model_list.getResidentialProperties();
         sortResidentialProperties(residentialProperties);
@@ -88,6 +92,7 @@ public class ModelManager {
             System.out.println(p.toString()); // Display info on the terminal
         }
     }
+    @Override
     public void viewAllCommercialProperties() {
         List<CommercialProperty> commercialProperties = model_list.getCommercialProperties();
         sortCommercialProperty(commercialProperties);

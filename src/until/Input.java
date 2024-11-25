@@ -1,9 +1,13 @@
 package until;
 import java.util.Scanner;
 
+/**
+ *  @author <Hoàng Minh Thắng - S3999925>
+ */
+
+/* Skeleton pattern */
 public class Input {
     private static Input input;
-
     private Scanner sc;
 
     private Input() {

@@ -10,6 +10,7 @@ import java.util.List;
 import until.ValidateInput;
 
 public class RentalAgreement {
+
     private String agreementID;
     private Tenant mainTenant; // Reference to the main tenant
     private List<Tenant> subTenants; // List of sub-tenants
@@ -22,25 +23,90 @@ public class RentalAgreement {
     private String status;  // Status of the agreement (e.g., "New", "Active", "Completed")
     private static int count = 0;
 
-    // Constructor
-    /**
-     * Used when the admin want to update the RentalAgreement and load data from RentalAgreement.csv (Keeping the ID/ Auto update ID)
-     */
-    public RentalAgreement(String id, Tenant mainTenant, List<Tenant> subTenants, Property propertyLeased, Host host, Owner owner,
-                           String period, Date contractDate, double rentingFee, String status) {
-        this.agreementID = (!id.isEmpty()) ? id : ("RA" + (++count < 10 ? "00" : "0") + count);
-        this.mainTenant = mainTenant;
-        this.subTenants = subTenants;
-        this.propertyLeased = propertyLeased;
-        this.host = host;
-        this.owner = owner;
-        this.period = ValidateInput.validateRentalPeriod(period);
-        this.contractDate = contractDate;
-        this.rentingFee = rentingFee;
-        this.status = ValidateInput.validateAgreementStatus(status);
+    // Private constructor to enforce the use of the Builder
+    private RentalAgreement(Builder builder) {
+        this.agreementID = builder.agreementID;
+        this.mainTenant = builder.mainTenant;
+        this.subTenants = builder.subTenants;
+        this.propertyLeased = builder.propertyLeased;
+        this.host = builder.host;
+        this.owner = builder.owner;
+        this.period = ValidateInput.validateRentalPeriod(builder.period);
+        this.contractDate = builder.contractDate;
+        this.rentingFee = builder.rentingFee;
+        this.status = ValidateInput.validateAgreementStatus(builder.status);
 
-        count = (!id.isEmpty()) ? Integer.parseInt(id.substring(2)) : count;
+        // Update the count based on the ID provided
+        count = (!builder.agreementID.isEmpty()) ? Integer.parseInt(builder.agreementID.substring(2)) : count;
     }
+
+    // Builder class
+    public static class Builder {
+        private String agreementID;
+        private Tenant mainTenant; // Reference to the main tenant
+        private List<Tenant> subTenants; // List of sub-tenants
+        private Property propertyLeased; // Reference to the property being leased
+        private Host host; // Reference to the host managing the property
+        private Owner owner;  // Reference to the owner of the property
+        private String period; // Rental period (e.g., "daily", "weekly", "monthly")
+        private Date contractDate; // Date the contract was signed
+        private double rentingFee; // Fee for renting the property
+        private String status;  // Status of the agreement (e.g., "New", "Active", "Completed")
+
+        public Builder(String id) {
+            this.agreementID = (!id.isEmpty()) ? id : ("RA" + (++count < 10 ? "00" : "0") + count);
+        }
+
+        public Builder mainTenant(Tenant mainTenant) {
+            this.mainTenant = mainTenant;
+            return this;
+        }
+
+        public Builder subTenants(List<Tenant> subTenants) {
+            this.subTenants = subTenants;
+            return this;
+        }
+
+        public Builder propertyLeased(Property propertyLeased) {
+            this.propertyLeased = propertyLeased;
+            return this;
+        }
+
+        public Builder host(Host host) {
+            this.host = host;
+            return this;
+        }
+
+        public Builder owner(Owner owner) {
+            this.owner = owner;
+            return this;
+        }
+
+        public Builder period(String period) {
+            this.period = period;
+            return this;
+        }
+
+        public Builder contractDate(Date contractDate) {
+            this.contractDate = contractDate;
+            return this;
+        }
+
+        public Builder rentingFee(double rentingFee) {
+            this.rentingFee = rentingFee;
+            return this;
+        }
+
+        public Builder status(String status) {
+            this.status = status;
+            return this;
+        }
+
+        public RentalAgreement build() {
+            return new RentalAgreement(this);
+        }
+    }
+
 
     // Getter
     public String getAgreementID() {
@@ -109,6 +175,22 @@ public class RentalAgreement {
     }
 
     public String toCSV() {
-        return "j";
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd");
+
+        String subTenantsNames = subTenants.stream()
+                .map(Tenant::getId)
+                .reduce((name1, name2) -> name1 + ", " + name2)
+                .orElse("None");
+
+        return (agreementID + "," +
+                mainTenant.getId() + "," +
+                subTenantsNames + "," +
+                propertyLeased.getPropertyID() + "," +
+                host.getId() + "," +
+                owner.getId() + "," +
+                period + "," +
+                dateFormat.format(contractDate) + "," +
+                rentingFee + "," +
+                status);
     }
 }
