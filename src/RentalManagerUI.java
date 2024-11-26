@@ -1,6 +1,7 @@
 /**
  *  @author <Hoàng Minh Thắng - S3999925>
  */
+import FileManager.DataPersistenceImp;
 import ModelManager.ModelManagerImp;
 import RentalAgreementManager.RentalManagerImp;
 import until.ValidateInput;
@@ -88,10 +89,12 @@ public class RentalManagerUI {
                 }
                 case 4 -> manager.viewAllRentalAgreements();
                 case 5 -> {
+                    DataPersistenceImp.viewAllExitsChoice(manager.getRentalAgreementList(),1); // Show all existing for Owner;s name
                     System.out.print("Enter appropriate Owner Name that includes Rental Agreement: ");
                     manager.viewRentalAgreementsByOwnerName(Input.getDataInput().getScanner().nextLine());
                 }
                 case 6 -> {
+                    DataPersistenceImp.viewAllExitsChoice(manager.getRentalAgreementList(),2); // Show all existing Property's address
                     System.out.print("Enter appropriate Property Address: ");
                     manager.viewRentalAgreementsByPropertyAddress(Input.getDataInput().getScanner().nextLine());
                 }

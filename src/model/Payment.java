@@ -14,7 +14,6 @@ public class Payment {
     private double amount; // The amount of money that is being paid in the transaction.
     private Date paymentDate; // Records the date when the payment was made
     private String paymentMethod; // The method of payment used (e.g., "Credit Card", "Cash", "Bank Transfer").
-    private static int count = 0;
 
     // Constructor
     public Payment() {
@@ -23,27 +22,16 @@ public class Payment {
         paymentMethod = "";
     }
     public Payment(String id, double amount, Date paymentDate, String paymentMethod) {
-        this.paymentID = (!id.isEmpty()) ? id : ("PM" + (++count < 10 ? "00" : "0") + count);
+        this.paymentID = id;
         this.amount = amount;
         this.paymentDate = paymentDate;
         this.paymentMethod = ValidateInput.validatePaymentMethod(paymentMethod);
-        count = (!id.isEmpty()) ? Integer.parseInt(id.substring(2)) : count;
     }
 
     // Getter
     public String getPaymentID() {
         return paymentID;
     }
-
-    @Override
-    public String toString() {
-        // Convert Date format in form dd/mm/yyyy
-        SimpleDateFormat formatDate = new SimpleDateFormat("dd/MM/yyyy");
-        return "Amount = " + amount +
-                ", Payment Date = " + formatDate.format(paymentDate) +
-                ", Payment Method = " + paymentMethod;
-    }
-
 
     /**
      * Converts the Payment object to a CSV (Comma-Separated Values) string.
@@ -53,9 +41,8 @@ public class Payment {
     public String toCSV() {
         // Convert Date to a suitable format for CSV
         SimpleDateFormat formatDate = new SimpleDateFormat("yyyy/MM/dd");
-        String formattedDate = (paymentDate != null) ? formatDate.format(paymentDate) : "";
 
         // Return a CSV formatted string
-        return paymentID + "," + amount + "," + formattedDate + "," + paymentMethod;
+        return  paymentID + "," + amount + "," + formatDate.format(paymentDate) + "," + paymentMethod;
     }
 }

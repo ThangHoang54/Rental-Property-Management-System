@@ -21,7 +21,6 @@ public class RentalAgreement {
     private Date contractDate; // Date the contract was signed
     private double rentingFee; // Fee for renting the property
     private String status;  // Status of the agreement (e.g., "New", "Active", "Completed")
-    private static int count = 0;
 
     // Private constructor to enforce the use of the Builder
     private RentalAgreement(Builder builder) {
@@ -36,8 +35,6 @@ public class RentalAgreement {
         this.rentingFee = builder.rentingFee;
         this.status = ValidateInput.validateAgreementStatus(builder.status);
 
-        // Update the count based on the ID provided
-        count = (!builder.agreementID.isEmpty()) ? Integer.parseInt(builder.agreementID.substring(2)) : count;
     }
 
     // Builder class
@@ -54,7 +51,7 @@ public class RentalAgreement {
         private String status;  // Status of the agreement (e.g., "New", "Active", "Completed")
 
         public Builder(String id) {
-            this.agreementID = (!id.isEmpty()) ? id : ("RA" + (++count < 10 ? "00" : "0") + count);
+            this.agreementID = id;
         }
 
         public Builder mainTenant(Tenant mainTenant) {
@@ -161,7 +158,7 @@ public class RentalAgreement {
                 .orElse("None");
 
         return String.format(
-                "Agreement ID: %-6s | Main Tenant ID: %-6s | Sub-Tenants ID: %-20s | Property ID: %-6s | Host ID: %-6s | Owner ID: %-6s | Period: %-10s | Contract Date: %-10s | Renting Fee: $%-10.2f | Status: %-10s",
+                "%-15s | %-16s | %-25s | %-20s | %-15s | %-15s | %-10s | %-15s | $%-12.2f | %-10s",
                 agreementID,
                 mainTenant.getId(),
                 subTenantsNames,
@@ -179,7 +176,7 @@ public class RentalAgreement {
 
         String subTenantsNames = subTenants.stream()
                 .map(Tenant::getId)
-                .reduce((name1, name2) -> name1 + ", " + name2)
+                .reduce((name1, name2) -> name1 + "-" + name2)
                 .orElse("None");
 
         return (agreementID + "," +

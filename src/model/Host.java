@@ -12,7 +12,6 @@ public class Host extends Person {
     private List<Property> propertiesManaged;
     private List<Owner> cooperatingOwners;
     private List<RentalAgreement> rentalAgreements;
-    private static int count = 0;
 
     // Constructor
     public Host(String id, String name, Date birthDate, String info_contact) {
@@ -20,13 +19,6 @@ public class Host extends Person {
         propertiesManaged = new ArrayList<>();
         cooperatingOwners = new ArrayList<>();
         rentalAgreements = new ArrayList<>();
-        count = Integer.parseInt(id.substring(2));
-    }
-    public Host(String name, Date dateOfBirth, String info_contact) {
-        super("HS" + (++count < 10 ? "00" : "0") + count, name, dateOfBirth, info_contact);
-        propertiesManaged = new ArrayList<Property>();
-        cooperatingOwners = new ArrayList<Owner>();
-        rentalAgreements = new ArrayList<RentalAgreement>();
     }
 
     public void addProperty(Property property) {
@@ -43,7 +35,32 @@ public class Host extends Person {
 
     @Override
     public String toString() {
-        return super.toString();
+        // Convert the propertiesManaged list into a stream
+        String propertyIDs = propertiesManaged.stream()
+                // Map each Property object to its propertyID using the getPropertyID method
+                .map(Property::getPropertyID)
+                // Reduce the stream by concatenating the propertyIDs with a hyphen ("-") as the separator
+                .reduce((name1, name2) -> name1 + "-" + name2)
+                .orElse("None"); // If the stream is empty, return "None" as the default value
+
+
+        // Convert the cooperatingOwners list into a stream
+        String ownerIDs = cooperatingOwners.stream()
+                // Map each Owner object to its OwnerID using the getId method
+                .map(Owner::getId)
+                // Reduce the stream by concatenating the ownerIDs with a hyphen ("-") as the separator
+                .reduce((name1, name2) -> name1 + "-" + name2)
+                .orElse("None"); // If the stream is empty, return "None" as the default value
+
+        // Convert the rentalAgreements list into a stream
+        String rentalAgreementIDs = rentalAgreements.stream()
+                // Map each RentalAgreement object to its AgreementID using the getAgreementID method
+                .map(RentalAgreement::getAgreementID)
+                // Reduce the stream by concatenating the AgreementID with a hyphen ("-") as the separator
+                .reduce((name1, name2) -> name1 + "-" + name2)
+                .orElse("None"); // If the stream is empty, return "None" as the default value
+
+        return super.toString() + String.format("| %-15s | %-15s | %-20s", propertyIDs, ownerIDs, rentalAgreementIDs);
     }
 
     public String toCSV() {
@@ -51,30 +68,30 @@ public class Host extends Person {
         SimpleDateFormat formatDate = new SimpleDateFormat("yyyy/MM/dd");
         String formattedBirthDate = formatDate.format(super.getDateOfBirth());
 
-        // Prepare lists of IDs for properties managed, owners, and rental agreements
-        StringBuilder propertyIDs = new StringBuilder();
-        for (Property property : propertiesManaged) {
-            propertyIDs.append(property.getPropertyID()).append("-");
-        }
+        // Convert the propertiesManaged list into a stream
+        String propertyIDs = propertiesManaged.stream()
+                // Map each Property object to its propertyID using the getPropertyID method
+                .map(Property::getPropertyID)
+                // Reduce the stream by concatenating the propertyIDs with a hyphen ("-") as the separator
+                .reduce((name1, name2) -> name1 + "-" + name2)
+                .orElse("None"); // If the stream is empty, return "None" as the default value
 
-        StringBuilder ownerIDs = new StringBuilder();
-        for (Owner owner : cooperatingOwners) {
-            ownerIDs.append(owner.getId()).append("-");
-        }
 
-        StringBuilder rentalAgreementIDs = new StringBuilder();
-        for (RentalAgreement rentalAgreement : rentalAgreements) {
-            rentalAgreementIDs.append(rentalAgreement.getAgreementID()).append("-");
-        }
+        // Convert the cooperatingOwners list into a stream
+        String ownerIDs = cooperatingOwners.stream()
+                // Map each Owner object to its OwnerID using the getId method
+                .map(Owner::getId)
+                // Reduce the stream by concatenating the ownerIDs with a hyphen ("-") as the separator
+                .reduce((name1, name2) -> name1 + "-" + name2)
+                .orElse("None"); // If the stream is empty, return "None" as the default value
 
-        // Remove trailing semicolons
-        if (!propertyIDs.isEmpty()) {
-            propertyIDs.setLength(propertyIDs.length() - 1);
-        } if (!ownerIDs.isEmpty()) {
-            ownerIDs.setLength(ownerIDs.length() - 1);
-        } if (!rentalAgreementIDs.isEmpty()) {
-            rentalAgreementIDs.setLength(rentalAgreementIDs.length() - 1);
-        }
+        // Convert the rentalAgreements list into a stream
+        String rentalAgreementIDs = rentalAgreements.stream()
+                // Map each RentalAgreement object to its AgreementID using the getAgreementID method
+                .map(RentalAgreement::getAgreementID)
+                // Reduce the stream by concatenating the AgreementID with a hyphen ("-") as the separator
+                .reduce((name1, name2) -> name1 + "-" + name2)
+                .orElse("None"); // If the stream is empty, return "None" as the default value
 
         // Return a CSV formatted string
         return super.getId() + "," +

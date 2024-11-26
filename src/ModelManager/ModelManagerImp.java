@@ -34,8 +34,8 @@ public class ModelManagerImp implements ModelManager {
         System.out.println("\n====== All Tenants Table ======\n");
 
         // Generating the Heading
-        System.out.printf("%-6s | %-20s | %-15s | %-20s",
-                "ID", "Name", "Date of Birth", "Contact Info");
+        System.out.printf("%-6s | %-20s | %-15s | %-30s| %-15s | %-20s\n",
+                "ID", "Name", "Date of Birth", "Contact Info", "PaymentID", "RentalAgreementID");
         System.out.println("-".repeat(60));
 
         // Loop through tenant
@@ -51,8 +51,8 @@ public class ModelManagerImp implements ModelManager {
         System.out.println("\n====== All Hosts Table ======\n");
 
         // Generating the Heading
-        System.out.printf("%-6s | %-20s | %-15s | %-20s",
-                "ID", "Name", "Date of Birth", "Contact Info");
+        System.out.printf("%-6s | %-20s | %-15s | %-30s| %-15s | %-15s | %-20s\n",
+                "ID", "Name", "Date of Birth", "Contact Info", "PropertyID", "OwnerID" ,"RentalAgreementID");
         System.out.println("-".repeat(60));
 
         // Loop through host
@@ -67,8 +67,8 @@ public class ModelManagerImp implements ModelManager {
         System.out.println("\n====== All Owners Table ======\n");
 
         // Generating the Heading
-        System.out.printf("%-6s | %-20s | %-15s | %-20s",
-                "ID", "Name", "Date of Birth", "Contact Info");
+        System.out.printf("%-6s | %-20s | %-15s | %-30s| %-15s | %-15s | %-20s\n",
+                "ID", "Name", "Date of Birth", "Contact Info", "PropertyID", "HostID" ,"RentalAgreementID");
         System.out.println("-".repeat(60));
 
         // Loop through owners
@@ -79,12 +79,12 @@ public class ModelManagerImp implements ModelManager {
     @Override
     public void viewAllResidentialProperties() {
         List<ResidentialProperty> residentialProperties = model_list.getResidentialProperties();
-        sortResidentialProperties(residentialProperties);
+        //sortResidentialProperties(residentialProperties);
         System.out.println("\n====== All Residential Properties Table ======\n");
 
         // Generating the Heading
-        System.out.printf("%-12s | %-25s | %-10s | %-20s | %-8s | %-19s | %-15s | %-12s\n",
-                "Property ID", "Address", "Pricing", "Status", "Owner ID", "Number of bedroom", "Include Garden", "Pet-Friendly");
+        System.out.printf("%-12s | %-25s | %-10s | %-20s | %-8s | %-15s | %-19s | %-15s | %-12s\n",
+                "Property ID", "Address", "Pricing", "Status", "Owner ID", "Host ID", "Number of bedroom", "Include Garden", "Pet-Friendly");
         System.out.println("-".repeat(100));
 
         // Loop through residentialProperties
@@ -95,12 +95,14 @@ public class ModelManagerImp implements ModelManager {
     @Override
     public void viewAllCommercialProperties() {
         List<CommercialProperty> commercialProperties = model_list.getCommercialProperties();
-        sortCommercialProperty(commercialProperties);
+        //sortCommercialProperty(commercialProperties);
         System.out.println("\n====== All Commercial Properties Table ======\n");
+
         // Generating the Heading
-        System.out.printf("%-12s | %-25s | %-10s | %-20s | %-8s | %-15s | %-14s | %-15s\n",
-                "Property ID", "Address", "Pricing", "Status", "Owner ID", "Business Type", "Parking Space", "Square Footage");
+        System.out.printf("%-12s | %-25s | %-10s | %-20s | %-8s | %-15s | %-15s | %-14s | %-15s\n",
+                "Property ID", "Address", "Pricing", "Status", "Owner ID", "Host ID","Business Type", "Parking Space", "Square Footage");
         System.out.println("-".repeat(100));
+
         // Loop through commercialProperties
         for (CommercialProperty p : commercialProperties) {
             System.out.println(p.toString()); // Display info on the terminal

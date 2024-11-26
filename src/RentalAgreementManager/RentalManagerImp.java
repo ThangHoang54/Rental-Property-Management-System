@@ -29,7 +29,10 @@ public class RentalManagerImp implements RentalManager {
     public void clearData() {
         model_list.clearData();
     }
-
+    // Getter
+    public List<RentalAgreement> getRentalAgreementList() {
+        return model_list.getRentalAgreements();
+    }
     /**
      * Checks if a rental agreement with the specified ID exists in the list of rental agreements.
      *
@@ -106,9 +109,10 @@ public class RentalManagerImp implements RentalManager {
 
         System.out.print("Enter Status (e.g., 'New', 'Active', 'Completed'): ");
         String status = ValidateInput.validateAgreementStatus(scanner.nextLine());
+        int size = model_list.getRentalAgreements().size();
 
         // Create new Rental Agreement object using Builder pattern
-        RentalAgreement rentalAgreement = new RentalAgreement.Builder("").mainTenant(mainTenant).subTenants(subTenants)
+        RentalAgreement rentalAgreement = new RentalAgreement.Builder("RA" + ((size < 10) ? "00" : "0") + (size + 1)).mainTenant(mainTenant).subTenants(subTenants)
                 .propertyLeased(propertyLeased).host(host).owner(owner).period(period).contractDate(contractDate)
                 .rentingFee(rentingFee).status(status).build();
 
@@ -138,6 +142,11 @@ public class RentalManagerImp implements RentalManager {
         sortRentalAgreements(agreements);
         System.out.println("\n====== All Rental Agreement Table ======\n");
 
+        // Generating the Heading
+        System.out.printf("%-15s | %-16s | %-25s | %-20s | %-15s | %-15s | %-10s | %-15s | %-12s | %-10s\n",
+                "Agreement ID", "Main Tenant ID", "Sub-Tenants ID", "Property ID", "Host ID", "Owner ID", "Period", "Contract Date", "Renting Fee", "Status");
+        System.out.println("-".repeat(170));
+
         // Loop through rentalAgreement
         for (RentalAgreement a : agreements) {
             System.out.println(a.toString()); // Display info on the terminal
@@ -151,6 +160,12 @@ public class RentalManagerImp implements RentalManager {
             return;
         }
         System.out.println("\n===== All Rental Agreement that have Owner name (" + ownerName + ") =====\n");
+
+        // Generating the Heading
+        System.out.printf("%-15s | %-16s | %-25s | %-20s | %-15s | %-15s | %-10s | %-15s | %-12s | %-10s\n",
+                "Agreement ID", "Main Tenant ID", "Sub-Tenants ID", "Property ID", "Host ID", "Owner ID", "Period", "Contract Date", "Renting Fee", "Status");
+        System.out.println("-".repeat(170));
+
         // Loop through rentalAgreement
         int view = 1;
         for (RentalAgreement a : agreements) {
@@ -172,6 +187,12 @@ public class RentalManagerImp implements RentalManager {
             return;
         }
         System.out.println("\n===== All Rental Agreement that have Property address (" + address + ") =====\n");
+
+        // Generating the Heading
+        System.out.printf("%-15s | %-16s | %-25s | %-20s | %-15s | %-15s | %-10s | %-15s | %-12s | %-10s\n",
+                "Agreement ID", "Main Tenant ID", "Sub-Tenants ID", "Property ID", "Host ID", "Owner ID", "Period", "Contract Date", "Renting Fee", "Status");
+        System.out.println("-".repeat(150));
+
         int view = 1;
         // Loop through rentalAgreement
         for (RentalAgreement a : agreements) {
@@ -194,6 +215,12 @@ public class RentalManagerImp implements RentalManager {
             return;
         }
         System.out.println("\n===== All Rental Agreement that have Status (" + status + ") =====\n");
+
+        // Generating the Heading
+        System.out.printf("%-15s | %-16s | %-25s | %-20s | %-15s | %-15s | %-10s | %-15s | %-12s | %-10s\n",
+                "Agreement ID", "Main Tenant ID", "Sub-Tenants ID", "Property ID", "Host ID", "Owner ID", "Period", "Contract Date", "Renting Fee", "Status");
+        System.out.println("-".repeat(170));
+
         // Loop through rentalAgreement
         for (RentalAgreement a : agreements) {
             if (a.getStatus().equalsIgnoreCase(status)) {
@@ -209,4 +236,5 @@ public class RentalManagerImp implements RentalManager {
    private static void sortRentalAgreements(List<RentalAgreement> list) {
        list.sort(Comparator.comparing(RentalAgreement::getAgreementID));
    }
+
 }

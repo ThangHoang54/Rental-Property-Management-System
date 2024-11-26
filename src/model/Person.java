@@ -45,7 +45,7 @@ public abstract class Person {
     public String toString() {
         // Convert Date format in form dd/mm/yyyy
         SimpleDateFormat formatDate = new SimpleDateFormat("dd/MM/yyyy");
-        return String.format("%-6s | %-20s | %-15s | %-20s",
+        return String.format("%-6s | %-20s | %-15s | %-30s",
                 id,
                 name,
                 formatDate.format(dateOfBirth),

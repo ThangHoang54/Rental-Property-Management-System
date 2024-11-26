@@ -16,7 +16,6 @@ public abstract class Property {
     private Owner owner; /*reference to the owner of the property*/
     private List<Host> hosts; /*to store hosts managing this property*/
 
-
     // Constructor
     public Property(String propertyID, String address, double price, String status, Owner owner) {
         this.propertyID = propertyID;
@@ -24,7 +23,7 @@ public abstract class Property {
         this.price = price;
         this.status = ValidateInput.validatePropertyStatus(status);
         this.owner = owner;
-        this.hosts = new ArrayList<Host>();
+        this.hosts = new ArrayList<>();
     }
 
     // Getter
@@ -42,6 +41,9 @@ public abstract class Property {
     }
     public double getPrice() {
         return price;
+    }
+    public List<Host> getHosts() {
+        return hosts;
     }
 
     public void addHost(Host host) {

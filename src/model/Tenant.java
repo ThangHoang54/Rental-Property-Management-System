@@ -9,21 +9,15 @@ import java.util.List;
  */
 
 public class Tenant extends Person {
-    private List<RentalAgreement> rentalAgreements; // store rental agreements associated with the tenant
     private List<Payment> paymentRecord; // to keep track of payment transactions made by the tenant
-    private static int count = 0;
+    private List<RentalAgreement> rentalAgreements; // store rental agreements associated with the tenant
 
     public Tenant(String id, String name, Date birthDate, String info_contact) {
         super(id, name, birthDate, info_contact);
         rentalAgreements = new ArrayList<>();
         paymentRecord = new ArrayList<>();
-        count = Integer.parseInt(id.substring(2));
     }
-    public Tenant(String name, Date dateOfBirth, String info_contact) {
-        super("TN" + (++count < 10 ? "00" : "0") + count, name, dateOfBirth, info_contact);
-        rentalAgreements = new ArrayList<>();
-        paymentRecord = new ArrayList<>();
-    }
+
 
     public void addRentalAgreement(RentalAgreement rentalAgreement) {
         rentalAgreements.add(rentalAgreement);
@@ -35,7 +29,24 @@ public class Tenant extends Person {
 
     @Override
     public String toString() {
-        return super.toString();
+        // Convert the paymentRecord list into a stream
+        String paymentIDs = paymentRecord.stream()
+                // Map each Payment object to its paymentID using the getPaymentID method
+                .map(Payment::getPaymentID)
+                // Reduce the stream by concatenating the paymentIDs with a hyphen ("-") as the separator
+                .reduce((name1, name2) -> name1 + "-" + name2)
+                .orElse("None"); // If the stream is empty, return "None" as the default value
+
+        // Convert the rentalAgreements list into a stream
+        String rentalAgreementIDs = rentalAgreements.stream()
+                // Map each RentalAgreement object to its AgreementID using the getAgreementID method
+                .map(RentalAgreement::getAgreementID)
+                // Reduce the stream by concatenating the AgreementID with a hyphen ("-") as the separator
+                .reduce((name1, name2) -> name1 + "-" + name2)
+                .orElse("None"); // If the stream is empty, return "None" as the default value
+
+        return super.toString() + String.format("| %-15s | %-20s",paymentIDs, rentalAgreementIDs);
+
     }
 
     public String toCSV() {
@@ -43,23 +54,21 @@ public class Tenant extends Person {
         SimpleDateFormat formatDate = new SimpleDateFormat("yyyy/MM/dd");
         String formattedBirthDate = formatDate.format(super.getDateOfBirth());
 
-        // Prepare lists of IDs for rental agreements and payment
-        StringBuilder paymentIDs = new StringBuilder();
-        for (Payment payment : paymentRecord) {
-            paymentIDs.append(payment.getPaymentID()).append(";");
-        }
+        // Convert the paymentRecord list into a stream
+        String paymentIDs = paymentRecord.stream()
+            // Map each Payment object to its paymentID using the getPaymentID method
+            .map(Payment::getPaymentID)
+            // Reduce the stream by concatenating the paymentIDs with a hyphen ("-") as the separator
+            .reduce((name1, name2) -> name1 + "-" + name2)
+            .orElse("None"); // If the stream is empty, return "None" as the default value
 
-        StringBuilder rentalAgreementIDs = new StringBuilder();
-        for (RentalAgreement rentalAgreement : rentalAgreements) {
-            rentalAgreementIDs.append(rentalAgreement.getAgreementID()).append(";");
-        }
-
-        // Remove trailing semicolons
-        if (!paymentIDs.isEmpty()) {
-            paymentIDs.setLength(paymentIDs.length() - 1);
-        } if (!rentalAgreementIDs.isEmpty()) {
-            rentalAgreementIDs.setLength(rentalAgreementIDs.length() - 1);
-        }
+        // Convert the rentalAgreements list into a stream
+        String rentalAgreementIDs = rentalAgreements.stream()
+                // Map each RentalAgreement object to its AgreementID using the getAgreementID method
+                .map(RentalAgreement::getAgreementID)
+                // Reduce the stream by concatenating the AgreementID with a hyphen ("-") as the separator
+                .reduce((name1, name2) -> name1 + "-" + name2)
+                .orElse("None"); // If the stream is empty, return "None" as the default value
 
         // Return a CSV formatted string
         return super.getId() + "," +
