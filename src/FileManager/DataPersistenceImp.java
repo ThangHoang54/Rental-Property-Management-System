@@ -90,7 +90,7 @@ public class DataPersistenceImp implements DataPersistenceManager{
                 "src/data/Owner.csv",
         };
 
-        // First Populated from .csv file(s)
+        // Second Populated from .csv file(s)
         for (String filePath : filePaths2) {
             loadFullDataFromFile(filePath);
         }
@@ -112,7 +112,6 @@ public class DataPersistenceImp implements DataPersistenceManager{
             saveDataToCSV(filePath);
         }
     }
-
 
     /**
      * Loads data from a specified CSV file and populates the corresponding lists of
@@ -372,7 +371,7 @@ public class DataPersistenceImp implements DataPersistenceManager{
             }
 
         } catch (IOException e) {
-            System.err.println("Error saving data to CSV: " + e.getMessage());
+            System.err.println("Error saving data to CSV: IOException");
         }
     }
 

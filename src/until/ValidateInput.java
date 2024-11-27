@@ -1,5 +1,6 @@
 package until;
-import java.util.Scanner;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 /**
  *  @author <Hoàng Minh Thắng - S3999925>
@@ -8,15 +9,22 @@ import java.util.Scanner;
 public class ValidateInput {
 
     /**
-     *
-     * @param method - Payment method giving by user
+     * Validate the payment method provided by user
+     * @param method - the payment method to validate
+     * @return a string representing the validated payment method
      */
     public static String validatePaymentMethod(String method) {
         while (true) {
             switch (method.toLowerCase()) {
-                case "credit card" -> {return "Credit Card";}
-                case "cash" -> {return "Cash";}
-                case "bank transfer" -> {return "Bank Transfer";}
+                case "credit card" -> {
+                    return "Credit Card";
+                }
+                case "cash" -> {
+                    return "Cash";
+                }
+                case "bank transfer" -> {
+                    return "Bank Transfer";
+                }
                 default -> {
                     System.out.println("Invalid Method, " +
                             "Please choose 1 from those methods (Credit Card, Cash, Bank Transfer)");
@@ -25,10 +33,10 @@ public class ValidateInput {
             }
         }
     }
-
     /**
-     *
-     * @param status - Status of the property giving by user
+     * Validate the Property's status provided by user
+     * @param status - Status of the property to validate
+     * @return a string representing the validated Property's status
      */
     public static String validatePropertyStatus(String status) {
         while (true) {
@@ -46,8 +54,9 @@ public class ValidateInput {
     }
 
     /**
-     *
-     * @param type - Business type for commercial Property giving by user
+     * Validate the Business Type for commercial Property provided by user
+     * @param type - Business type for commercial Property to validate
+     * @return a string representing the validated Business type for commercial Property
      */
     public static String validateBusinessType(String type) {
         while (true) {
@@ -67,8 +76,9 @@ public class ValidateInput {
     }
 
     /**
-     *
+     * Validate Rental Agreement Period (daily, weekly, fortnightly, monthly)
      * @param period - Rental period giving by user
+     * @return String - Valid period
      */
     public static String validateRentalPeriod(String period) {
         while (true) {
@@ -86,10 +96,10 @@ public class ValidateInput {
         }
     }
 
-
     /**
-     *
-     * @param status - Status of the agreement giving by user
+     * Validate Rental Agreement Status (new, active, complete)
+     * @param status - Status of the agreement to validate
+     * @return String - Valid status
      */
     public static String validateAgreementStatus(String status) {
         while (true) {
@@ -132,6 +142,23 @@ public class ValidateInput {
     }
 
     /**
+     * Validate Rental Agreement Contact Date in a form dd/MM/yyyy
+     * @param date - date of the agreement
+     * @return String - Valid date (dd/MM/yyyy)
+     */
+    public static Date validateContactDate(String date) {
+        Date contractDate;
+        while (true) {
+            try {
+                contractDate = new SimpleDateFormat("dd/MM/yyyy").parse(date);
+                return contractDate;
+            } catch (Exception e) {
+                System.out.print("Enter another Contract Date (dd/MM/yyyy): ");
+                date = Input.getDataInput().getScanner().nextLine();
+            }
+        }
+    }
+    /**
      * Checks if the provided string can be parsed as an integer.
      * @param str the string to be checked
      * @return {@code true} if the string can be parsed as an integer;
@@ -146,4 +173,5 @@ public class ValidateInput {
             return false;
         }
     }
+
 }

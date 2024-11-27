@@ -119,6 +119,27 @@ public class RentalAgreement {
         return propertyLeased.getAddress();
     }
 
+    public String getMainTenantID() {
+        return mainTenant.getId();
+    }
+
+    public List<Tenant> getSubTenants() {
+        return subTenants;
+    }
+
+    public String getPropertyId() {
+        return propertyLeased.getPropertyID();
+    }
+
+    public String getHost() {
+        return host.getId();
+    }
+
+    public String getOwner() {
+        return owner.getId();
+    }
+
+
     // Setter
     public void setMainTenant(Tenant mainTenant) {
         this.mainTenant = mainTenant;

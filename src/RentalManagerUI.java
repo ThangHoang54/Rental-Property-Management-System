@@ -127,7 +127,9 @@ public class RentalManagerUI {
         RentalManagerUI ui = new RentalManagerUI();
         ui.mainMenu(manager, model);
 
-        System.out.print("Do you want to save all the data back to the file for next used (y/n)> ");
+        System.out.println("\nImportance Note: If user type anything without y or yes, " +
+                            "the data won't save back to load file.");
+        System.out.print("Do you want to save all the data back to the load file for next used (y/n): ");
         if (Input.getDataInput().getScanner().nextLine().toLowerCase().charAt(0) == 'y') {
             // Save all data back to CSV file
             manager.saveData();

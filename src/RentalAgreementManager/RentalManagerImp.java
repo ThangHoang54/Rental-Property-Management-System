@@ -1,5 +1,7 @@
 package RentalAgreementManager;
-import java.text.SimpleDateFormat;
+import java.io.BufferedWriter;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.Scanner;
 import java.util.List;
 import java.util.ArrayList;
@@ -81,6 +83,28 @@ public class RentalManagerImp implements RentalManager {
         return false; // The give Property's address not exist
     }
 
+    /**
+     * Checks if a Property's ID exists in entire program.
+     *
+     * @return Exist Property object
+     */
+    private Property checkPropertyExits() {
+        Property propertyLeased = null;
+        do {
+            System.out.print("Enter Property ID: ");
+            String propertyID = Input.getDataInput().getScanner().nextLine();
+
+            if (propertyID.startsWith("RP")) {
+                propertyLeased = (ResidentialProperty) DataPersistenceImp.getProperty(model_list.getCommercialProperties(),
+                        model_list.getResidentialProperties(), propertyID); // Assuming a method to retrieve Property by ID
+            } else if (propertyID.startsWith("CP")) {
+                propertyLeased = (CommercialProperty) DataPersistenceImp.getProperty(model_list.getCommercialProperties(),
+                        model_list.getResidentialProperties(), propertyID); // Assuming a method to retrieve Property by ID
+            }
+        } while (propertyLeased != null);
+        return propertyLeased;
+    }
+
 
     @Override
     public void addRentalAgreement() {
@@ -101,20 +125,7 @@ public class RentalManagerImp implements RentalManager {
             subTenants.add(subTenant);
         }
 
-        Property propertyLeased = null;
-        do {
-            System.out.print("Enter Property ID: ");
-            String propertyID = scanner.nextLine();
-
-            if (propertyID.startsWith("RP")) {
-                propertyLeased = (ResidentialProperty) DataPersistenceImp.getProperty(model_list.getCommercialProperties(),
-                        model_list.getResidentialProperties(), propertyID); // Assuming a method to retrieve Property by ID
-            } else if (propertyID.startsWith("CP")) {
-                propertyLeased = (CommercialProperty) DataPersistenceImp.getProperty(model_list.getCommercialProperties(),
-                        model_list.getResidentialProperties(), propertyID); // Assuming a method to retrieve Property by ID
-            }
-        } while (propertyLeased != null);
-
+        Property propertyLeased = checkPropertyExits();
 
         System.out.print("Enter Host ID: ");
         String hostID = "HS" + scanner.nextLine();
@@ -124,24 +135,19 @@ public class RentalManagerImp implements RentalManager {
         String ownerID = scanner.nextLine();
         Owner owner = DataPersistenceImp.getOwner(model_list.getOwners(), ownerID); // Assuming a method to retrieve Owner by ID
 
-        System.out.print("Enter Rental Period (e.g., 'monthly'): ");
+        System.out.print("Enter Rental Period (daily, weekly, fortnightly, monthly): ");
         String period = ValidateInput.validateRentalPeriod(scanner.nextLine());
 
-        System.out.print("Enter Contract Date (yyyy-MM-dd): ");
-        String contractDateString = scanner.nextLine();
-        Date contractDate;
-        try {
-            contractDate = new SimpleDateFormat("yyyy-MM-dd").parse(contractDateString);
-        } catch (Exception e) {
-            System.out.println("Invalid date format.");
-            return;
-        }
+        System.out.print("Enter Contract Date (dd/MM/yyyy): ");
+        Date contractDate = ValidateInput.validateContactDate(scanner.nextLine());
 
         System.out.print("Enter Renting Fee: ");
         double rentingFee = Double.parseDouble(scanner.nextLine());
 
         System.out.print("Enter Status (e.g., 'New', 'Active', 'Completed'): ");
         String status = ValidateInput.validateAgreementStatus(scanner.nextLine());
+
+        // Get the latest ID number of Rental Agreement
         int size = Integer.parseInt(model_list.getRentalAgreements().getLast().getAgreementID().substring(2));
 
         // Create new Rental Agreement object using Builder pattern
@@ -182,12 +188,19 @@ public class RentalManagerImp implements RentalManager {
 
         // Loop through rentalAgreement
         for (RentalAgreement a : agreements) {
-            System.out.println(a.toString()); // Display info on the terminal
+            System.out.println(a); // Display info on the terminal
+        }
+
+        // Generate report option
+        System.out.print("\nDo you want to generate the report and export into csv file? (Y/N): ");
+        if (Input.getDataInput().getScanner().nextLine().toUpperCase().startsWith("Y")) {
+            generateReport(agreements);
         }
     }
     @Override
     public void viewRentalAgreementsByOwnerName(String ownerName) {
         List<RentalAgreement>agreements = model_list.getRentalAgreements();
+        List<RentalAgreement> report = new ArrayList<>();
         if (agreements == null) {
             System.out.println("No rental agreements available.");
             return;
@@ -200,21 +213,23 @@ public class RentalManagerImp implements RentalManager {
         System.out.println("-".repeat(170));
 
         // Loop through rentalAgreement
-        int view = 1;
         for (RentalAgreement a : agreements) {
             if (a.getOwnerName().equals(ownerName)) {
-                view++;
                 System.out.println(a);
+                report.add(a);
             }
         }
 
-        if (view == 1) {
-            System.out.println("There is no Owner with this name that have Rental Agreements.");
+        // Generate report option
+        System.out.print("\nDo you want to generate the report and export into csv file? (Y/N): ");
+        if (Input.getDataInput().getScanner().nextLine().toUpperCase().startsWith("Y")) {
+            generateReport(report);
         }
     }
     @Override
     public void viewRentalAgreementsByPropertyAddress(String address) {
         List<RentalAgreement>agreements = model_list.getRentalAgreements();
+        List<RentalAgreement> report = new ArrayList<>();
         if (agreements == null) {
             System.out.println("No rental agreements available.");
             return;
@@ -226,23 +241,25 @@ public class RentalManagerImp implements RentalManager {
                 "Agreement ID", "Main Tenant ID", "Sub-Tenants ID", "Property ID", "Host ID", "Owner ID", "Period", "Contract Date", "Renting Fee", "Status");
         System.out.println("-".repeat(150));
 
-        int view = 1;
         // Loop through rentalAgreement
         for (RentalAgreement a : agreements) {
             if (a.getPropertyAddress().equals(address)) {
-                view++;
                 System.out.println(a);
+                report.add(a);
             }
         }
 
-        if (view == 1) {
-            System.out.println("There is no Property with this address that have Rental Agreements.");
+        // Generate report option
+        System.out.print("\nDo you want to generate the report and export into csv file? (Y/N): ");
+        if (Input.getDataInput().getScanner().nextLine().toUpperCase().startsWith("Y")) {
+            generateReport(report);
         }
-
     }
     @Override
     public void viewRentalAgreementsByStatus(String status) {
         List<RentalAgreement>agreements = model_list.getRentalAgreements();
+        List<RentalAgreement> report = new ArrayList<>();
+
         if (agreements == null) {
             System.out.println("No rental agreements available.");
             return;
@@ -258,7 +275,14 @@ public class RentalManagerImp implements RentalManager {
         for (RentalAgreement a : agreements) {
             if (a.getStatus().equalsIgnoreCase(status)) {
                 System.out.println(a);
+                report.add(a);
             }
+        }
+
+        // Generate report option
+        System.out.print("\nDo you want to generate the report and export into csv file? (Y/N): ");
+        if (Input.getDataInput().getScanner().nextLine().toUpperCase().startsWith("Y")) {
+            generateReport(report);
         }
     }
 
@@ -270,4 +294,29 @@ public class RentalManagerImp implements RentalManager {
        list.sort(Comparator.comparing(RentalAgreement::getAgreementID));
    }
 
+    /**
+     * Generates a CSV report of rental agreements and saves it to a specified file.
+     *
+     * This method prompts the user for a filename and writes the details of each
+     * RentalAgreement in the provided list to a CSV file. The generated file will
+     * include headers for the agreement's attributes.
+     *
+     * @param list a list of RentalAgreement objects to be included in the report
+     */
+   private static void generateReport(List<RentalAgreement> list) {
+       System.out.print("Please enter the name of the file you want to save into: ");
+       String filename = Input.getDataInput().getScanner().next();
+       try (BufferedWriter writer = new BufferedWriter(new FileWriter("src/data/" + filename + ".csv"))) {
+           writer.write("AgreementID,MainTenantID,SubTenantIDs,PropertyID,HostID,OwnerID,Period,ContractDate,RentingFee,Status");
+           writer.newLine();
+           for (RentalAgreement r : list) {
+               writer.write(r.toCSV());
+               writer.newLine();
+           }
+
+           System.out.println("Report generated successfully in src/data/" + filename + ".csv");
+       } catch (IOException e) {
+           System.err.println("Error saving data to CSV: IOException");
+       }
+   }
 }
