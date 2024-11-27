@@ -18,6 +18,10 @@ public class Tenant extends Person {
         paymentRecord = new ArrayList<>();
     }
 
+    // Getter
+    public List<RentalAgreement> getRentalAgreements() {
+        return rentalAgreements;
+    }
 
     public void addRentalAgreement(RentalAgreement rentalAgreement) {
         rentalAgreements.add(rentalAgreement);

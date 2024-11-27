@@ -487,10 +487,10 @@ public class DataPersistenceImp implements DataPersistenceManager{
      * @param num an integer representing the user's choice (1 for owner names, 2 for property addresses from rental agreements)
      */
     public static void viewAllExitsChoice(List<RentalAgreement> agreements, int num) {
-        int counter = 0;
+        int counter = 1;
         switch (num) {
             case 1:
-                System.out.println("Rental Agreement Owner's name option are shown below");
+                System.out.println("\nRental Agreement Owner's name option are shown below: ");
                 for (RentalAgreement a : agreements) {
                     if (counter % 6 == 0) {System.out.println();}
                     System.out.print(a.getOwnerName() + ", ");
@@ -498,7 +498,7 @@ public class DataPersistenceImp implements DataPersistenceManager{
                 }
                 break;
            case 2:
-               System.out.println("Rental Agreement Property's address option are shown below");
+               System.out.println("\nRental Agreement Property's address option are shown below:");
                for (RentalAgreement a : agreements) {
                    if (counter % 6 == 0) {System.out.println();}
                    System.out.print(a.getPropertyAddress() + ", ");

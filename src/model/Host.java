@@ -21,6 +21,11 @@ public class Host extends Person {
         rentalAgreements = new ArrayList<>();
     }
 
+    // Getter
+    public List<RentalAgreement> getRentalAgreements() {
+        return rentalAgreements;
+    }
+
     public void addProperty(Property property) {
         propertiesManaged.add(property);
     }

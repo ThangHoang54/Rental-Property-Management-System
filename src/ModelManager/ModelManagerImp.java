@@ -1,4 +1,7 @@
 package ModelManager;
+import java.io.BufferedWriter;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.Comparator;
 import java.util.List;
 
@@ -8,6 +11,7 @@ import java.util.List;
 
 import FileManager.DataPersistenceImp;
 import model.*;
+import until.Input;
 
 public class ModelManagerImp implements ModelManager {
     private DataPersistenceImp model_list;
@@ -40,8 +44,13 @@ public class ModelManagerImp implements ModelManager {
 
         // Loop through tenant
         for (Tenant t : tenants) {
-            // Heading
             System.out.println(t.toString()); // Display info on the terminal
+        }
+
+        // Generate report option
+        System.out.print("\nDo you want to generate the report and export into csv file? (Y/N): ");
+        if (Input.getDataInput().getScanner().nextLine().toUpperCase().startsWith("Y")) {
+            reportTenant(tenants);
         }
     }
     @Override
@@ -59,6 +68,12 @@ public class ModelManagerImp implements ModelManager {
         for (Host h : hosts) {
             System.out.println(h.toString()); // Display info on the terminal
         }
+
+        // Generate report option
+        System.out.print("\nDo you want to generate the report and export into csv file? (Y/N): ");
+        if (Input.getDataInput().getScanner().nextLine().toUpperCase().startsWith("Y")) {
+            reportHost(hosts);
+        }
     }
     @Override
     public void viewAllOwners() {
@@ -75,11 +90,17 @@ public class ModelManagerImp implements ModelManager {
         for (Owner owner : owners) {
             System.out.println(owner.toString()); // Display info on the terminal
         }
+
+        // Generate report option
+        System.out.print("\nDo you want to generate the report and export into csv file? (Y/N): ");
+        if (Input.getDataInput().getScanner().nextLine().toUpperCase().startsWith("Y")) {
+            reportOwners(owners);
+        }
     }
     @Override
     public void viewAllResidentialProperties() {
         List<ResidentialProperty> residentialProperties = model_list.getResidentialProperties();
-        //sortResidentialProperties(residentialProperties);
+        sortResidentialProperties(residentialProperties);
         System.out.println("\n====== All Residential Properties Table ======\n");
 
         // Generating the Heading
@@ -91,11 +112,17 @@ public class ModelManagerImp implements ModelManager {
         for (ResidentialProperty p : residentialProperties) {
             System.out.println(p.toString()); // Display info on the terminal
         }
+
+        // Generate report option
+        System.out.print("\nDo you want to generate the report and export into csv file? (Y/N): ");
+        if (Input.getDataInput().getScanner().nextLine().toUpperCase().startsWith("Y")) {
+            reportResidentialProperties(residentialProperties);
+        }
     }
     @Override
     public void viewAllCommercialProperties() {
         List<CommercialProperty> commercialProperties = model_list.getCommercialProperties();
-        //sortCommercialProperty(commercialProperties);
+        sortCommercialProperty(commercialProperties);
         System.out.println("\n====== All Commercial Properties Table ======\n");
 
         // Generating the Heading
@@ -106,6 +133,12 @@ public class ModelManagerImp implements ModelManager {
         // Loop through commercialProperties
         for (CommercialProperty p : commercialProperties) {
             System.out.println(p.toString()); // Display info on the terminal
+        }
+
+        // Generate report option
+        System.out.print("\nDo you want to generate the report and export into csv file? (Y/N): ");
+        if (Input.getDataInput().getScanner().nextLine().toUpperCase().startsWith("Y")) {
+            reportCommercialProperties(commercialProperties);
         }
     }
 
@@ -147,5 +180,85 @@ public class ModelManagerImp implements ModelManager {
      */
     private static void sortCommercialProperty(List<CommercialProperty> list) {
         list.sort(Comparator.comparing(Property::getPropertyID));
+    }
+
+    private static void reportTenant(List<Tenant> list) {
+        System.out.print("Please enter the name of the file you want to save into: ");
+        String filename = Input.getDataInput().getScanner().next();
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter("src/data/" + filename + ".csv"))) {
+            writer.write("TenantID,FullName,DateOfBirth,ContactInfo,PaymentsID,RentalAgreementsID");
+            writer.newLine();
+            for (Tenant t : list) {
+                writer.write(t.toCSV());
+                writer.newLine();
+            }
+            System.out.println("Report generated successfully in src/data/" + filename + ".csv");
+        } catch (IOException e) {
+            System.err.println("Error saving data to CSV: IOException");
+        }
+    }
+    private static void reportHost(List<Host> list) {
+        System.out.print("Please enter the name of the file you want to save into: ");
+        String filename = Input.getDataInput().getScanner().next();
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter("src/data/" + filename + ".csv"))) {
+            writer.write("TenantID,FullName,DateOfBirth,ContactInfo,PropertyID,OwnerID,AgreementID");
+            writer.newLine();
+            for (Host h : list) {
+                writer.write(h.toCSV());
+                writer.newLine();
+            }
+
+            System.out.println("Report generated successfully in src/data/" + filename + ".csv");
+        } catch (IOException e) {
+            System.err.println("Error saving data to CSV: IOException");
+        }
+    }
+    private static void reportOwners(List<Owner> list) {
+        System.out.print("Please enter the name of the file you want to save into: ");
+        String filename = Input.getDataInput().getScanner().next();
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter("src/data/" + filename + ".csv"))) {
+            writer.write("TenantID,FullName,DateOfBirth,ContactInfo,PropertyID,HostID,AgreementID");
+            writer.newLine();
+            for (Owner o : list) {
+                writer.write(o.toCSV());
+                writer.newLine();
+            }
+
+            System.out.println("Report generated successfully in src/data/" + filename + ".csv");
+        } catch (IOException e) {
+            System.err.println("Error saving data to CSV: IOException");
+        }
+    }
+    private static void reportResidentialProperties(List<ResidentialProperty> list) {
+        System.out.print("Please enter the name of the file you want to save into: ");
+        String filename = Input.getDataInput().getScanner().next();
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter("src/data/" + filename + ".csv"))) {
+            writer.write("PropertyID,Address,Pricing,Status,OwnerID,HostIDs,Bedrooms,GardenAvailable,PetFriendly");
+            writer.newLine();
+            for (ResidentialProperty rp : list) {
+                writer.write(rp.toCSV());
+                writer.newLine();
+            }
+
+            System.out.println("Report generated successfully in src/data/" + filename + ".csv");
+        } catch (IOException e) {
+            System.err.println("Error saving data to CSV: IOException");
+        }
+    }
+    private static void reportCommercialProperties(List<CommercialProperty> list) {
+        System.out.print("Please enter the name of the file you want to save into: ");
+        String filename = Input.getDataInput().getScanner().next();
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter("src/data/" + filename + ".csv"))) {
+            writer.write("PropertyID,Address,Pricing,Status,OwnerID,HostIDs,BusinessType,ParkingSpaces,SquareFootage");
+            writer.newLine();
+            for (CommercialProperty cp : list) {
+                writer.write(cp.toCSV());
+                writer.newLine();
+            }
+
+            System.out.println("Report generated successfully in src/data/" + filename + ".csv");
+        } catch (IOException e) {
+            System.err.println("Error saving data to CSV: IOException");
+        }
     }
 }

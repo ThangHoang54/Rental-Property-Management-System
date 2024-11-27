@@ -21,6 +21,11 @@ public class Owner extends Person{
         rentalAgreements = new ArrayList<>();
     }
 
+    // Getter
+    public List<RentalAgreement> getRentalAgreements() {
+        return rentalAgreements;
+    }
+
     public void addProperty(Property property) {
         propertiesOwned.add(property);
     }

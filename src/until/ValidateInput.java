@@ -1,13 +1,14 @@
 package until;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Scanner;
 
 /**
  *  @author <Hoàng Minh Thắng - S3999925>
  */
 
 public class ValidateInput {
-
     /**
      * Validate the payment method provided by user
      * @param method - the payment method to validate
@@ -131,7 +132,7 @@ public class ValidateInput {
         while (true) {
             System.out.print("Please select an appropriate option: ");
             String userInput = Input.getDataInput().getScanner().nextLine(); // Read the entire line
-            if (userInput.isEmpty() || !isInteger(userInput)
+            if (userInput.isEmpty() || isInteger(userInput)
                     || (value = Integer.parseInt(userInput)) < 0
                     || value > upperBound) {
                 System.out.println("Invalid input. Please enter a valid integer between 0 and " + upperBound + ".");
@@ -142,36 +143,82 @@ public class ValidateInput {
     }
 
     /**
-     * Validate Rental Agreement Contact Date in a form dd/MM/yyyy
-     * @param date - date of the agreement
-     * @return String - Valid date (dd/MM/yyyy)
+     * Prompts the user to enter a date in the format dd/MM/yyyy, validates the input,
+     * and returns a valid Date object.
+     *
+     * @return a valid Date object entered by the user.
      */
-    public static Date validateContactDate(String date) {
-        Date contractDate;
-        while (true) {
+    public static Date validateContactDate() {
+        Scanner scanner = Input.getDataInput().getScanner();
+        SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+        dateFormat.setLenient(false); // Ensure strict date parsing
+        Date date = null;
+        while (date == null) {
+            System.out.print("Please enter a date (dd/MM/yyyy): ");
+            String input = scanner.nextLine();
+            int date_ = Integer.parseInt(input.substring(0,2));
+            int month_ = Integer.parseInt(input.substring(3,5));
+            int year_ = Integer.parseInt(input.substring(6));
             try {
-                contractDate = new SimpleDateFormat("dd/MM/yyyy").parse(date);
-                return contractDate;
-            } catch (Exception e) {
-                System.out.print("Enter another Contract Date (dd/MM/yyyy): ");
-                date = Input.getDataInput().getScanner().nextLine();
+                // Parse the input date
+                date = dateFormat.parse(input);
+                // Validate day, month, and year
+                if (!isValidDate(date_, month_, year_)) {
+                    System.out.println("Invalid date. Please ensure the day, month, and year are correct.");
+                    date = null;
+                }
+            } catch (ParseException e) {
+                System.out.println("Invalid date format. Please try again.");
             }
         }
-    }
-    /**
-     * Checks if the provided string can be parsed as an integer.
-     * @param str the string to be checked
-     * @return {@code true} if the string can be parsed as an integer;
-     *         {@code false} otherwise
-     * @throws NullPointerException if the input string is {@code null}
-     */
-    private static boolean isInteger(String str) {
-        try {
-            Integer.parseInt(str);
-            return true;
-        } catch (NumberFormatException e) {
-            return false;
-        }
+        return date;
     }
 
+    /**
+     * Checks if the given year is a leap year.
+     *
+     * @param year the year to check
+     * @return true if the year is a leap year; false otherwise
+     */
+    private static boolean isLeapYear (int year) {
+        return (year % 4 == 0 && year % 100 != 0) || (year % 400 == 0);
+    }
+
+    /**
+     * Checks if the given day is valid for the specified month and year.
+     *
+     * @param day   the day to check
+     * @param month the month to check (1-12)
+     * @param year  the year to check
+     * @return true if the day is valid for the month and year; false otherwise
+     */
+    private static boolean isValidDate ( int day, int month, int year){
+        return switch (month) {
+            case 1, 3, 5, 7, 8, 10, 12 -> // 31 days
+                    day <= 31;
+            case 4, 6, 9, 11 -> // 30 days
+                    day <= 30;
+            case 2 -> // February
+                    day <= (isLeapYear(year) ? 29 : 28);
+            default -> false; // Invalid month
+        };
+    }
+
+
+        /**
+         * Checks if the provided string can be parsed as an integer.
+         * @param str the string to be checked
+         * @return {@code true} if the string can be parsed as an integer;
+         *         {@code false} otherwise
+         * @throws NullPointerException if the input string is {@code null}
+         */
+    public static boolean isInteger (String str){
+        try {
+            Integer.parseInt(str);
+            return false;
+        } catch (NumberFormatException e) {
+            return true;
+        }
+    }
 }
+
