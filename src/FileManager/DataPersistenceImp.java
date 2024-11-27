@@ -329,7 +329,7 @@ public class DataPersistenceImp implements DataPersistenceManager{
                     }
                     break;
                 case "src/data/Host.csv":
-                    writer.write("TenantID,FullName,DateOfBirth,ContactInfo,PropertyID,OwnerID,AgreementID");
+                    writer.write("HostID,FullName,DateOfBirth,ContactInfo,PropertyID,OwnerID,AgreementID");
                     writer.newLine();
                     for (Host h : hosts) {
                         writer.write(h.toCSV());
@@ -337,7 +337,7 @@ public class DataPersistenceImp implements DataPersistenceManager{
                     }
                     break;
                 case "src/data/Owner.csv":
-                    writer.write("TenantID,FullName,DateOfBirth,ContactInfo,PropertyID,HostID,AgreementID");
+                    writer.write("OwnerID,FullName,DateOfBirth,ContactInfo,PropertyID,HostID,AgreementID");
                     writer.newLine();
                     for (Owner o : owners) {
                         writer.write(o.toCSV());

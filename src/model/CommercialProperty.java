@@ -29,13 +29,18 @@ public class CommercialProperty extends Property {
      */
     @Override
     public String toString() {
+        String hostIDs;
         // Convert the hostsManagingProperties list into a stream
-        String hostIDs = (super.getHosts() == null) ? super.getHosts().stream()
-                // Map each Host object to its HostID using the getId method
-                .map(Host::getId)
-                // Reduce the stream by concatenating the hostIDs with a hyphen ("-") as the separator
-                .reduce((name1, name2) -> name1 + "-" + name2)
-                .orElse("None") : "None"; // If the stream is empty, return
+        try {
+            hostIDs = super.getHosts().stream()
+                    // Map each Host object to its HostID using the getId method
+                    .map(Host::getId)
+                    // Reduce the stream by concatenating the hostIDs with a hyphen ("-") as the separator
+                    .reduce((name1, name2) -> name1 + "-" + name2)
+                    .orElse("None"); // If the stream is empty, return
+        } catch (NullPointerException e) {
+            hostIDs = "None";
+        }
 
         return String.format("%-12s | %-25s | $%-9.2f | %-20s | %-8s | %-15s | %-15s | %-14d | %-14.2f",
                 super.getPropertyID(),
@@ -58,13 +63,18 @@ public class CommercialProperty extends Property {
      * @return a CSV formatted string representing the object's data
      */
     public String toCSV() {
+        String hostIDs;
         // Convert the hostsManagingProperties list into a stream
-        String hostIDs = (super.getHosts() == null) ? super.getHosts().stream()
-                // Map each Host object to its HostID using the getId method
-                .map(Host::getId)
-                // Reduce the stream by concatenating the hostIDs with a hyphen ("-") as the separator
-                .reduce((name1, name2) -> name1 + "-" + name2)
-                .orElse("None") : "None"; // If the stream is empty, return
+        try {
+            hostIDs = super.getHosts().stream()
+                    // Map each Host object to its HostID using the getId method
+                    .map(Host::getId)
+                    // Reduce the stream by concatenating the hostIDs with a hyphen ("-") as the separator
+                    .reduce((name1, name2) -> name1 + "-" + name2)
+                    .orElse("None"); // If the stream is empty, return
+        } catch (NullPointerException e) {
+            hostIDs = "None";
+        }
 
         // Return a CSV formatted string
         return super.getPropertyID() + "," +

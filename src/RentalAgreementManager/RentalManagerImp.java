@@ -211,11 +211,76 @@ public class RentalManagerImp implements RentalManager {
         System.out.println("Rental Agreement added successfully");
     }
     @Override
-    public void updateRentalAgreement(String id) {
-        if (checkRentalAgreementExits(id)) {
-            boolean found = false;
-        }
-        System.out.println("Rental Agreement updated");
+    public void updateRentalAgreement(String id, int num_) {
+        Scanner scanner = Input.getDataInput().getScanner();
+        Tenant mainTenant; Tenant subTenant; Host host;
+        Owner owner; Property property; String num = "-1"; int number = 0;
+
+        switch (num_) {
+               case 1 -> {
+                   // Ask the user input valid Tenant ID
+                   do {
+                       do {
+                           System.out.print("Enter new Main Tenant ID as a number: ");
+                           num = scanner.nextLine();
+                       } while (!ValidateInput.isInteger(num));
+                       number = Integer.parseInt(num);
+                       String mainTenantID = "TN" + ((number < 10) ? "00" : "0") + number;
+                       mainTenant = DataPersistenceImp.getTenant(model_list.getTenants(), mainTenantID);  // Assuming a method to retrieve Tenant by ID
+                   } while (mainTenant == null || number < 1 || number > model_list.getTenants().size());
+                   // Updating new Main Tenant
+                   for (RentalAgreement a : model_list.getRentalAgreements()) {
+                       if (a.getAgreementID().equals(id)) {
+                           a.setMainTenant(mainTenant);
+                       }
+                   }
+               }
+               case 2 -> {
+                   String t = "0";
+                   for (RentalAgreement mainTenant_ : model_list.getRentalAgreements()) {
+                       if (mainTenant_.getAgreementID().equals(id)) {
+                           t = mainTenant_.getMainTenantID();
+                       }
+                   }
+                   // Ask user input valid Sub-Tenant ID
+                   Set<Tenant> subTenants = new LinkedHashSet<>();
+                   System.out.print("Enter number of Sub-Tenants: ");
+                   int subTenantCount = Integer.parseInt(scanner.nextLine());
+
+                   for (int i = 0; i < subTenantCount; i++) {
+                       do {
+                           do {
+                               System.out.print("Enter Sub-Tenant ID " + (i + 1) + "as a number: ");
+                               num = scanner.nextLine();
+                           } while (!ValidateInput.isInteger(num) || Integer.parseInt(num) == Integer.parseInt(t.substring(2)));
+                           number = Integer.parseInt(num);
+                           String subTenantID = "TN" + ((number < 10) ? "00" : "0") + number;;
+                           subTenant = DataPersistenceImp.getTenant(model_list.getTenants(), subTenantID);
+                       } while (subTenant == null || number < 1 || number > model_list.getTenants().size());
+                       subTenants.add(subTenant);
+                   }
+                   // Convert Set to List
+                   List<Tenant> subTenantList = new ArrayList<>(subTenants);
+
+                   // Updating new Sub Tenant
+                   for (RentalAgreement a : model_list.getRentalAgreements()) {
+                       if (a.getAgreementID().equals(id)) {
+                           a.setSubTenants(subTenantList);
+                       }
+                   }
+               }
+               case 3 -> {
+                   // Ask user input valid Property ID
+                   Property propertyLeased = checkPropertyExits();
+                   // Updating Property Leased
+                   for (RentalAgreement a : model_list.getRentalAgreements()) {
+                       if (a.getAgreementID().equals(id)) {
+                           a.setPropertyLeased(propertyLeased);
+                       }
+                   }
+               }
+           }
+           System.out.println("Rental Agreement updated");
     }
     @Override
     public void deleteRentalAgreement(String id) {
