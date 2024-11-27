@@ -4,13 +4,15 @@
 import FileManager.DataPersistenceImp;
 import ModelManager.ModelManagerImp;
 import RentalAgreementManager.RentalManagerImp;
+import model.RentalAgreement;
 import until.ValidateInput;
 import until.Input;
 
+import java.util.Date;
+
 public class RentalManagerUI {
     // Constructor
-    public RentalManagerUI() {}
-    public void mainMenu(RentalManagerImp manager, ModelManagerImp model) {
+    private void mainMenu(RentalManagerImp manager, ModelManagerImp model) {
         while (true) {
             System.out.println("\n===== Main Menu =====");
             System.out.println("1. View Models (Tenant, Host, Owner, Residential Property, Commercial Property)");
@@ -19,8 +21,8 @@ public class RentalManagerUI {
 
             int option = ValidateInput.validateChoice(2);
             switch (option) {
-                case 1 -> modelsMenu(manager, model);
-                case 2 -> rentalAgreementMenu(manager, model);
+                case 1 -> modelsMenu(model);
+                case 2 -> rentalAgreementMenu(manager);
                 case 0 -> {
                     return; // Break the while loop and end the program
                 }
@@ -28,7 +30,7 @@ public class RentalManagerUI {
             }
         }
     }
-    public void modelsMenu(RentalManagerImp manager, ModelManagerImp model) {
+    private void modelsMenu(ModelManagerImp model) {
 
         while (true) {
             System.out.println("\n===== Model Menu =====");
@@ -52,7 +54,7 @@ public class RentalManagerUI {
             }
         }
     }
-    public void rentalAgreementMenu(RentalManagerImp manager, ModelManagerImp model) {
+    private void rentalAgreementMenu(RentalManagerImp manager) {
         while (true) {
             // Display the Main Menu
             System.out.println("\n================== Rental Agreement Menu ====================");
@@ -73,33 +75,33 @@ public class RentalManagerUI {
                 case 1 -> manager.addRentalAgreement();
                 case 2 -> {
                     do {
-                        System.out.print("Enter Rental Agreement ID you wish to update: ");
+                        System.out.print("Enter Rental Agreement ID you wish to update in form (RAxxx) (e.g RA009): ");
                         id = Input.getDataInput().getScanner().nextLine();
-                    } while (manager.checkRentalAgreementExits(id)); // Ensure the ID is exist
-                    manager.updateRentalAgreement(id);
+                    } while (!manager.checkRentalAgreementExits(id)); // Ensure the ID is exist
+                    updateRentalAgreementMenu(manager, id);
                 }
                 case 3 -> {
                     do {
-                        System.out.print("Enter Rental Agreement ID you wish to delete: ");
+                        System.out.print("Enter Rental Agreement ID you wish to delete in form (RAxxx) (e.g, RA009): ");
                         id = Input.getDataInput().getScanner().nextLine();
-                    } while (manager.checkRentalAgreementExits(id)); // Ensure the ID is exist
+                    } while (!manager.checkRentalAgreementExits(id)); // Ensure the ID is exist
                     manager.deleteRentalAgreement(id);
                 }
                 case 4 -> manager.viewAllRentalAgreements();
                 case 5 -> {
                     DataPersistenceImp.viewAllExitsChoice(manager.getRentalAgreementList(),1); // Show all existing for Owner;s name
                     do {
-                        System.out.print("Enter appropriate Owner Name that mention above: ");
+                        System.out.print("\nEnter appropriate Owner Name that mention above: ");
                         owner_name = Input.getDataInput().getScanner().nextLine();
-                    } while (manager.checkOwnerNameExits(owner_name));
+                    } while (!manager.checkOwnerNameExits(owner_name));
                     manager.viewRentalAgreementsByOwnerName(owner_name);
                 }
                 case 6 -> {
                     DataPersistenceImp.viewAllExitsChoice(manager.getRentalAgreementList(),2); // Show all existing Property's address
                     do {
-                        System.out.print("Enter appropriate Property Address that mention above: ");
+                        System.out.print("\nEnter appropriate Property Address that mention above: ");
                         property_address = Input.getDataInput().getScanner().nextLine();
-                    } while (manager.checkPropertyAddressExits(property_address));
+                    } while (!manager.checkPropertyAddressExits(property_address));
                     manager.viewRentalAgreementsByPropertyAddress(property_address);
                 }
                 case 7 -> {
@@ -113,6 +115,78 @@ public class RentalManagerUI {
                     return;
                 }
                 default -> System.out.println("Invalid option. Please try again.");
+            }
+        }
+    }
+    private void updateRentalAgreementMenu(RentalManagerImp manager, String agreementID) {
+        while (true) {
+            System.out.println("\n--- Update Rental Agreement: " + agreementID + " ---");
+            System.out.println("1. Update Main Tenant");
+            System.out.println("2. Update Sub-Tenants");
+            System.out.println("3. Update Property Leased");
+            System.out.println("4. Update Rental Period");
+            System.out.println("5. Delete Rental Contact Date");
+            System.out.println("6. Update Renting Fee");
+            System.out.println("7. Update Status");
+            System.out.println("0. Finish update (Back to Rental Agreement Menu)");
+
+            int choice = ValidateInput.validateChoice(7);
+
+            switch (choice) {
+                case 1 -> {
+                    System.out.print("Updating new main Tenant: ");
+                    manager.updateRentalAgreement(agreementID, 1);
+                    System.out.println("Main Tenant updated successfully.");
+                }
+                case 2 -> {
+                    System.out.println("Updating Sub-Tenants:");
+                    manager.updateRentalAgreement(agreementID, 2);
+                    System.out.println("Sub-Tenants updated successfully.");
+                }
+                case 3 -> {
+                    System.out.println("Updating Property Leased :");
+                    manager.updateRentalAgreement(agreementID, 3);
+                    System.out.println("Property Leased updated successfully.");
+                }
+                case 4 -> {
+                    System.out.print("Enter new Rental Period (e.g., daily, weekly, monthly): ");
+                    String newPeriod = ValidateInput.validateRentalPeriod(Input.getDataInput().getScanner().nextLine());
+                    for (RentalAgreement a : manager.getRentalAgreementList()) {
+                        if (a.getAgreementID().equals(agreementID)) {
+                            a.setPeriod(newPeriod);
+                        }
+                    }
+                    System.out.println("Rental Period updated successfully.");
+                }
+                case 5 -> {
+                    Date newContactDate = ValidateInput.validateContactDate();
+                    for (RentalAgreement a : manager.getRentalAgreementList()) {
+                        if (a.getAgreementID().equals(agreementID)) {
+                            a.setContractDate(newContactDate);
+                        }
+                    }
+                    System.out.println("Rental Contact Date updated successfully.");
+                }
+                case 6 -> {
+                    System.out.print("Enter new Renting Fee: ");
+                    double newRentingFee = Input.getDataInput().getScanner().nextDouble();
+                    for (RentalAgreement a : manager.getRentalAgreementList()) {
+                        if (a.getAgreementID().equals(agreementID)) {
+                            a.setRentingFee(newRentingFee);
+                        }
+                    }
+                    System.out.println("Renting Fee updated successfully.");
+                }
+                case 7 -> {
+                    System.out.print("Enter new Status (e.g., New, Active, Completed): ");
+                    String newStatus = ValidateInput.validateAgreementStatus(Input.getDataInput().getScanner().nextLine());
+                    for (RentalAgreement a: manager.getRentalAgreementList()) {
+                        if(a.getAgreementID().equals(agreementID)) {a.setStatus(newStatus);}
+                    }
+                    System.out.println("Status updated successfully.");
+                }
+                case 0 -> {return;}
+                default -> System.out.println("Invalid choice. Please try again.");
             }
         }
     }
