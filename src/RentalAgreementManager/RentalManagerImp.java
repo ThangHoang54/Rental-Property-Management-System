@@ -49,6 +49,39 @@ public class RentalManagerImp implements RentalManager {
         return false; // The give ID not exist
     }
 
+    /**
+     * Checks if a rental agreement with the specified owner's name exists in the list of rental agreements.
+     *
+     * @param name the name of owner that associate with rental agreement to check for
+     * @return true if a rental agreement with the specified owner's exists; false otherwise
+     */
+    public boolean checkOwnerNameExits(String name) {
+        for (RentalAgreement a : model_list.getRentalAgreements()) {
+            if (a.getOwnerName().equals(name)) {
+                return true;
+            }
+        }
+        System.out.println("Owner's name not exits, please try again");
+        return false; // The give Owner's name not exist
+    }
+
+    /**
+     * Checks if a rental agreement with the specified property's address exists in the list of rental agreements.
+     *
+     * @param address the address of property that associate with rental agreement to check for
+     * @return true if a rental agreement with the specified property's address exists; false otherwise
+     */
+    public boolean checkPropertyAddressExits(String address) {
+        for (RentalAgreement a : model_list.getRentalAgreements()) {
+            if (a.getPropertyAddress().equals(address)) {
+                return true;
+            }
+        }
+        System.out.println("Property's address not exits, please try again");
+        return false; // The give Property's address not exist
+    }
+
+
     @Override
     public void addRentalAgreement() {
         Scanner scanner = Input.getDataInput().getScanner();
@@ -109,7 +142,7 @@ public class RentalManagerImp implements RentalManager {
 
         System.out.print("Enter Status (e.g., 'New', 'Active', 'Completed'): ");
         String status = ValidateInput.validateAgreementStatus(scanner.nextLine());
-        int size = model_list.getRentalAgreements().size();
+        int size = Integer.parseInt(model_list.getRentalAgreements().getLast().getAgreementID().substring(2));
 
         // Create new Rental Agreement object using Builder pattern
         RentalAgreement rentalAgreement = new RentalAgreement.Builder("RA" + ((size < 10) ? "00" : "0") + (size + 1)).mainTenant(mainTenant).subTenants(subTenants)

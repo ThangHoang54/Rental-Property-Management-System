@@ -40,7 +40,6 @@ public class RentalManagerUI {
             System.out.println("0. Back to Main Menu");
 
             int option = ValidateInput.validateChoice(5);
-
             switch (option) {
                 case 1 -> model.viewAllTenants();
                 case 2 -> model.viewAllHosts();
@@ -67,9 +66,8 @@ public class RentalManagerUI {
             System.out.println(" 0. Back to Main Menu");
 
             int option = ValidateInput.validateChoice(7);
-
-            String id = ""; String status = "";
-            System.out.println();
+            String id = ""; String owner_name = "";
+            String property_address = ""; String status = "";
 
             switch (option) {
                 case 1 -> manager.addRentalAgreement();
@@ -90,13 +88,19 @@ public class RentalManagerUI {
                 case 4 -> manager.viewAllRentalAgreements();
                 case 5 -> {
                     DataPersistenceImp.viewAllExitsChoice(manager.getRentalAgreementList(),1); // Show all existing for Owner;s name
-                    System.out.print("Enter appropriate Owner Name that includes Rental Agreement: ");
-                    manager.viewRentalAgreementsByOwnerName(Input.getDataInput().getScanner().nextLine());
+                    do {
+                        System.out.print("Enter appropriate Owner Name that mention above: ");
+                        owner_name = Input.getDataInput().getScanner().nextLine();
+                    } while (manager.checkOwnerNameExits(owner_name));
+                    manager.viewRentalAgreementsByOwnerName(owner_name);
                 }
                 case 6 -> {
                     DataPersistenceImp.viewAllExitsChoice(manager.getRentalAgreementList(),2); // Show all existing Property's address
-                    System.out.print("Enter appropriate Property Address: ");
-                    manager.viewRentalAgreementsByPropertyAddress(Input.getDataInput().getScanner().nextLine());
+                    do {
+                        System.out.print("Enter appropriate Property Address that mention above: ");
+                        property_address = Input.getDataInput().getScanner().nextLine();
+                    } while (manager.checkPropertyAddressExits(property_address));
+                    manager.viewRentalAgreementsByPropertyAddress(property_address);
                 }
                 case 7 -> {
                     do {
