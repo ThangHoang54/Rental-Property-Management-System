@@ -5,7 +5,7 @@ package RentalAgreementManager;
 
 public interface RentalManager {
     void addRentalAgreement();
-    void updateRentalAgreement(String id);
+    void updateRentalAgreement(String id, int num);
     void deleteRentalAgreement(String id);
     void viewAllRentalAgreements();
     void viewRentalAgreementsByOwnerName(String ownerName);
