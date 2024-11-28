@@ -37,10 +37,6 @@ public abstract class Person {
         return info_contact;
     }
 
-    // Setter
-    public void setId(String id) {
-        this.id = id;
-    }
     @Override
     public String toString() {
         // Convert Date format in form dd/mm/yyyy

@@ -19,14 +19,12 @@ public class Tenant extends Person {
     }
 
     // Getter
-    public List<RentalAgreement> getRentalAgreements() {
-        return rentalAgreements;
-    }
+    public List<RentalAgreement> getRentalAgreements() {return rentalAgreements;}
 
     public void addRentalAgreement(RentalAgreement rentalAgreement) {
         rentalAgreements.add(rentalAgreement);
     }
-
+    public void removeRentalAgreement(RentalAgreement rentalAgreement) {rentalAgreements.remove(rentalAgreement);}
     public void addPayment(Payment payment) {
         paymentRecord.add(payment);
     }

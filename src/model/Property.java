@@ -49,5 +49,11 @@ public abstract class Property {
     public void addHost(Host host) {
         hosts.add(host);
     }
+    public void removeHost(Host host) {hosts.remove(host);}
+
+    // Setter
+    public void setOwner(Owner owner) {
+        this.owner = owner;
+    }
 
 }

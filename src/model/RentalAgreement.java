@@ -8,6 +8,7 @@ import java.util.List;
  */
 
 import until.ValidateInput;
+import Build.BuilderRentalAgreement;
 
 public class RentalAgreement {
 
@@ -23,91 +24,28 @@ public class RentalAgreement {
     private String status;  // Status of the agreement (e.g., "New", "Active", "Completed")
 
     // Private constructor to enforce the use of the Builder
-    private RentalAgreement(Builder builder) {
-        this.agreementID = builder.agreementID;
-        this.mainTenant = builder.mainTenant;
-        this.subTenants = builder.subTenants;
-        this.propertyLeased = builder.propertyLeased;
-        this.host = builder.host;
-        this.owner = builder.owner;
-        this.period = ValidateInput.validateRentalPeriod(builder.period);
-        this.contractDate = builder.contractDate;
-        this.rentingFee = builder.rentingFee;
-        this.status = ValidateInput.validateAgreementStatus(builder.status);
-
+    public RentalAgreement(BuilderRentalAgreement builder) {
+        this.agreementID = builder.getAgreementID();
+        this.mainTenant = builder.getMainTenant();
+        this.subTenants = builder.getSubTenants();
+        this.propertyLeased = builder.getPropertyLeased();
+        this.host = builder.getHost();
+        this.owner = builder.getOwner();
+        this.period = ValidateInput.validateRentalPeriod(builder.getPeriod());
+        this.contractDate = builder.getContractDate();
+        this.rentingFee = builder.getRentingFee();
+        this.status = ValidateInput.validateAgreementStatus(builder.getStatus());
     }
-
-    // Builder class
-    public static class Builder {
-        private String agreementID;
-        private Tenant mainTenant; // Reference to the main tenant
-        private List<Tenant> subTenants; // List of sub-tenants
-        private Property propertyLeased; // Reference to the property being leased
-        private Host host; // Reference to the host managing the property
-        private Owner owner;  // Reference to the owner of the property
-        private String period; // Rental period (e.g., "daily", "weekly", "monthly")
-        private Date contractDate; // Date the contract was signed
-        private double rentingFee; // Fee for renting the property
-        private String status;  // Status of the agreement (e.g., "New", "Active", "Completed")
-
-        public Builder(String id) {
-            this.agreementID = id;
-        }
-
-        public Builder mainTenant(Tenant mainTenant) {
-            this.mainTenant = mainTenant;
-            return this;
-        }
-
-        public Builder subTenants(List<Tenant> subTenants) {
-            this.subTenants = subTenants;
-            return this;
-        }
-
-        public Builder propertyLeased(Property propertyLeased) {
-            this.propertyLeased = propertyLeased;
-            return this;
-        }
-
-        public Builder host(Host host) {
-            this.host = host;
-            return this;
-        }
-
-        public Builder owner(Owner owner) {
-            this.owner = owner;
-            return this;
-        }
-
-        public Builder period(String period) {
-            this.period = period;
-            return this;
-        }
-
-        public Builder contractDate(Date contractDate) {
-            this.contractDate = contractDate;
-            return this;
-        }
-
-        public Builder rentingFee(double rentingFee) {
-            this.rentingFee = rentingFee;
-            return this;
-        }
-
-        public Builder status(String status) {
-            this.status = status;
-            return this;
-        }
-
-        public RentalAgreement build() {
-            return new RentalAgreement(this);
-        }
-    }
-
 
     // Getter
     public String getAgreementID() {
         return agreementID;
+    }
+    public String getMainTenantID() {
+        return mainTenant.getId();
+    }
+    public List<Tenant> getSubTenants() {
+        return subTenants;
     }
     public String getStatus() {
         return status;
@@ -115,20 +53,17 @@ public class RentalAgreement {
     public String getOwnerName() {
         return owner.getName();
     }
+    public String getOwnerID() {
+        return owner.getId();
+    }
+    public String getHostID() {
+        return host.getId();
+    }
+    public String getPropertyID() {
+        return period;
+    }
     public String getPropertyAddress() {
         return propertyLeased.getAddress();
-    }
-
-    public String getMainTenantID() {
-        return mainTenant.getId();
-    }
-
-    public List<Tenant> getSubTenants() {
-        return subTenants;
-    }
-
-    public String getPropertyId() {
-        return propertyLeased.getPropertyID();
     }
 
     public String getHost() {
@@ -138,7 +73,6 @@ public class RentalAgreement {
     public String getOwner() {
         return owner.getId();
     }
-
 
     // Setter
     public void setMainTenant(Tenant mainTenant) {

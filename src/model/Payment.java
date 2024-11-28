@@ -16,11 +16,6 @@ public class Payment {
     private String paymentMethod; // The method of payment used (e.g., "Credit Card", "Cash", "Bank Transfer").
 
     // Constructor
-    public Payment() {
-        amount = 0.0;
-        paymentDate = null;
-        paymentMethod = "";
-    }
     public Payment(String id, double amount, Date paymentDate, String paymentMethod) {
         this.paymentID = id;
         this.amount = amount;

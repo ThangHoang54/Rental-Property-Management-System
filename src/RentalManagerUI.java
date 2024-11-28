@@ -124,13 +124,15 @@ public class RentalManagerUI {
             System.out.println("1. Update Main Tenant");
             System.out.println("2. Update Sub-Tenants");
             System.out.println("3. Update Property Leased");
-            System.out.println("4. Update Rental Period");
-            System.out.println("5. Delete Rental Contact Date");
-            System.out.println("6. Update Renting Fee");
-            System.out.println("7. Update Status");
+            System.out.println("4. Update Host");
+            System.out.println("5. Update Owner");
+            System.out.println("6. Update Rental Period");
+            System.out.println("7. Delete Rental Contact Date");
+            System.out.println("8. Update Renting Fee");
+            System.out.println("9. Update Status");
             System.out.println("0. Finish update (Back to Rental Agreement Menu)");
 
-            int choice = ValidateInput.validateChoice(7);
+            int choice = ValidateInput.validateChoice(9);
 
             switch (choice) {
                 case 1 -> {
@@ -139,16 +141,26 @@ public class RentalManagerUI {
                     System.out.println("Main Tenant updated successfully.");
                 }
                 case 2 -> {
-                    System.out.println("Updating Sub-Tenants:");
+                    System.out.println("Updating Sub-Tenants: ");
                     manager.updateRentalAgreement(agreementID, 2);
                     System.out.println("Sub-Tenants updated successfully.");
                 }
                 case 3 -> {
-                    System.out.println("Updating Property Leased :");
+                    System.out.println("Updating Host: ");
                     manager.updateRentalAgreement(agreementID, 3);
-                    System.out.println("Property Leased updated successfully.");
+                    System.out.println("Host updated successfully.");
                 }
                 case 4 -> {
+                    System.out.println("Updating Owner: ");
+                    manager.updateRentalAgreement(agreementID, 4);
+                    System.out.println("Owner updated successfully.");
+                }
+                case 5 -> {
+                    System.out.println("Updating Property Leased :");
+                    manager.updateRentalAgreement(agreementID, 5);
+                    System.out.println("Property Leased updated successfully.");
+                }
+                case 6 -> {
                     System.out.print("Enter new Rental Period (e.g., daily, weekly, monthly): ");
                     String newPeriod = ValidateInput.validateRentalPeriod(Input.getDataInput().getScanner().nextLine());
                     for (RentalAgreement a : manager.getRentalAgreementList()) {
@@ -158,7 +170,7 @@ public class RentalManagerUI {
                     }
                     System.out.println("Rental Period updated successfully.");
                 }
-                case 5 -> {
+                case 7 -> {
                     Date newContactDate = ValidateInput.validateContactDate();
                     for (RentalAgreement a : manager.getRentalAgreementList()) {
                         if (a.getAgreementID().equals(agreementID)) {
@@ -167,7 +179,7 @@ public class RentalManagerUI {
                     }
                     System.out.println("Rental Contact Date updated successfully.");
                 }
-                case 6 -> {
+                case 8 -> {
                     System.out.print("Enter new Renting Fee: ");
                     double newRentingFee = Input.getDataInput().getScanner().nextDouble();
                     for (RentalAgreement a : manager.getRentalAgreementList()) {
@@ -177,7 +189,7 @@ public class RentalManagerUI {
                     }
                     System.out.println("Renting Fee updated successfully.");
                 }
-                case 7 -> {
+                case 9 -> {
                     System.out.print("Enter new Status (e.g., New, Active, Completed): ");
                     String newStatus = ValidateInput.validateAgreementStatus(Input.getDataInput().getScanner().nextLine());
                     for (RentalAgreement a: manager.getRentalAgreementList()) {

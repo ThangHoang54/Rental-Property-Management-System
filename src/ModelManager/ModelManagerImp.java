@@ -185,14 +185,14 @@ public class ModelManagerImp implements ModelManager {
     private static void reportTenant(List<Tenant> list) {
         System.out.print("Please enter the name of the file you want to save into: ");
         String filename = Input.getDataInput().getScanner().next();
-        try (BufferedWriter writer = new BufferedWriter(new FileWriter("src/data/" + filename + ".csv"))) {
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter("src/SaveReport/" + filename + ".csv"))) {
             writer.write("TenantID,FullName,DateOfBirth,ContactInfo,PaymentsID,RentalAgreementsID");
             writer.newLine();
             for (Tenant t : list) {
                 writer.write(t.toCSV());
                 writer.newLine();
             }
-            System.out.println("Report generated successfully in src/data/" + filename + ".csv");
+            System.out.println("Report generated successfully in src/SaveReport/" + filename + ".csv");
         } catch (IOException e) {
             System.err.println("Error saving data to CSV: IOException");
         }
@@ -200,7 +200,7 @@ public class ModelManagerImp implements ModelManager {
     private static void reportHost(List<Host> list) {
         System.out.print("Please enter the name of the file you want to save into: ");
         String filename = Input.getDataInput().getScanner().next();
-        try (BufferedWriter writer = new BufferedWriter(new FileWriter("src/data/" + filename + ".csv"))) {
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter("src/SaveReport/" + filename + ".csv"))) {
             writer.write("TenantID,FullName,DateOfBirth,ContactInfo,PropertyID,OwnerID,AgreementID");
             writer.newLine();
             for (Host h : list) {
@@ -216,7 +216,7 @@ public class ModelManagerImp implements ModelManager {
     private static void reportOwners(List<Owner> list) {
         System.out.print("Please enter the name of the file you want to save into: ");
         String filename = Input.getDataInput().getScanner().next();
-        try (BufferedWriter writer = new BufferedWriter(new FileWriter("src/data/" + filename + ".csv"))) {
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter("src/SaveReport/" + filename + ".csv"))) {
             writer.write("TenantID,FullName,DateOfBirth,ContactInfo,PropertyID,HostID,AgreementID");
             writer.newLine();
             for (Owner o : list) {
@@ -224,7 +224,7 @@ public class ModelManagerImp implements ModelManager {
                 writer.newLine();
             }
 
-            System.out.println("Report generated successfully in src/data/" + filename + ".csv");
+            System.out.println("Report generated successfully in src/SaveReport/" + filename + ".csv");
         } catch (IOException e) {
             System.err.println("Error saving data to CSV: IOException");
         }
@@ -232,7 +232,7 @@ public class ModelManagerImp implements ModelManager {
     private static void reportResidentialProperties(List<ResidentialProperty> list) {
         System.out.print("Please enter the name of the file you want to save into: ");
         String filename = Input.getDataInput().getScanner().next();
-        try (BufferedWriter writer = new BufferedWriter(new FileWriter("src/data/" + filename + ".csv"))) {
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter("src/SaveReport/" + filename + ".csv"))) {
             writer.write("PropertyID,Address,Pricing,Status,OwnerID,HostIDs,Bedrooms,GardenAvailable,PetFriendly");
             writer.newLine();
             for (ResidentialProperty rp : list) {
@@ -240,7 +240,7 @@ public class ModelManagerImp implements ModelManager {
                 writer.newLine();
             }
 
-            System.out.println("Report generated successfully in src/data/" + filename + ".csv");
+            System.out.println("Report generated successfully in src/SaveReport/" + filename + ".csv");
         } catch (IOException e) {
             System.err.println("Error saving data to CSV: IOException");
         }
@@ -248,7 +248,7 @@ public class ModelManagerImp implements ModelManager {
     private static void reportCommercialProperties(List<CommercialProperty> list) {
         System.out.print("Please enter the name of the file you want to save into: ");
         String filename = Input.getDataInput().getScanner().next();
-        try (BufferedWriter writer = new BufferedWriter(new FileWriter("src/data/" + filename + ".csv"))) {
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter("src/SaveReport/" + filename + ".csv"))) {
             writer.write("PropertyID,Address,Pricing,Status,OwnerID,HostIDs,BusinessType,ParkingSpaces,SquareFootage");
             writer.newLine();
             for (CommercialProperty cp : list) {
@@ -256,7 +256,7 @@ public class ModelManagerImp implements ModelManager {
                 writer.newLine();
             }
 
-            System.out.println("Report generated successfully in src/data/" + filename + ".csv");
+            System.out.println("Report generated successfully in src/SaveReport/" + filename + ".csv");
         } catch (IOException e) {
             System.err.println("Error saving data to CSV: IOException");
         }

@@ -22,21 +22,16 @@ public class Host extends Person {
     }
 
     // Getter
-    public List<RentalAgreement> getRentalAgreements() {
-        return rentalAgreements;
-    }
+    public List<RentalAgreement> getRentalAgreements() {return rentalAgreements;}
+    public List<Owner> getCooperatingOwners() {return cooperatingOwners;}
+    public List<Property> getProperties() {return propertiesManaged;}
 
-    public void addProperty(Property property) {
-        propertiesManaged.add(property);
-    }
-
-    public void addOwner(Owner owner) {
-        cooperatingOwners.add(owner);
-    }
-
-    public void addRentalAgreement(RentalAgreement rentalAgreement) {
-        rentalAgreements.add(rentalAgreement);
-    }
+    public void addProperty(Property property) {propertiesManaged.add(property);}
+    public void removeProperty(Property property) {propertiesManaged.remove(property);}
+    public void addOwner(Owner owner) {cooperatingOwners.add(owner);}
+    public void removeOwner(Owner owner) {cooperatingOwners.remove(owner);}
+    public void addRentalAgreement(RentalAgreement rentalAgreement) {rentalAgreements.add(rentalAgreement);}
+    public void removeRentalAgreement(RentalAgreement rentalAgreement) {rentalAgreements.remove(rentalAgreement);}
 
     @Override
     public String toString() {

@@ -10,7 +10,7 @@ import java.util.List;
  */
 
 import model.*;
-import until.Input;
+import Build.BuilderRentalAgreement;
 
 public class DataPersistenceImp implements DataPersistenceManager{
     private List<RentalAgreement> rentalAgreements;
@@ -96,6 +96,7 @@ public class DataPersistenceImp implements DataPersistenceManager{
         }
     }
 
+    @Override
     public void saveDataToCSVFile() {
         final String[] filePaths = {
                 "src/data/Payment.csv",
@@ -192,7 +193,7 @@ public class DataPersistenceImp implements DataPersistenceManager{
                             property_from_csv = (ResidentialProperty) getProperty(commercialProperties, residentialProperties, data[3]);
                         }
 
-                        RentalAgreement agreement =  new RentalAgreement.Builder(data[0]).mainTenant(getTenant(tenants, data[1])).subTenants(sub)
+                        RentalAgreement agreement =  new BuilderRentalAgreement(data[0]).mainTenant(getTenant(tenants, data[1])).subTenants(sub)
                                 .propertyLeased(property_from_csv).host(getHost(hosts, data[4])).owner(getOwner(owners, data[5])).period(data[6])
                                 .contractDate(dateFormat.parse(data[7]))
                                 .rentingFee(Double.parseDouble(data[8])).status(data[9]).build();
