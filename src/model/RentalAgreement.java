@@ -47,31 +47,17 @@ public class RentalAgreement {
     public List<Tenant> getSubTenants() {
         return subTenants;
     }
+    public Property getPropertyLeased() {
+        return propertyLeased;
+    }
+    public Host getHost() {
+        return host;
+    }
+    public Owner getOwner() {
+        return owner;
+    }
     public String getStatus() {
         return status;
-    }
-    public String getOwnerName() {
-        return owner.getName();
-    }
-    public String getOwnerID() {
-        return owner.getId();
-    }
-    public String getHostID() {
-        return host.getId();
-    }
-    public String getPropertyID() {
-        return period;
-    }
-    public String getPropertyAddress() {
-        return propertyLeased.getAddress();
-    }
-
-    public String getHost() {
-        return host.getId();
-    }
-
-    public String getOwner() {
-        return owner.getId();
     }
 
     // Setter
@@ -103,43 +89,63 @@ public class RentalAgreement {
         this.status = status;
     }
 
+    /**
+     * Returns a string representation of the object RentalAgreement, formatted to display
+     * key property details
+     *
+     * @return a formatted string containing the details of the RentalAgreement
+     */
     @Override
     public String toString() {
+        String subTenantsNames;
         SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
-
-        String subTenantsNames = subTenants.stream()
-                .map(Tenant::getId)
-                .reduce((name1, name2) -> name1 + ", " + name2)
-                .orElse("None");
+        try {
+             subTenantsNames = subTenants.stream()
+                    .map(Tenant::getId)
+                    .reduce((name1, name2) -> name1 + "-" + name2)
+                    .orElse("None");
+        } catch (NullPointerException e) {
+            subTenantsNames = "None";
+        }
 
         return String.format(
                 "%-15s | %-16s | %-25s | %-20s | %-15s | %-15s | %-10s | %-15s | $%-12.2f | %-10s",
                 agreementID,
-                mainTenant.getId(),
+                (mainTenant != null ? mainTenant.getId() : "None"),
                 subTenantsNames,
-                propertyLeased.getPropertyID(),
-                host.getId(),
-                owner.getId(),
+                (propertyLeased != null ? propertyLeased.getPropertyID() : "None"),
+                (host != null ? host.getId() : "None"),
+                (owner != null ? owner.getId() : "None"),
                 period,
                 dateFormat.format(contractDate),
                 rentingFee,
                 status);
     }
 
+    /**
+     * Converts the object's RentalAgreement into a CSV formatted string.
+     *
+     * @return a CSV formatted string representing the object's data
+     */
     public String toCSV() {
+        String subTenantsNames;
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd");
 
-        String subTenantsNames = subTenants.stream()
-                .map(Tenant::getId)
-                .reduce((name1, name2) -> name1 + "-" + name2)
-                .orElse("None");
+        try {
+            subTenantsNames = subTenants.stream()
+                    .map(Tenant::getId)
+                    .reduce((name1, name2) -> name1 + "-" + name2)
+                    .orElse("None");
+        } catch (NullPointerException e) {
+            subTenantsNames = "None";
+        }
 
         return (agreementID + "," +
-                mainTenant.getId() + "," +
+               (mainTenant != null ? mainTenant.getId() : "None") + "," +
                 subTenantsNames + "," +
-                propertyLeased.getPropertyID() + "," +
-                host.getId() + "," +
-                owner.getId() + "," +
+                (propertyLeased != null ? propertyLeased.getPropertyID() : "None") + "," +
+                (host != null ? host.getId() : "None") + "," +
+                (owner != null ? owner.getId() : "None") + "," +
                 period + "," +
                 dateFormat.format(contractDate) + "," +
                 rentingFee + "," +

@@ -6,7 +6,7 @@ import java.util.Date;
  *  @author <Hoàng Minh Thắng - S3999925>
  */
 public abstract class Person {
-    private String id;
+    private final String id;
     private String name;
     private Date dateOfBirth;
     private String info_contact; /*Email*/
@@ -24,15 +24,12 @@ public abstract class Person {
     public String getId() {
         return id;
     }
-
     public String getName() {
         return name;
     }
-
     public Date getDateOfBirth() {
         return dateOfBirth;
     }
-
     public String getInfo_contact() {
         return info_contact;
     }

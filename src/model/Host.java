@@ -26,73 +26,97 @@ public class Host extends Person {
     public List<Owner> getCooperatingOwners() {return cooperatingOwners;}
     public List<Property> getProperties() {return propertiesManaged;}
 
-    public void addProperty(Property property) {propertiesManaged.add(property);}
-    public void removeProperty(Property property) {propertiesManaged.remove(property);}
-    public void addOwner(Owner owner) {cooperatingOwners.add(owner);}
-    public void removeOwner(Owner owner) {cooperatingOwners.remove(owner);}
-    public void addRentalAgreement(RentalAgreement rentalAgreement) {rentalAgreements.add(rentalAgreement);}
-    public void removeRentalAgreement(RentalAgreement rentalAgreement) {rentalAgreements.remove(rentalAgreement);}
-
+    /**
+     * Returns a string representation of the object Host, formatted to display
+     * key property details
+     *
+     * @return a formatted string containing the details of the Host
+     */
     @Override
     public String toString() {
+        String propertyIDs; String ownerIDs; String rentalAgreementIDs;
         // Convert the propertiesManaged list into a stream
-        String propertyIDs = propertiesManaged.stream()
-                // Map each Property object to its propertyID using the getPropertyID method
-                .map(Property::getPropertyID)
-                // Reduce the stream by concatenating the propertyIDs with a hyphen ("-") as the separator
-                .reduce((name1, name2) -> name1 + "-" + name2)
-                .orElse("None"); // If the stream is empty, return "None" as the default value
-
+        try {
+             propertyIDs = propertiesManaged.stream()
+                    // Map each Property object to its propertyID using the getPropertyID method
+                    .map(Property::getPropertyID)
+                    // Reduce the stream by concatenating the propertyIDs with a hyphen ("-") as the separator
+                    .reduce((name1, name2) -> name1 + "-" + name2)
+                    .orElse("None"); // If the stream is empty, return "None" as the default value
+        } catch (NullPointerException e) {
+            propertyIDs = "None";
+        }
 
         // Convert the cooperatingOwners list into a stream
-        String ownerIDs = cooperatingOwners.stream()
-                // Map each Owner object to its OwnerID using the getId method
-                .map(Owner::getId)
-                // Reduce the stream by concatenating the ownerIDs with a hyphen ("-") as the separator
-                .reduce((name1, name2) -> name1 + "-" + name2)
-                .orElse("None"); // If the stream is empty, return "None" as the default value
+        try {
+             ownerIDs = cooperatingOwners.stream()
+                    // Map each Owner object to its OwnerID using the getId method
+                    .map(Owner::getId)
+                    // Reduce the stream by concatenating the ownerIDs with a hyphen ("-") as the separator
+                    .reduce((name1, name2) -> name1 + "-" + name2)
+                    .orElse("None"); // If the stream is empty, return "None" as the default value
+        } catch (NullPointerException e) {
+            ownerIDs = "None";
+        }
 
         // Convert the rentalAgreements list into a stream
-        String rentalAgreementIDs = rentalAgreements.stream()
-                // Map each RentalAgreement object to its AgreementID using the getAgreementID method
-                .map(RentalAgreement::getAgreementID)
-                // Reduce the stream by concatenating the AgreementID with a hyphen ("-") as the separator
-                .reduce((name1, name2) -> name1 + "-" + name2)
-                .orElse("None"); // If the stream is empty, return "None" as the default value
+        try {
+             rentalAgreementIDs = rentalAgreements.stream()
+                    // Map each RentalAgreement object to its AgreementID using the getAgreementID method
+                    .map(RentalAgreement::getAgreementID)
+                    // Reduce the stream by concatenating the AgreementID with a hyphen ("-") as the separator
+                    .reduce((name1, name2) -> name1 + "-" + name2)
+                    .orElse("None"); // If the stream is empty, return "None" as the default value
+        } catch (NullPointerException e) {
+            rentalAgreementIDs = "None";
+        }
 
         return super.toString() + String.format("| %-15s | %-15s | %-20s", propertyIDs, ownerIDs, rentalAgreementIDs);
     }
-
+    /**
+     * Converts the object's Host into a CSV formatted string.
+     *
+     * @return a CSV formatted string representing the object's data
+     */
     public String toCSV() {
         // Format the birthdate
         SimpleDateFormat formatDate = new SimpleDateFormat("yyyy/MM/dd");
         String formattedBirthDate = formatDate.format(super.getDateOfBirth());
 
+        String propertyIDs; String ownerIDs; String rentalAgreementIDs;
         // Convert the propertiesManaged list into a stream
-        String propertyIDs = propertiesManaged.stream()
-                // Map each Property object to its propertyID using the getPropertyID method
-                .map(Property::getPropertyID)
-                // Reduce the stream by concatenating the propertyIDs with a hyphen ("-") as the separator
-                .reduce((name1, name2) -> name1 + "-" + name2)
-                .orElse("None"); // If the stream is empty, return "None" as the default value
-
-
+        try {
+            propertyIDs = propertiesManaged.stream()
+                    // Map each Property object to its propertyID using the getPropertyID method
+                    .map(Property::getPropertyID)
+                    // Reduce the stream by concatenating the propertyIDs with a hyphen ("-") as the separator
+                    .reduce((name1, name2) -> name1 + "-" + name2)
+                    .orElse("None"); // If the stream is empty, return "None" as the default value
+        } catch (NullPointerException e) {
+            propertyIDs = "None";
+        }
         // Convert the cooperatingOwners list into a stream
-        String ownerIDs = cooperatingOwners.stream()
-                // Map each Owner object to its OwnerID using the getId method
-                .map(Owner::getId)
-                // Reduce the stream by concatenating the ownerIDs with a hyphen ("-") as the separator
-                .reduce((name1, name2) -> name1 + "-" + name2)
-                .orElse("None"); // If the stream is empty, return "None" as the default value
-
+        try {
+            ownerIDs = cooperatingOwners.stream()
+                    // Map each Owner object to its OwnerID using the getId method
+                    .map(Owner::getId)
+                    // Reduce the stream by concatenating the ownerIDs with a hyphen ("-") as the separator
+                    .reduce((name1, name2) -> name1 + "-" + name2)
+                    .orElse("None"); // If the stream is empty, return "None" as the default value
+        } catch (NullPointerException e) {
+            ownerIDs = "None";
+        }
         // Convert the rentalAgreements list into a stream
-        String rentalAgreementIDs = rentalAgreements.stream()
-                // Map each RentalAgreement object to its AgreementID using the getAgreementID method
-                .map(RentalAgreement::getAgreementID)
-                // Reduce the stream by concatenating the AgreementID with a hyphen ("-") as the separator
-                .reduce((name1, name2) -> name1 + "-" + name2)
-                .orElse("None"); // If the stream is empty, return "None" as the default value
-
+        try {
+            rentalAgreementIDs = rentalAgreements.stream()
+                    // Map each RentalAgreement object to its AgreementID using the getAgreementID method
+                    .map(RentalAgreement::getAgreementID)
+                    // Reduce the stream by concatenating the AgreementID with a hyphen ("-") as the separator
+                    .reduce((name1, name2) -> name1 + "-" + name2)
+                    .orElse("None"); // If the stream is empty, return "None" as the default value
+        } catch (NullPointerException e) {
+            rentalAgreementIDs = "None";
+        }
         // Return a CSV formatted string
         return super.getId() + "," +
                 super.getName() + "," +

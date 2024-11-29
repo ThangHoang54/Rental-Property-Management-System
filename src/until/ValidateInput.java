@@ -127,7 +127,7 @@ public class ValidateInput {
      *         the specified upper bound (inclusive)
      */
     public static int validateChoice(int upperBound) {
-        int value = 0;
+        int value;
 
         while (true) {
             System.out.print("Please select an appropriate option: ");
@@ -204,14 +204,13 @@ public class ValidateInput {
         };
     }
 
-
-        /**
-         * Checks if the provided string can be parsed as an integer.
-         * @param str the string to be checked
-         * @return {@code true} if the string can be parsed as an integer;
-         *         {@code false} otherwise
-         * @throws NullPointerException if the input string is {@code null}
-         */
+    /**
+     * Checks if the provided string can be parsed as an integer.
+     * @param str the string to be checked
+     * @return {@code false} if the string can be parsed as an integer;
+     *         {@code true} otherwise
+     * @throws NullPointerException if the input string is {@code null}
+     */
     public static boolean isInteger (String str){
         try {
             Integer.parseInt(str);

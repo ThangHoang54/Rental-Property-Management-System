@@ -68,8 +68,8 @@ public class RentalManagerUI {
             System.out.println(" 0. Back to Main Menu");
 
             int option = ValidateInput.validateChoice(7);
-            String id = ""; String owner_name = "";
-            String property_address = ""; String status = "";
+            String id; String owner_name;
+            String property_address; String status;
 
             switch (option) {
                 case 1 -> manager.addRentalAgreement();
@@ -122,10 +122,10 @@ public class RentalManagerUI {
         while (true) {
             System.out.println("\n--- Update Rental Agreement: " + agreementID + " ---");
             System.out.println("1. Update Main Tenant");
-            System.out.println("2. Update Sub-Tenants");
-            System.out.println("3. Update Property Leased");
-            System.out.println("4. Update Host");
-            System.out.println("5. Update Owner");
+            System.out.println("2. Update All Sub-Tenants (Whole)");
+            System.out.println("3. Update Host");
+            System.out.println("4. Update Owner");
+            System.out.println("5. Update Property Leased");
             System.out.println("6. Update Rental Period");
             System.out.println("7. Delete Rental Contact Date");
             System.out.println("8. Update Renting Fee");
@@ -213,8 +213,6 @@ public class RentalManagerUI {
         RentalManagerUI ui = new RentalManagerUI();
         ui.mainMenu(manager, model);
 
-        System.out.println("\nImportance Note: If user type anything without y or yes, " +
-                            "the data won't save back to load file.");
         System.out.print("Do you want to save all the data back to the load file for next used (y/n): ");
         if (Input.getDataInput().getScanner().nextLine().toLowerCase().charAt(0) == 'y') {
             // Save all data back to CSV file

@@ -124,7 +124,7 @@ public class DataPersistenceImp implements DataPersistenceManager{
      */
     private void loadFromFile(String filepath) {
 
-        String line = "";
+        String line;
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd");
 
         try (BufferedReader reader = new BufferedReader(new FileReader(filepath))) {
@@ -159,7 +159,7 @@ public class DataPersistenceImp implements DataPersistenceManager{
                         String[] owners_list = data[5].split("-");
 
                         for (String id : owners_list) {
-                            property.addHost(getHost(hosts, id)); // Add the Host to an object
+                            property.getHosts().add(getHost(hosts, id)); // Add the Host to an object
                         }
 
                         this.residentialProperties.add(property);
@@ -172,7 +172,7 @@ public class DataPersistenceImp implements DataPersistenceManager{
                         String[] owner_list = data[5].split("-");
 
                         for (String id : owner_list) {
-                            property.addHost(getHost(hosts, id)); // Add the Host to an object
+                            property.getHosts().add(getHost(hosts, id)); // Add the Host to an object
                         }
 
                         this.commercialProperties.add(property);
@@ -218,11 +218,10 @@ public class DataPersistenceImp implements DataPersistenceManager{
      * contained in the file.
      *
      * @param filepath the path to the CSV file from which data is to be loaded
-     * @throws IOException if an I/O error occurs while reading the file
      */
     private void loadFullDataFromFile(String filepath)  {
 
-        String line = "";
+        String line;
         try (BufferedReader reader = new BufferedReader(new FileReader(filepath))) {
             reader.readLine(); // Skip header line
             while ((line = reader.readLine()) != null) {
@@ -237,7 +236,7 @@ public class DataPersistenceImp implements DataPersistenceManager{
 
                         for (String id : agreement_id_list) {
                             assert tenant != null; // Ensure tenant is not null
-                            tenant.addRentalAgreement(getRentalAgreement(rentalAgreements, id)); // Add the RentalAgreements to an object
+                            tenant.getRentalAgreements().add(getRentalAgreement(rentalAgreements, id)); // Add the RentalAgreements to an object
                         }
 
                     }
@@ -251,17 +250,17 @@ public class DataPersistenceImp implements DataPersistenceManager{
 
                         for (String id : property_id_list) {
                             assert host != null; // Ensure host is not null
-                            host.addProperty((Property) getProperty(commercialProperties, residentialProperties, id)); // Add the Property to an object
+                            host.getProperties().add((Property) getProperty(commercialProperties, residentialProperties, id)); // Add the Property to an object
                         }
 
                         for (String id : owner_id_list) {
                             assert host != null; // Ensure host is not null
-                            host.addOwner(getOwner(owners, id)); // Add the Owner to an object
+                            host.getCooperatingOwners().add(getOwner(owners, id)); // Add the Owner to an object
                         }
 
                         for (String id : agreement_id_list) {
                             assert host != null; // Ensure host is not null
-                            host.addRentalAgreement(getRentalAgreement(rentalAgreements, id)); // Add the RentalAgreements to an object
+                            host.getRentalAgreements().add(getRentalAgreement(rentalAgreements, id)); // Add the RentalAgreements to an object
                         }
 
                     }
@@ -275,17 +274,17 @@ public class DataPersistenceImp implements DataPersistenceManager{
 
                         for (String id : property_id_list) {
                             assert owner != null; // Ensure owner is not null
-                            owner.addProperty((Property) getProperty(commercialProperties, residentialProperties, id)); // Add the Property to an object
+                            owner.getPropertiesOwned().add((Property) getProperty(commercialProperties, residentialProperties, id)); // Add the Property to an object
                         }
 
                         for (String id : host_id_list) {
                             assert owner != null; // Ensure owner is not null
-                            owner.addHost(getHost(hosts, id)); // Add the Host to an object
+                            owner.getHostsManagingProperties().add(getHost(hosts, id)); // Add the Host to an object
                         }
 
                         for (String id : agreement_id_list) {
                             assert owner != null; // Ensure owner is not null
-                            owner.addRentalAgreement(getRentalAgreement(rentalAgreements, id)); // Add the RentalAgreements to an object
+                            owner.getRentalAgreements().add(getRentalAgreement(rentalAgreements, id)); // Add the RentalAgreements to an object
                         }
                     }
                 }
@@ -307,7 +306,6 @@ public class DataPersistenceImp implements DataPersistenceManager{
      * - RentalAgreement
      *
      * @param filepath the path to the CSV file where the data will be saved
-     * @throws IOException if an I/O error occurs while writing to the file
      */
     @Override
     public void saveDataToCSV(String filepath) {
@@ -494,7 +492,7 @@ public class DataPersistenceImp implements DataPersistenceManager{
                 System.out.println("\nRental Agreement Owner's name option are shown below: ");
                 for (RentalAgreement a : agreements) {
                     if (counter % 6 == 0) {System.out.println();}
-                    System.out.print(a.getOwnerName() + ", ");
+                    System.out.print(a.getOwner().getName() + ", ");
                     counter++;
                 }
                 break;
@@ -502,7 +500,7 @@ public class DataPersistenceImp implements DataPersistenceManager{
                System.out.println("\nRental Agreement Property's address option are shown below:");
                for (RentalAgreement a : agreements) {
                    if (counter % 6 == 0) {System.out.println();}
-                   System.out.print(a.getPropertyAddress() + ", ");
+                   System.out.print(a.getPropertyLeased().getAddress() + ", ");
                    counter++;
                }
                break;
