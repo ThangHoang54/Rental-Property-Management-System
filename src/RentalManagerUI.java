@@ -21,7 +21,7 @@ public class RentalManagerUI {
 
             int option = ValidateInput.validateChoice(2);
             switch (option) {
-                case 1 -> modelsMenu(model);
+                case 1 -> modelsMenu(manager, model);
                 case 2 -> rentalAgreementMenu(manager);
                 case 0 -> {
                     return; // Break the while loop and end the program
@@ -30,8 +30,8 @@ public class RentalManagerUI {
             }
         }
     }
-    private void modelsMenu(ModelManagerImp model) {
-
+    private void modelsMenu(RentalManagerImp manager, ModelManagerImp model) {
+        model.setWholeModelList(manager.getModelList());
         while (true) {
             System.out.println("\n===== Model Menu =====");
             System.out.println("1. View All Tenants");

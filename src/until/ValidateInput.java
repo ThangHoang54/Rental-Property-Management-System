@@ -156,19 +156,28 @@ public class ValidateInput {
         while (date == null) {
             System.out.print("Please enter a date (dd/MM/yyyy): ");
             String input = scanner.nextLine();
-            int date_ = Integer.parseInt(input.substring(0,2));
-            int month_ = Integer.parseInt(input.substring(3,5));
-            int year_ = Integer.parseInt(input.substring(6));
-            try {
-                // Parse the input date
-                date = dateFormat.parse(input);
-                // Validate day, month, and year
-                if (!isValidDate(date_, month_, year_)) {
-                    System.out.println("Invalid date. Please ensure the day, month, and year are correct.");
-                    date = null;
+            String[] dateParts = input.split("/");
+            if (dateParts.length == 3) {
+                try {
+                    // Parse the input date
+                    date = dateFormat.parse(input);
+                    // Normalize and parse day
+                    int day_ = Integer.parseInt(dateParts[0].replaceFirst("^0+(?!$)", ""));
+                    // Normalize and parse month
+                    int month_ = Integer.parseInt(dateParts[1].replaceFirst("^0+(?!$)", ""));
+                    // Normalize and parse year
+                    int year_ = Integer.parseInt(dateParts[2]);
+
+                    // Validate day, month, and year
+                    if (!isValidDate(day_, month_, year_)) {
+                        System.out.println("Invalid date. Please ensure the day, month, and year are correct.");
+                        date = null;
+                    }
+                } catch (ParseException e) {
+                    System.out.println("Invalid date format. Please try again.");
                 }
-            } catch (ParseException e) {
-                System.out.println("Invalid date format. Please try again.");
+            } else {
+                System.out.println("Invalid date format. Please enter a valid date.");
             }
         }
         return date;
@@ -214,6 +223,22 @@ public class ValidateInput {
     public static boolean isInteger (String str){
         try {
             Integer.parseInt(str);
+            return false;
+        } catch (NumberFormatException e) {
+            return true;
+        }
+    }
+
+    /**
+     * Checks if the provided string can be parsed as a double.
+     * @param str the string to be checked
+     * @return {@code false} if the string can be parsed as a double;
+     *         {@code true} otherwise
+     * @throws NullPointerException if the input string is {@code null}
+     */
+    public static boolean isDouble (String str){
+        try {
+            Double.parseDouble(str);
             return false;
         } catch (NumberFormatException e) {
             return true;

@@ -26,7 +26,10 @@ public class ModelManagerImp implements ModelManager {
         model_list.clearData();
     }
 
-    // Method
+    // Setter
+    public void setWholeModelList(DataPersistenceImp list) {
+        this.model_list = list;
+    }
     /**
      * 5 methods below served for display specific model (Tenant, Host, Owner, Residential/Commercial Property)
      * in the console

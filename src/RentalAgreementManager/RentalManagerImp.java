@@ -21,16 +21,20 @@ public class RentalManagerImp implements RentalManager {
         model_list = new DataPersistenceImp();
     }
 
+    // save whole list to corresponding csv files
     public void saveData() {
         model_list.saveDataToCSVFile();
     }
-    // Add a method for save to csv file and cleanup (useful for manual resource management)
+    // cleanup whole object list (useful for manual resource management)
     public void clearData() {
         model_list.clearData();
     }
     // Getter
     public List<RentalAgreement> getRentalAgreementList() {
         return model_list.getRentalAgreements();
+    }
+    public DataPersistenceImp getModelList() {
+        return model_list;
     }
     /**
      * Checks if a rental agreement with the specified ID exists in the list of rental agreements.
@@ -116,7 +120,7 @@ public class RentalManagerImp implements RentalManager {
         int size = Integer.parseInt(model_list.getRentalAgreements().getLast().getAgreementID().substring(2));
         String id = "RA" + ((size < 10) ? "00" : "0") + (size + 1);
 
-        // Main Tenant
+        // Ask admin to input a valid Main Tenant
         do {
             do {
                 System.out.print("Enter Main Tenant ID as a number: ");
@@ -128,7 +132,7 @@ public class RentalManagerImp implements RentalManager {
 
         } while (mainTenant == null || number < 1 || number > model_list.getTenants().size());
 
-        // Sub-Tenant
+        // Ask admin to input a valid Sub-Tenant(s)
         Set<Tenant> subTenants = new LinkedHashSet<>();
         System.out.print("Enter number of Sub-Tenants: ");
         int subTenantCount = Integer.parseInt(scanner.nextLine());
@@ -136,7 +140,7 @@ public class RentalManagerImp implements RentalManager {
         for (int i = 0; i < subTenantCount; i++) {
             do {
                 do {
-                    System.out.print("Enter Sub-Tenant ID " + (i + 1) + "as a number: ");
+                    System.out.print("Enter Sub-Tenant ID " + (i + 1) + " as a number: ");
                     num = scanner.nextLine();
                 } while (ValidateInput.isInteger(num) || Integer.parseInt(num) == Integer.parseInt(mainTenant.getId().substring(2)));
                 number = Integer.parseInt(num);
@@ -147,10 +151,9 @@ public class RentalManagerImp implements RentalManager {
         }
         // Convert Set to List
         List<Tenant> subTenantList = new ArrayList<>(subTenants);
-
+        // Ask admin to input a valid propertyLeased
         Property propertyLeased = checkPropertyExits();
-
-        // Host
+        // Ask admin to input a valid Host
         do {
             do {
                 System.out.print("Enter Host ID as a number: ");
@@ -160,8 +163,7 @@ public class RentalManagerImp implements RentalManager {
             String hostID = "HS" + ((number < 10) ? "00" : "0") + number;
             host = DataPersistenceImp.getHost(model_list.getHosts(), hostID); // Assuming a method to retrieve Host by ID
         } while (host == null || number < 1 || number > model_list.getHosts().size());
-
-        // Owner
+        // Ask admin to input a valid Owner
         do {
             do {
                 System.out.print("Enter Owner ID as a number: ");
@@ -171,22 +173,25 @@ public class RentalManagerImp implements RentalManager {
             String ownerID = "ON" + ((number < 10) ? "00" : "0") + number;
             owner = DataPersistenceImp.getOwner(model_list.getOwners(), ownerID); // Assuming a method to retrieve Owner by ID
         } while (owner == null || number < 1 || number > model_list.getOwners().size());
-
+        // Ask admin to input a valid Rental Agreement period
         System.out.print("Enter Rental Period (daily, weekly, fortnightly, monthly): ");
         String period = ValidateInput.validateRentalPeriod(scanner.nextLine());
-
-        Date contractDate = ValidateInput.validateContactDate();
-
-        System.out.print("Enter Renting Fee (double type): ");
-        double rentingFee = Double.parseDouble(scanner.nextLine());
-
+        // Ask admin to input a valid Contact Date
+        Date contactDate = ValidateInput.validateContactDate();
+        // Ask admin to input a valid Renting Fee
+        do {
+            System.out.print("Enter Renting Fee (double type): ");
+            num = scanner.nextLine();
+        } while (ValidateInput.isDouble(num));
+        double rentingFee = Double.parseDouble(num);
+        // Ask admin to input a valid Status
         System.out.print("Enter Status (e.g., 'New', 'Active', 'Completed'): ");
         String status = ValidateInput.validateAgreementStatus(scanner.nextLine());
 
         // Create new Rental Agreement object using Builder pattern
         RentalAgreement rentalAgreement = new BuilderRentalAgreement(id).mainTenant(mainTenant)
                 .subTenants(subTenantList).propertyLeased(propertyLeased).host(host).owner(owner)
-                .period(period).contractDate(contractDate).rentingFee(rentingFee).status(status).build();
+                .period(period).contractDate(contactDate).rentingFee(rentingFee).status(status).build();
 
         // Add rentalAgreement to the list or database (depending on your implementation)
         model_list.getRentalAgreements().add(rentalAgreement); // Assuming a List<RentalAgreement> rentalAgreements
@@ -238,13 +243,11 @@ public class RentalManagerImp implements RentalManager {
             for(ResidentialProperty rp : model_list.getResidentialProperties()) {
                 if (rp.getPropertyID().equals(propertyLeased.getPropertyID())) {
                     // Add the owner in ResidentialProperty
-                    rp.setOwner(propertyLeased.getOwner());
+                    rp.setOwner(rentalAgreement.getOwner());
                     // Add the host in ResidentialProperty
-                    for (Host h : rp.getHosts()) {
-                        if (!propertyLeased.getHosts().contains(h)) {
-                            if(rp.getHosts().contains(null)) {rp.getHosts().removeIf(Objects::isNull);}
-                            rp.getHosts().add(h);
-                        }
+                    if (!propertyLeased.getHosts().contains(rentalAgreement.getHost())) {
+                        if(rp.getHosts().contains(null)) {rp.getHosts().removeIf(Objects::isNull);}
+                        rp.getHosts().add(rentalAgreement.getHost());
                     }
                 }
             }
@@ -253,34 +256,16 @@ public class RentalManagerImp implements RentalManager {
             for (CommercialProperty cp : model_list.getCommercialProperties()) {
                 if (cp.getPropertyID().equals(propertyLeased.getPropertyID())) {
                     // Add the owner in CommercialProperty
-                    cp.setOwner(propertyLeased.getOwner());
+                    cp.setOwner(rentalAgreement.getOwner());
                     // Add the host in ResidentialProperty
-                    for (Host h : cp.getHosts()) {
-                        if (!propertyLeased.getHosts().contains(h)) {
-                            if(cp.getHosts().contains(null)) {cp.getHosts().removeIf(Objects::isNull);}
-                            cp.getHosts().add(h);
-                        }
+                    if (!propertyLeased.getHosts().contains(rentalAgreement.getHost())) {
+                        if(cp.getHosts().contains(null)) {cp.getHosts().removeIf(Objects::isNull);}
+                        cp.getHosts().add(rentalAgreement.getHost());
                     }
                 }
             }
         }
-//        for (RentalAgreement a : model_list.getRentalAgreements()) {
-//            if (a.getAgreementID().equals(id)) {
-//                String propertyId = a.getPropertyID();
-//                if (propertyId.startsWith("RP")) {
-//                    for (ResidentialProperty p : model_list.getResidentialProperties()) {
-//                        p.addHost(DataPersistenceImp.getHost(model_list.getHosts(), id));
-//                        p.setOwner(DataPersistenceImp.getOwner(model_list.getOwners(), id));
-//                    }
-//                } else if (propertyId.startsWith("CP")) {
-//                    for (CommercialProperty c : model_list.getCommercialProperties()) {
-//                        c.addHost(DataPersistenceImp.getHost(model_list.getHosts(), id));
-//                        c.setOwner(DataPersistenceImp.getOwner(model_list.getOwners(), id));
-//                    }
-//                }
-//            }
-//        }
-        }
+    }
     @Override
     public void updateRentalAgreement(String id, int num_) {
         Scanner scanner = Input.getDataInput().getScanner();
@@ -339,7 +324,7 @@ public class RentalManagerImp implements RentalManager {
                 for (int i = 0; i < subTenantCount; i++) {
                     do {
                         do {
-                            System.out.print("Enter Sub-Tenant ID " + (i + 1) + "as a number: ");
+                            System.out.print("Enter Sub-Tenant ID " + (i + 1) + " as a number: ");
                             num = scanner.nextLine();
                         } while (ValidateInput.isInteger(num) || Integer.parseInt(num) == Integer.parseInt(t.substring(2)));
                         number = Integer.parseInt(num);
@@ -470,9 +455,7 @@ public class RentalManagerImp implements RentalManager {
                         // Delete the previous owner in ResidentialProperty
                         if (rp.getPropertyID().equals(oldPropertyID)) {
                             rp.setOwner(null);
-                            if (rp.getHosts() != null) {
-                                rp.getHosts().remove(agreementUpdate.getHost());
-                            }
+                            if (rp.getHosts() != null) {rp.getHosts().remove(agreementUpdate.getHost());}
                         }
                     }
                 } else if (oldPropertyID.startsWith("CP")) {
@@ -480,9 +463,7 @@ public class RentalManagerImp implements RentalManager {
                         // Delete the previous owner in CommercialProperty
                         if (cp.getPropertyID().equals(oldPropertyID)) {
                             cp.setOwner(null);
-                            if (cp.getHosts() != null) {
-                                cp.getHosts().remove(agreementUpdate.getHost());
-                            }
+                            if (cp.getHosts() != null) {cp.getHosts().remove(agreementUpdate.getHost());}
                         }
                     }
                 }
