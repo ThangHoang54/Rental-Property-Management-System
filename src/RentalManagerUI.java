@@ -217,14 +217,8 @@ public class RentalManagerUI {
         RentalManagerUI ui = new RentalManagerUI();
         ui.mainMenu(manager, model);
 
-        System.out.print("Do you want to save all the data back to the load file for next used (y/n): ");
-        if (Input.getDataInput().getScanner().nextLine().toLowerCase().charAt(0) == 'y') {
-            // Save all data back to CSV file
-            manager.saveData();
-            System.out.println("Data saved successfully.");
-        } else {
-            System.out.println("Data not saved.");
-        }
+        // Save all data back to CSV file
+        manager.saveData();
 
         // Clear all the data before ending the program
         manager.clearData();
