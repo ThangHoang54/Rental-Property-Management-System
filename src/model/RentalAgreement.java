@@ -109,7 +109,7 @@ public class RentalAgreement {
         }
 
         return String.format(
-                "%-15s | %-16s | %-25s | %-20s | %-15s | %-15s | %-10s | %-15s | $%-12.2f | %-10s",
+                "%-15s | %-16s | %-25s | %-20s | %-15s | %-15s | %-12s | %-15s | $%-12.2f | %-10s",
                 agreementID,
                 (mainTenant != null ? mainTenant.getId() : "None"),
                 subTenantsNames,

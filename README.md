@@ -4,6 +4,10 @@ first individual assignment for COSC2440 Further Programming (S3_2024) course.
 
 ## Application Description ℹ️
 _____
+This repository contains the source code for a Rental Property Management System
+developed in Java. The system enables admin to efficiently manage, track, 
+and process rental agreement. It includes functionalities such as adding, updating, and deleting rental agreement, 
+as well as retrieving model (Tenant, Host, Owner Property, RentalAgreement) details and generating reports.
 
 ## Key Feature 🔑
 ___
@@ -15,7 +19,7 @@ ___
 - Admin can add a new Rental Agreement.
 - Admin can delete an existing Rental Agreement.
 - Admin can update an existing Rental Agreement.
-- Admin can generate the report of the model, (if Admin want).
+- Admin ability to generate the report of the model after view Model, (if Admin want).
 
 ## Getting Started
 _____
@@ -28,7 +32,11 @@ To get started with the Rental Property Management System:
 
 ## Sample Data Files 📁
 ___
-
+- Claims (/src/data/claims.txt) : Contains ID, Claim Date, Insured Person's ID, Card Number, Exam Date, Documents, Claim Amount, Claim Status, Receiver Banking Info's ID.
+- Customers (/src/data/customers.txt) : Contains ID, Full Name, Customer Type.
+- Customer Relationships (/src/data/customer_relationships.txt) : Contains ID of policyholders and their dependents.
+- Insurance Cards (/src/data/insurance_cards.txt) : Contains Card Number, Cardholder's ID, Policy Owner, Expiration Date.
+- Receiver Banking Info (/src/data/receiver_banking_info.txt) : Contains ID, Bank, Insured Person's Name, Account Number.
 ## Addition Note
 ___
 

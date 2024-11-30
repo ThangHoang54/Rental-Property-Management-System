@@ -127,12 +127,13 @@ public class RentalManagerUI {
             System.out.println("4. Update Owner");
             System.out.println("5. Update Property Leased");
             System.out.println("6. Update Rental Period");
-            System.out.println("7. Delete Rental Contact Date");
+            System.out.println("7. Update Rental Contact Date");
             System.out.println("8. Update Renting Fee");
             System.out.println("9. Update Status");
             System.out.println("0. Finish update (Back to Rental Agreement Menu)");
 
             int choice = ValidateInput.validateChoice(9);
+            String num;
 
             switch (choice) {
                 case 1 -> {
@@ -161,7 +162,7 @@ public class RentalManagerUI {
                     System.out.println("Property Leased updated successfully.");
                 }
                 case 6 -> {
-                    System.out.print("Enter new Rental Period (e.g., daily, weekly, monthly): ");
+                    System.out.print("Enter new Rental Period (e.g. daily, weekly, fortnightly, monthly): ");
                     String newPeriod = ValidateInput.validateRentalPeriod(Input.getDataInput().getScanner().nextLine());
                     for (RentalAgreement a : manager.getRentalAgreementList()) {
                         if (a.getAgreementID().equals(agreementID)) {
@@ -180,8 +181,11 @@ public class RentalManagerUI {
                     System.out.println("Rental Contact Date updated successfully.");
                 }
                 case 8 -> {
-                    System.out.print("Enter new Renting Fee: ");
-                    double newRentingFee = Input.getDataInput().getScanner().nextDouble();
+                    do {
+                        System.out.print("Enter new Renting Fee: ");
+                        num = Input.getDataInput().getScanner().nextLine();
+                    } while (ValidateInput.isDouble(num));
+                    double newRentingFee = Double.parseDouble(num);
                     for (RentalAgreement a : manager.getRentalAgreementList()) {
                         if (a.getAgreementID().equals(agreementID)) {
                             a.setRentingFee(newRentingFee);

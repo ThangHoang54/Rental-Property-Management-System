@@ -72,7 +72,7 @@ public class Owner extends Person{
             rentalAgreementIDs = "None";
         }
 
-        return super.toString() + String.format("| %-15s | %-15s | %-20s", propertyIDs, hostIDs, rentalAgreementIDs);
+        return super.toString() + String.format("| %-35s | %-35s | %-25s", propertyIDs, hostIDs, rentalAgreementIDs);
     }
     /**
      * Converts the object's Owner into a CSV formatted string.

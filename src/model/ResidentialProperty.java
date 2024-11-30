@@ -41,7 +41,7 @@ public class ResidentialProperty extends Property {
             hostIDs = "None";
         }
 
-        return String.format("%-12s | %-25s | $%-9.2f | %-20s | %-8s | %-15s | %-19d | %-15b | %-12b",
+        return String.format("%-12s | %-25s | $%-9.2f | %-20s | %-8s | %-25s | %-19d | %-15b | %-12b",
                 super.getPropertyID(),
                 super.getAddress(),
                 super.getPrice(),

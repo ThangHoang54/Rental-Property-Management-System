@@ -45,9 +45,6 @@ public abstract class Property {
     public List<Host> getHosts() {
         return hosts;
     }
-    public void addHost(Host host) {
-        hosts.add(host);
-    }
 
     // Setter
     public void setOwner(Owner owner) {

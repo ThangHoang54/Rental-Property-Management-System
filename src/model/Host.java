@@ -71,7 +71,7 @@ public class Host extends Person {
             rentalAgreementIDs = "None";
         }
 
-        return super.toString() + String.format("| %-15s | %-15s | %-20s", propertyIDs, ownerIDs, rentalAgreementIDs);
+        return super.toString() + String.format("| %-35s | %-35s | %-25s", propertyIDs, ownerIDs, rentalAgreementIDs);
     }
     /**
      * Converts the object's Host into a CSV formatted string.

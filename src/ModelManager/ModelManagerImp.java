@@ -65,9 +65,9 @@ public class ModelManagerImp implements ModelManager {
         System.out.println("\n====== All Hosts Table ======\n");
 
         // Generating the Heading
-        System.out.printf("%-6s | %-20s | %-15s | %-30s| %-15s | %-15s | %-20s\n",
+        System.out.printf("%-6s | %-20s | %-15s | %-30s| %-35s | %-35s | %-25s\n",
                 "ID", "Name", "Date of Birth", "Contact Info", "PropertyID", "OwnerID" ,"RentalAgreementID");
-        System.out.println("-".repeat(135));
+        System.out.println("-".repeat(190));
 
         // Loop through host
         for (Host h : hosts) {
@@ -89,9 +89,9 @@ public class ModelManagerImp implements ModelManager {
         System.out.println("\n====== All Owners Table ======\n");
 
         // Generating the Heading
-        System.out.printf("%-6s | %-20s | %-15s | %-30s| %-15s | %-15s | %-20s\n",
+        System.out.printf("%-6s | %-20s | %-15s | %-30s| %-35s | %-35s | %-25s\n",
                 "ID", "Name", "Date of Birth", "Contact Info", "PropertyID", "HostID" ,"RentalAgreementID");
-        System.out.println("-".repeat(135));
+        System.out.println("-".repeat(190));
 
         // Loop through owners
         for (Owner owner : owners) {
@@ -113,9 +113,9 @@ public class ModelManagerImp implements ModelManager {
         System.out.println("\n====== All Residential Properties Table ======\n");
 
         // Generating the Heading
-        System.out.printf("%-12s | %-25s | %-10s | %-20s | %-8s | %-15s | %-19s | %-15s | %-12s\n",
-                "Property ID", "Address", "Pricing", "Status", "Owner ID", "Host ID", "Number of bedroom", "Include Garden", "Pet-Friendly");
-        System.out.println("-".repeat(161));
+        System.out.printf("%-12s | %-25s | %-10s | %-20s | %-8s | %-25s | %-19s | %-15s | %-12s\n",
+                "Property ID", "Address", "Pricing", "Status", "Owner ID", "Host IDs", "Number of bedroom", "Include Garden", "Pet-Friendly");
+        System.out.println("-".repeat(171));
 
         // Loop through residentialProperties
         for (ResidentialProperty p : residentialProperties) {
@@ -137,9 +137,9 @@ public class ModelManagerImp implements ModelManager {
         System.out.println("\n====== All Commercial Properties Table ======\n");
 
         // Generating the Heading
-        System.out.printf("%-12s | %-25s | %-10s | %-20s | %-8s | %-15s | %-15s | %-14s | %-15s\n",
-                "Property ID", "Address", "Pricing", "Status", "Owner ID", "Host ID","Business Type", "Parking Space", "Square Footage");
-        System.out.println("-".repeat(157));
+        System.out.printf("%-12s | %-25s | %-10s | %-20s | %-8s | %-25s | %-15s | %-14s | %-15s\n",
+                "Property ID", "Address", "Pricing", "Status", "Owner ID", "Host IDs","Business Type", "Parking Space", "Square Footage");
+        System.out.println("-".repeat(167));
 
         // Loop through commercialProperties
         for (CommercialProperty p : commercialProperties) {

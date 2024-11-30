@@ -42,7 +42,7 @@ public class CommercialProperty extends Property {
             hostIDs = "None";
         }
 
-        return String.format("%-12s | %-25s | $%-9.2f | %-20s | %-8s | %-15s | %-15s | %-14d | %-14.2f",
+        return String.format("%-12s | %-25s | $%-9.2f | %-20s | %-8s | %-25s | %-15s | %-14d | %-14.2f",
                 super.getPropertyID(),
                 super.getAddress(),
                 super.getPrice(),

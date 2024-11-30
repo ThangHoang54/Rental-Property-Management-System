@@ -200,12 +200,12 @@ public class RentalManagerImp implements RentalManager {
 
         // Modify other model
         for (Tenant t : model_list.getTenants()) {
-            if (t.getId().equals(mainTenant.getId())) {
+            if (t.getId().equals(mainTenant.getId()) && !t.getRentalAgreements().contains(rentalAgreement)) {
                 if (t.getRentalAgreements().contains(null)) {t.getRentalAgreements().removeIf(Objects::isNull);}
                 t.getRentalAgreements().add(rentalAgreement);
             }
             for (Tenant sub : subTenantList) {
-                if (t.getId().equals(sub.getId())) {
+                if (t.getId().equals(sub.getId()) && !t.getRentalAgreements().contains(rentalAgreement)) {
                     if (t.getRentalAgreements().contains(null)) {t.getRentalAgreements().removeIf(Objects::isNull);}
                     t.getRentalAgreements().add(rentalAgreement);
                 }
@@ -296,7 +296,7 @@ public class RentalManagerImp implements RentalManager {
                         t.getRentalAgreements().remove(agreementUpdate);
                     }
                     // Add the new Rental Agreement
-                    if (t.getId().equals(mainTenant.getId())) {
+                    if (t.getId().equals(mainTenant.getId()) && !t.getRentalAgreements().contains(agreementUpdate)) {
                         if (t.getRentalAgreements().contains(null)) {t.getRentalAgreements().removeIf(Objects::isNull);}
                         t.getRentalAgreements().add(agreementUpdate);
                         System.out.println(t.getRentalAgreements());
@@ -346,7 +346,7 @@ public class RentalManagerImp implements RentalManager {
                     }
                     // Add new RentalAgreement to Tenant
                     for (Tenant sub : subTenantList) {
-                        if (tenant.getId().equals(sub.getId())) {
+                        if (tenant.getId().equals(sub.getId()) && !tenant.getRentalAgreements().contains(agreementUpdate)) {
                             if(tenant.getRentalAgreements().contains(null)) {tenant.getRentalAgreements().removeIf(Objects::isNull);}
                             tenant.getRentalAgreements().add(agreementUpdate);
                         }
@@ -383,15 +383,15 @@ public class RentalManagerImp implements RentalManager {
                         h.getRentalAgreements().removeIf(a -> a != null && h.getProperties() != null && a.getAgreementID().equals(id));
                     }
                     if (h.getId().equals(host.getId())) {
-                        // Add the new Property
                         if(h.getProperties().contains(null)) {h.getRentalAgreements().removeIf(Objects::isNull);}
                         if(h.getCooperatingOwners().contains(null)) {h.getRentalAgreements().removeIf(Objects::isNull);}
                         if(h.getRentalAgreements().contains(null)) {h.getRentalAgreements().removeIf(Objects::isNull);}
-                        h.getProperties().add(agreementUpdate.getPropertyLeased());
+                        // Add the new Property
+                        if(!h.getProperties().contains(agreementUpdate.getPropertyLeased())){h.getProperties().add(agreementUpdate.getPropertyLeased());}
                         // Add the new Owner
-                        h.getCooperatingOwners().add(agreementUpdate.getOwner());
+                        if(!h.getCooperatingOwners().contains(agreementUpdate.getOwner())){h.getCooperatingOwners().add(agreementUpdate.getOwner());}
                         // Add the new Rental Agreement
-                        h.getRentalAgreements().add(agreementUpdate);
+                        if(!h.getRentalAgreements().contains(agreementUpdate)){h.getRentalAgreements().add(agreementUpdate);}
                     }
                 }
                 // Updating new Host
@@ -429,11 +429,11 @@ public class RentalManagerImp implements RentalManager {
                         if(h.getHostsManagingProperties().contains(null)) {h.getHostsManagingProperties().removeIf(Objects::isNull);}
                         if(h.getRentalAgreements().contains(null)) {h.getRentalAgreements().removeIf(Objects::isNull);}
                         // Add the new Property
-                        h.getPropertiesOwned().add(agreementUpdate.getPropertyLeased());
+                        if(!h.getPropertiesOwned().contains(agreementUpdate.getPropertyLeased())){h.getPropertiesOwned().add(agreementUpdate.getPropertyLeased());}
                         // Add the new Host
-                        h.getHostsManagingProperties().add(agreementUpdate.getHost());
+                        if(!h.getHostsManagingProperties().contains(agreementUpdate.getHost())){h.getHostsManagingProperties().add(agreementUpdate.getHost());}
                         // Add the new Rental Agreement
-                        h.getRentalAgreements().add(agreementUpdate);
+                        if(!h.getRentalAgreements().contains(agreementUpdate)){h.getRentalAgreements().add(agreementUpdate);}
                     }
                 }
                 // Updating new Owner
@@ -453,17 +453,15 @@ public class RentalManagerImp implements RentalManager {
                 if (oldPropertyID.startsWith("RP")) {
                     for (ResidentialProperty rp : model_list.getResidentialProperties()) {
                         // Delete the previous owner in ResidentialProperty
-                        if (rp.getPropertyID().equals(oldPropertyID)) {
-                            rp.setOwner(null);
-                            if (rp.getHosts() != null) {rp.getHosts().remove(agreementUpdate.getHost());}
+                        if (rp.getPropertyID().equals(oldPropertyID) && rp.getHosts() != null) {
+                            rp.getHosts().remove(agreementUpdate.getHost());
                         }
                     }
                 } else if (oldPropertyID.startsWith("CP")) {
                     for (CommercialProperty cp : model_list.getCommercialProperties()) {
                         // Delete the previous owner in CommercialProperty
-                        if (cp.getPropertyID().equals(oldPropertyID)) {
-                            cp.setOwner(null);
-                            if (cp.getHosts() != null) {cp.getHosts().remove(agreementUpdate.getHost());}
+                        if (cp.getPropertyID().equals(oldPropertyID) && cp.getHosts() != null) {
+                            cp.getHosts().remove(agreementUpdate.getHost());
                         }
                     }
                 }
@@ -471,13 +469,14 @@ public class RentalManagerImp implements RentalManager {
                     for (ResidentialProperty rp : model_list.getResidentialProperties()) {
                         if (rp.getPropertyID().equals(newPropertyID)) {
                             // Add the new owner in ResidentialProperty
-                            rp.setOwner(propertyLeased.getOwner());
+                            rp.setOwner(agreementUpdate.getOwner());
                             // Add the new host in ResidentialProperty
-                            for (Host h : agreementUpdate.getPropertyLeased().getHosts()) {
-                                if (!propertyLeased.getHosts().contains(h)) {
-                                    if (rp.getHosts().contains(null)) {rp.getHosts().removeIf(Objects::isNull);}
-                                    rp.getHosts().add(h);
-                                }
+                            if (rp.getHosts().contains(null)) {
+                                rp.getHosts().removeIf(Objects::isNull);
+                            }
+                            if (!propertyLeased.getHosts().contains(agreementUpdate.getHost())) {
+                                rp.getHosts().add(agreementUpdate.getHost());
+
                             }
                         }
                     }
@@ -485,18 +484,61 @@ public class RentalManagerImp implements RentalManager {
                     for (CommercialProperty cp : model_list.getCommercialProperties()) {
                         if (cp.getPropertyID().equals(newPropertyID)) {
                             // Add the owner in CommercialProperty
-                            cp.setOwner(propertyLeased.getOwner());
+                            cp.setOwner(agreementUpdate.getOwner());
                             // Add the host in CommercialProperty
-                            for (Host h : agreementUpdate.getPropertyLeased().getHosts()) {
-                                if (!propertyLeased.getHosts().contains(h)) {
-                                    if (cp.getHosts().contains(null)) {cp.getHosts().removeIf(Objects::isNull);}
-                                    cp.getHosts().add(h);
-                                }
+                            if (cp.getHosts().contains(null)) {
+                                cp.getHosts().removeIf(Objects::isNull);
+                            }
+                            if (!propertyLeased.getHosts().contains(agreementUpdate.getHost())) {
+                                cp.getHosts().add(agreementUpdate.getHost());
                             }
                         }
                     }
                 }
-                // Updating Property Leased
+                for (Host h : model_list.getHosts()) {
+                    if (h.getId().equals(agreementUpdate.getHost().getId())) {
+                        // Remove the previous Property
+                        h.getProperties().removeIf(p -> p != null && h.getProperties() != null && p.getPropertyID().equals(agreementUpdate.getPropertyLeased().getPropertyID()));
+                        // Remove the previous Owner
+                        h.getCooperatingOwners().removeIf(o -> o != null && h.getCooperatingOwners() != null && o.getId().equals(agreementUpdate.getOwner().getId()));
+                    }
+                    for (Host host_ : propertyLeased.getHosts()) {
+                        if (h.getId().equals(host_.getId()) && propertyLeased.getHosts() != null) {
+                            if (h.getProperties().contains(null)) {
+                                h.getRentalAgreements().removeIf(Objects::isNull);
+                            }
+                            if (h.getCooperatingOwners().contains(null)) {
+                                h.getRentalAgreements().removeIf(Objects::isNull);
+                            }
+                            // Add the new Property
+                            if (!h.getProperties().contains(propertyLeased)) {
+                                h.getProperties().add(propertyLeased);
+                            }
+                        }
+                    }
+                    // Add the new Owner
+                    if (!h.getCooperatingOwners().contains(agreementUpdate.getOwner()) && h.getId().equals(agreementUpdate.getHost().getId())) {
+                        h.getCooperatingOwners().add(agreementUpdate.getOwner());
+                    }
+                }
+                for (Owner h : model_list.getOwners()) {
+                    if (h.getId().equals(agreementUpdate.getOwner().getId())) {
+                        // Remove the previous Property
+                        h.getPropertiesOwned().removeIf(p -> p != null && h.getPropertiesOwned() != null && p.getPropertyID().equals(agreementUpdate.getPropertyLeased().getPropertyID()));
+                        // Remove the previous Owner
+                        h.getHostsManagingProperties().removeIf(o -> o != null && h.getHostsManagingProperties() != null && o.getId().equals(agreementUpdate.getHost().getId()));
+                    }
+                    if (h.getId().equals(propertyLeased.getOwner().getId())) {
+                        if(h.getPropertiesOwned().contains(null)) {h.getPropertiesOwned().removeIf(Objects::isNull);}
+                        if(h.getHostsManagingProperties().contains(null)) {h.getHostsManagingProperties().removeIf(Objects::isNull);}
+                        // Add the new Property
+                        if(!h.getPropertiesOwned().contains(propertyLeased)){h.getPropertiesOwned().add(propertyLeased);}
+                        // Add the new Owner
+                        if(!h.getHostsManagingProperties().contains(agreementUpdate.getHost())){h.getHostsManagingProperties().add(agreementUpdate.getHost());}
+                    }
+                }
+
+                // Updating new Property
                 for (RentalAgreement a : model_list.getRentalAgreements()) {
                     if (a.getAgreementID().equals(id)) {
                         a.setPropertyLeased(propertyLeased);
@@ -541,8 +583,6 @@ public class RentalManagerImp implements RentalManager {
             if (property.getPropertyID().startsWith("RP")) {
                 for (ResidentialProperty rp : model_list.getResidentialProperties()) {
                     if (rp.getPropertyID().equals(property.getPropertyID())) {
-                        // Remove the owner in ResidentialProperty
-                        rp.setOwner(null);
                         // Remove the host in ResidentialProperty
                         rp.getHosts().removeIf(h -> property.getHosts().contains(h));
                     }
@@ -551,8 +591,6 @@ public class RentalManagerImp implements RentalManager {
             else if (property.getPropertyID().startsWith("CP")) {
                 for (CommercialProperty cp : model_list.getCommercialProperties()) {
                     if (cp.getPropertyID().equals(property.getPropertyID())) {
-                        // Remove the owner in CommercialProperty
-                        cp.setOwner(null);
                         // Remove the host in ResidentialProperty
                         cp.getHosts().removeIf(h -> property.getHosts().contains(h));
                     }
@@ -571,9 +609,9 @@ public class RentalManagerImp implements RentalManager {
         System.out.println("\n====== All Rental Agreement Table ======\n");
 
         // Generating the Heading
-        System.out.printf("%-15s | %-16s | %-25s | %-20s | %-15s | %-15s | %-10s | %-15s | %-12s | %-10s\n",
+        System.out.printf("%-15s | %-16s | %-25s | %-20s | %-15s | %-15s | %-12s | %-15s | %-12s | %-10s\n",
                 "Agreement ID", "Main Tenant ID", "Sub-Tenants ID", "Property ID", "Host ID", "Owner ID", "Period", "Contract Date", "Renting Fee", "Status");
-        System.out.println("-".repeat(180));
+        System.out.println("-".repeat(182));
 
         // Loop through rentalAgreement
         for (RentalAgreement a : agreements) {
@@ -599,9 +637,9 @@ public class RentalManagerImp implements RentalManager {
         System.out.println("\n===== All Rental Agreement that have Owner name (" + ownerName + ") =====\n");
 
         // Generating the Heading
-        System.out.printf("%-15s | %-16s | %-25s | %-20s | %-15s | %-15s | %-10s | %-15s | %-12s | %-10s\n",
+        System.out.printf("%-15s | %-16s | %-25s | %-20s | %-15s | %-15s | %-12s | %-15s | %-12s | %-10s\n",
                 "Agreement ID", "Main Tenant ID", "Sub-Tenants ID", "Property ID", "Host ID", "Owner ID", "Period", "Contract Date", "Renting Fee", "Status");
-        System.out.println("-".repeat(180));
+        System.out.println("-".repeat(182));
 
         // Loop through rentalAgreement
         for (RentalAgreement a : agreements) {
@@ -630,9 +668,9 @@ public class RentalManagerImp implements RentalManager {
         System.out.println("\n===== All Rental Agreement that have Property address (" + address + ") =====\n");
 
         // Generating the Heading
-        System.out.printf("%-15s | %-16s | %-25s | %-20s | %-15s | %-15s | %-10s | %-15s | %-12s | %-10s\n",
+        System.out.printf("%-15s | %-16s | %-25s | %-20s | %-15s | %-15s | %-12s | %-15s | %-12s | %-10s\n",
                 "Agreement ID", "Main Tenant ID", "Sub-Tenants ID", "Property ID", "Host ID", "Owner ID", "Period", "Contract Date", "Renting Fee", "Status");
-        System.out.println("-".repeat(180));
+        System.out.println("-".repeat(182));
 
         // Loop through rentalAgreement
         for (RentalAgreement a : agreements) {
@@ -662,9 +700,9 @@ public class RentalManagerImp implements RentalManager {
         System.out.println("\n===== All Rental Agreement that have Status (" + status + ") =====\n");
 
         // Generating the Heading
-        System.out.printf("%-15s | %-16s | %-25s | %-20s | %-15s | %-15s | %-10s | %-15s | %-12s | %-10s\n",
+        System.out.printf("%-15s | %-16s | %-25s | %-20s | %-15s | %-15s | %-12s | %-15s | %-12s | %-10s\n",
                 "Agreement ID", "Main Tenant ID", "Sub-Tenants ID", "Property ID", "Host ID", "Owner ID", "Period", "Contract Date", "Renting Fee", "Status");
-        System.out.println("-".repeat(180));
+        System.out.println("-".repeat(182));
 
         // Loop through rentalAgreement
         for (RentalAgreement a : agreements) {

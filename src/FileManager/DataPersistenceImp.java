@@ -96,24 +96,6 @@ public class DataPersistenceImp implements DataPersistenceManager{
         }
     }
 
-    @Override
-    public void saveDataToCSVFile() {
-        final String[] filePaths = {
-                "src/data/Payment.csv",
-                "src/data/Tenant.csv",
-                "src/data/Host.csv",
-                "src/data/Owner.csv",
-                "src/data/ResidentialProperty.csv",
-                "src/data/CommercialProperty.csv",
-                "src/data/RentalAgreement.csv"
-        };
-
-        // Save to .csv file(s)
-        for (String filePath : filePaths) {
-            saveDataToCSV(filePath);
-        }
-    }
-
     /**
      * Loads data from a specified CSV file and populates the corresponding lists of
      * tenants, hosts, owners, residential properties, commercial properties,
@@ -371,6 +353,27 @@ public class DataPersistenceImp implements DataPersistenceManager{
 
         } catch (IOException e) {
             System.err.println("Error saving data to CSV: IOException");
+        }
+    }
+
+    /**
+     *  Saves data to multiple CSV files specified in the filePaths array.
+     */
+    @Override
+    public void saveDataToCSVFile() {
+        final String[] filePaths = {
+                "src/data/Payment.csv",
+                "src/data/Tenant.csv",
+                "src/data/Host.csv",
+                "src/data/Owner.csv",
+                "src/data/ResidentialProperty.csv",
+                "src/data/CommercialProperty.csv",
+                "src/data/RentalAgreement.csv"
+        };
+
+        // Save to .csv file(s)
+        for (String filePath : filePaths) {
+            saveDataToCSV(filePath);
         }
     }
 
