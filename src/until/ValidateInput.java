@@ -130,7 +130,7 @@ public class ValidateInput {
         int value;
 
         while (true) {
-            System.out.print("Please select an appropriate option: ");
+            System.out.print("Please select an appropriate option from a menu above: ");
             String userInput = Input.getDataInput().getScanner().nextLine(); // Read the entire line
             if (userInput.isEmpty() || isInteger(userInput)
                     || (value = Integer.parseInt(userInput)) < 0

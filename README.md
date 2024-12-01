@@ -1,4 +1,4 @@
-# Rental-Property-Management-System
+# Rental-Property-Management-System 🏠
 Welcome to the Rental Property Management System repository! This project serves as the
 first individual assignment for COSC2440 Further Programming (S3_2024) course.
 
@@ -21,9 +21,9 @@ ___
 - Admin can update an existing Rental Agreement.
 - Admin ability to generate the report of the model after view Model, (if Admin want).
 
-## Getting Started
-_____
-To get started with the Rental Property Management System:
+## Getting Started ✈️
+_____ 
+To get started with the Rental Property Management System: 
 
 1. Clone this repository to your local machine.
 2. Compile and run the Java source code provided.
@@ -32,12 +32,14 @@ To get started with the Rental Property Management System:
 
 ## Sample Data Files 📁
 ___
-- Claims (/src/data/claims.txt) : Contains ID, Claim Date, Insured Person's ID, Card Number, Exam Date, Documents, Claim Amount, Claim Status, Receiver Banking Info's ID.
-- Customers (/src/data/customers.txt) : Contains ID, Full Name, Customer Type.
-- Customer Relationships (/src/data/customer_relationships.txt) : Contains ID of policyholders and their dependents.
-- Insurance Cards (/src/data/insurance_cards.txt) : Contains Card Number, Cardholder's ID, Policy Owner, Expiration Date.
-- Receiver Banking Info (/src/data/receiver_banking_info.txt) : Contains ID, Bank, Insured Person's Name, Account Number.
-## Addition Note
+- Payment (${src/data/Payment.csv}$) : Contains Payment ID, Amount, Date, Payment Method.
+- Tenant (${src/data/Tenant.csv}$) : Contains Tenant ID, FullName, DateOfBirth, ContactInfo, Payments ID, RentalAgreements ID.
+- Host (${src/data/Host.csv}$) : Contains Host ID, FullName, DateOfBirth, ContactInfo, Properties ID, Owners ID, Agreements ID.
+- Owner (${src/data/Owner.csv}$) : Contains Owner ID, FullName, DateOfBirth, ContactInfo, Properties ID, Hosts ID, Agreements ID.
+- Commercial Property (${src/data/CommercialProperty.csv}$) : Contains Property ID, Address, Pricing, Status, Owner ID, HostIDs, Business Type, Parking Spaces, Square Footage.
+- Residential Property (${src/data/ResidentialProperty.csv}$) : Contains Property ID, Address, Pricing, Status, Owner ID, HostIDs, Bedrooms, Garden Available, Pet-Friendly.
+- Rental Agreement (${src/data/RentalAgreement.csv}$): Contains Agreement ID, MainTenant ID, SubTenantIDs, PropertyID, Host ID, Owner ID, Period, ContractDate, RentingFee, Status.
+## Addition Note 🗒️
 ___
 
 ## Acknowledgment 🙏

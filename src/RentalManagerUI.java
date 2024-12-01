@@ -119,19 +119,18 @@ public class RentalManagerUI {
         }
     }
     private void updateRentalAgreementMenu(RentalManagerImp manager, String agreementID) {
+        System.out.println("\n--- Update Rental Agreement: " + agreementID + " ---");
+        System.out.println("1. Update Main Tenant");
+        System.out.println("2. Update All Sub-Tenants (Whole)");
+        System.out.println("3. Update Host");
+        System.out.println("4. Update Owner");
+        System.out.println("5. Update Property Leased");
+        System.out.println("6. Update Rental Period");
+        System.out.println("7. Update Rental Contact Date");
+        System.out.println("8. Update Renting Fee");
+        System.out.println("9. Update Status");
+        System.out.println("0. Finish update (Back to Rental Agreement Menu)");
         while (true) {
-            System.out.println("\n--- Update Rental Agreement: " + agreementID + " ---");
-            System.out.println("1. Update Main Tenant");
-            System.out.println("2. Update All Sub-Tenants (Whole)");
-            System.out.println("3. Update Host");
-            System.out.println("4. Update Owner");
-            System.out.println("5. Update Property Leased");
-            System.out.println("6. Update Rental Period");
-            System.out.println("7. Update Rental Contact Date");
-            System.out.println("8. Update Renting Fee");
-            System.out.println("9. Update Status");
-            System.out.println("0. Finish update (Back to Rental Agreement Menu)");
-
             int choice = ValidateInput.validateChoice(9);
             String num;
 
@@ -225,7 +224,7 @@ public class RentalManagerUI {
         model.clearData();
 
         // Ending message
-        System.out.println("Goodbye, I hope you will have the great time \u9999!!!");
+        System.out.println("Goodbye, I hope you will have the great time!!!");
         System.exit(0); // Exit terminating the current process
     }
 
