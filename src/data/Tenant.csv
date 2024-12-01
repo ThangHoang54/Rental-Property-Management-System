@@ -1,0 +1,16 @@
+TenantID,FullName,DateOfBirth,ContactInfo,PaymentsID,RentalAgreementsID
+TN001,John Doe,1990/01/15,johndoe@gmail.com,PM001,RA001-RA014
+TN002,Jane Smith,1985/05/20,janesmith@gmail.com,PM002,RA002-RA001-RA014
+TN003,Alex Johnson,1992/03/10,alexjohnson@gmail.com,PM003,RA003-RA001-RA015
+TN004,Linda Brown,1988/11/25,lindabrown@gmail.com,PM004,RA004-RA002
+TN005,Michael White,1995/07/30,michaelwhite@gmail.com,PM005,RA005-RA002-RA010
+TN006,Emily Davis,1989/02/14,emilydavis@gmail.com,PM006,RA006-RA003-RA010
+TN007,Chris Lee,1991/06/18,chrislee@gmail.com,PM007,RA007-RA004-RA011
+TN008,Sarah Wilson,1993/09/12,sarahwilson@gmail.com,PM008,RA008-RA004-RA012
+TN009,David Clark,1987/04/08,davidclark@gmail.com,PM009,RA009-RA005-RA012
+TN010,Amy Turner,1994/08/22,amyturner@gmail.com,PM010,RA010-RA006
+TN011,Daniel Walker,1990/10/30,danielwalker@gmail.com,PM011,RA011-RA006-RA013
+TN012,Jessica Scott,1986/12/05,jessicascott@gmail.com,PM012,RA012-RA007
+TN013,Matthew Green,1992/01/28,matthewgreen@gmail.com,PM013,RA013-RA008
+TN014,Ashley Hall,1989/03/16,ashleyhall@gmail.com,PM014,RA014-RA009
+TN015,Robert Young,1991/05/25,robertyoung@gmail.com,PM015,RA015

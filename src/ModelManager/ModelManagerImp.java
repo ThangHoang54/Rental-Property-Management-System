@@ -195,6 +195,11 @@ public class ModelManagerImp implements ModelManager {
         list.sort(Comparator.comparing(Property::getPropertyID));
     }
 
+    /**
+     * Generates a CSV report of tenant information and saves it to a specified file.
+     *
+     * @param list a List of Tenant objects to be included in the report
+     */
     private static void reportTenant(List<Tenant> list) {
         System.out.print("Please enter the name of the file you want to save into: ");
         String filename = Input.getDataInput().getScanner().nextLine();
@@ -210,6 +215,11 @@ public class ModelManagerImp implements ModelManager {
             System.err.println("Error saving data to CSV: IOException");
         }
     }
+    /**
+     * Generates a CSV report of host information and saves it to a specified file.
+     *
+     * @param list a List of Host objects to be included in the report
+     */
     private static void reportHost(List<Host> list) {
         System.out.print("Please enter the name of the file you want to save into: ");
         String filename = Input.getDataInput().getScanner().nextLine();
@@ -226,6 +236,11 @@ public class ModelManagerImp implements ModelManager {
             System.err.println("Error saving data to CSV: IOException");
         }
     }
+    /**
+     * Generates a CSV report of owner information and saves it to a specified file.
+     *
+     * @param list a List of Owner objects to be included in the report
+     */
     private static void reportOwners(List<Owner> list) {
         System.out.print("Please enter the name of the file you want to save into: ");
         String filename = Input.getDataInput().getScanner().nextLine();
@@ -242,6 +257,11 @@ public class ModelManagerImp implements ModelManager {
             System.err.println("Error saving data to CSV: IOException");
         }
     }
+    /**
+     * Generates a CSV report of residential property information and saves it to a specified file.
+     *
+     * @param list a List of residential property objects to be included in the report
+     */
     private static void reportResidentialProperties(List<ResidentialProperty> list) {
         System.out.print("Please enter the name of the file you want to save into: ");
         String filename = Input.getDataInput().getScanner().nextLine();
@@ -258,6 +278,11 @@ public class ModelManagerImp implements ModelManager {
             System.err.println("Error saving data to CSV: IOException");
         }
     }
+    /**
+     * Generates a CSV report of commercial property information and saves it to a specified file.
+     *
+     * @param list a List of commercial property objects to be included in the report
+     */
     private static void reportCommercialProperties(List<CommercialProperty> list) {
         System.out.print("Please enter the name of the file you want to save into: ");
         String filename = Input.getDataInput().getScanner().nextLine();

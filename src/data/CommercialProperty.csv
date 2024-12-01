@@ -1,0 +1,16 @@
+PropertyID,Address,Pricing,Status,OwnerID,HostIDs,BusinessType,ParkingSpaces,SquareFootage
+CP001,100 Commerce St,5000.0,Rented,ON003,HS003-HS009,Office,15,2000.0
+CP002,200 Market Ave,7000.0,Rented,ON006,HS006-HS003,Retail,20,3500.0
+CP003,300 Trade Blvd,6000.0,Rented,ON009,HS009-HS006,Warehouse,10,5000.0
+CP004,400 Industrial Rd,4500.0,Rented,ON012,HS012-HS001,Factory,25,7500.0
+CP005,500 Business Ln,5500.0,Rented,ON015,HS015-HS012,Office,12,3000.0
+CP006,600 Enterprise Ave,4800.0,Under Maintenance,ON003,HS001-HS015,Retail,18,2500.0
+CP007,700 Commercial St,6200.0,Available,ON006,HS002-HS005,Hotel,8,4000.0
+CP008,800 Corporate Dr,5300.0,Available,ON009,HS004-HS002,Office,10,2800.0
+CP009,900 Enterprise Blvd,7500.0,Under Maintenance,ON012,HS005-HS004,Factory,30,6500.0
+CP010,1000 Industrial Park,5800.0,Available,ON015,HS007-HS004,Warehouse,20,4200.0
+CP011,1100 Commerce St,4900.0,Under Maintenance,ON003,HS008-HS007,Retail,14,2700.0
+CP012,1200 Trade Ave,5600.0,Available,ON006,HS004-HS012,Hotel,16,3100.0
+CP013,1300 Business Blvd,6300.0,Under Maintenance,ON009,HS012-HS008,Factory,22,5300.0
+CP014,1400 Corporate Rd,7000.0,Available,ON012,HS003-HS011,Retail,25,3600.0
+CP015,1500 Industrial Ln,5900.0,Available,ON015,HS014-HS003,Warehouse,12,4500.0

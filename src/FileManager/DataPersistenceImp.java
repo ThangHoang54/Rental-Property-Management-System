@@ -390,6 +390,19 @@ public class DataPersistenceImp implements DataPersistenceManager{
         payments.clear();
     }
 
+    /**
+     * Retrieves a property (either commercial or residential) based on the provided property ID.
+     *
+     * <p>This method checks the given ID to determine whether it corresponds to a
+     * commercial property (ID starting with "CP") or a residential property (ID starting with "RP").
+     * It searches through the respective list of properties and returns the matching property
+     * if found. If the ID is "None" or no matching property is found, the method returns null.</p>
+     *
+     * @param properties1 a List of CommercialProperty objects to search for the property
+     * @param properties2 a List of ResidentialProperty objects to search for the property
+     * @param id the ID of the property to retrieve
+     * @return the matching property object if found, or null if not found or if the ID is "None"
+     */
     public static Object getProperty(List<CommercialProperty> properties1, List<ResidentialProperty> properties2, String id) {
         if (id.equals("None"))
             return null;
@@ -411,6 +424,18 @@ public class DataPersistenceImp implements DataPersistenceManager{
         return null; // Can not find that Property with the id
     }
 
+    /**
+     * Retrieves an Owner object based on the provided owner ID.
+     *
+     * <p>This method searches through a list of Owner objects to find a match for the
+     * specified owner ID. If the ID is "None", the method returns null. If a matching
+     * owner is found, it is returned; otherwise, a message is printed, and the method
+     * returns null.</p>
+     *
+     * @param owners a List of Owner objects to search for the specified ID
+     * @param id the ID of the owner to retrieve
+     * @return the matching Owner object if found, or null if not found or if the ID is "None"
+     */
     public static Owner getOwner(List<Owner> owners, String id) {
         if (id.equals("None"))
             return null;
@@ -424,6 +449,18 @@ public class DataPersistenceImp implements DataPersistenceManager{
         return null; // Can not find that Owner with the id
     }
 
+    /**
+     * Retrieves a Host object based on the provided host ID.
+     *
+     * <p>This method searches through a list of Host objects to find a match for the
+     * specified host ID. If the ID is "None", the method returns null. If a matching
+     * host is found, it is returned; otherwise, a message is printed, and the method
+     * returns null.</p>
+     *
+     * @param hosts a List of Host objects to search for the specified ID
+     * @param id the ID of the host to retrieve
+     * @return the matching Host object if found, or null if not found or if the ID is "None"
+     */
     public static Host getHost(List<Host> hosts, String id) {
         if (id.equals("None"))
             return null;
@@ -437,6 +474,18 @@ public class DataPersistenceImp implements DataPersistenceManager{
         return null; // Can not find that Host with the id
     }
 
+    /**
+     * Retrieves a Tenant object based on the provided tenant ID.
+     *
+     * <p>This method searches through a list of Tenant objects to find a match for the
+     * specified tenant ID. If the ID is "None", the method returns null. If a matching
+     * tenant is found, it is returned; otherwise, a message is printed, and the method
+     * returns null.</p>
+     *
+     * @param tenants a List of Tenant objects to search for the specified ID
+     * @param id the ID of the tenant to retrieve
+     * @return the matching Tenant object if found, or null if not found or if the ID is "None"
+     */
     public static Tenant getTenant(List<Tenant> tenants, String id) {
         if (id.equals("None"))
             return null;
@@ -450,6 +499,18 @@ public class DataPersistenceImp implements DataPersistenceManager{
         return null; // Can not find that Tenant with the id
     }
 
+    /**
+     * Retrieves a Payment object based on the provided payment ID.
+     *
+     * <p>This method searches through a list of Payment objects to find a match for the
+     * specified payment ID. If the ID is "None", the method returns null. If a matching
+     * payment is found, it is returned; otherwise, a message is printed, and the method
+     * returns null.</p>
+     *
+     * @param payments a List of Payment objects to search for the specified ID
+     * @param id the ID of the payment to retrieve
+     * @return the matching Payment object if found, or null if not found or if the ID is "None"
+     */
     public static Payment getPayment(List<Payment> payments, String id) {
         if (id.equals("None"))
             return null;
@@ -463,6 +524,18 @@ public class DataPersistenceImp implements DataPersistenceManager{
         return null; // Can not find that Payment with the id
     }
 
+    /**
+     * Retrieves a RentalAgreement object based on the provided agreement ID.
+     *
+     * <p>This method searches through a list of RentalAgreement objects to find a match for the
+     * specified agreement ID. If the ID is "None", the method returns null. If a matching
+     * agreement is found, it is returned; otherwise, a message is printed, and the method
+     * returns null.</p>
+     *
+     * @param agreements a List of RentalAgreement objects to search for the specified ID
+     * @param id the ID of the rental agreement to retrieve
+     * @return the matching RentalAgreement object if found, or null if not found or if the ID is "None"
+     */
     public static RentalAgreement getRentalAgreement(List<RentalAgreement> agreements, String id) {
         if (id.equals("None"))
             return null;

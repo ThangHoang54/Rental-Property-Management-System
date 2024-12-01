@@ -1,0 +1,16 @@
+OwnerID,FullName,DateOfBirth,ContactInfo,PropertyID,HostID,AgreementID
+ON001,George Thompson,1965/05/10,georgethompson@gmail.com,RP001-RP007,HS001-HS003,RA001
+ON002,Mary Allen,1970/07/15,maryallen@gmail.com,RP002,HS002-HS006,RA002
+ON003,Richard Perez,1968/09/22,richardperez@gmail.com,CP001-CP006-CP011,HS003-HS009-HS001-HS015-HS008-HS007,RA003
+ON004,Susan Mitchell,1973/04/18,susanmitchell@gmail.com,RP003-RP013-RP015,HS004-HS002-HS011,RA004
+ON005,Charles Campbell,1962/12/07,charlescampbell@gmail.com,RP004,HS005-HS012,RA005
+ON006,Karen Carter,1975/11/25,karencarter@gmail.com,CP002-CP007-CP012,HS006-HS003-HS002-HS005-HS004-HS012,RA006
+ON007,Joseph Rivera,1960/03/05,josephrivera@gmail.com,RP005-RP011-RP014,HS007-HS009-HS015-HS010-HS011,RA007
+ON008,Nancy Martinez,1974/06/13,nancymartinez@gmail.com,RP006-RP012,HS008-HS014-HS005,RA008
+ON009,Robert Phillips,1966/01/19,robertphillips@gmail.com,CP003-CP008-CP013,HS009-HS006-HS004-HS002-HS012-HS008,RA009
+ON010,Linda Evans,1969/08/03,lindaevans@gmail.com,RP007,HS010-HS008,RA010
+ON011,Michael Diaz,1971/02/27,michaeldiaz@gmail.com,RP008,HS011-HS001,RA011
+ON012,Barbara Scott,1964/10/21,barbarascott@gmail.com,CP004-CP009-CP014,HS012-HS001-HS005-HS004-HS003-HS011,RA012
+ON013,David Hernandez,1976/09/09,davidhernandez@gmail.com,RP009,HS013,RA013
+ON014,Patricia Hill,1972/05/29,patriciahill@gmail.com,RP010,HS014-HS013,RA014
+ON015,Thomas Roberts,1967/12/17,thomasroberts@gmail.com,CP005-CP010-CP015,HS015-HS012-HS007-HS004-HS014-HS003,RA015

@@ -1,0 +1,16 @@
+PropertyID,Address,Pricing,Status,OwnerID,HostIDs,Bedrooms,GardenAvailable,PetFriendly
+RP001,123 Maple Street,1500.0,Rented,ON001,HS001-HS003,3,true,true
+RP002,456 Oak Avenue,1800.0,Rented,ON002,HS002-HS006,2,false,true
+RP003,789 Pine Drive,2200.0,Rented,ON004,HS004,4,true,false
+RP004,321 Cedar Lane,1300.0,Rented,ON005,HS005-HS012,1,false,true
+RP005,654 Birch Road,1600.0,Rented,ON007,HS007-HS009,2,true,false
+RP006,987 Elm Street,1900.0,Rented,ON008,HS008-HS014,3,true,true
+RP007,811 Spruce Court,2500.0,Under Maintenance,ON010,HS010-HS008,4,true,true
+RP008,242 Willow Boulevard,2000.0,Available,ON011,HS011-HS001,3,true,true
+RP009,397 Redwood Terrace,2300.0,Under Maintenance,ON013,HS013,5,true,false
+RP010,439/6 Cypress Street,1400.0,Available,ON014,HS014-HS013,1,false,true
+RP011,549 Magnolia Avenue,1700.0,Under Maintenance,ON007,HS015-HS010,2,true,true
+RP012,625 Poplar Drive,2100.0,Available,ON008,HS014-HS005,3,true,false
+RP013,794 Fir Lane,2600.0,Available,ON004,HS002,4,false,true
+RP014,831 Aspen Road,2400.0,Under Maintenance,ON007,HS015-HS011,3,true,true
+RP015,659 Juniper Street,1800.0,Available,ON004,HS011,2,false,false

@@ -10,7 +10,7 @@ import until.Input;
 
 import java.util.Date;
 
-public class RentalManagerUI {
+public class ManagerUI {
     // Constructor
     private void mainMenu(RentalManagerImp manager, ModelManagerImp model) {
         while (true) {
@@ -213,7 +213,7 @@ public class RentalManagerUI {
         // Print out welcome message
         System.out.println("=== Welcome to Rental Agreement Management System ===");
 
-        RentalManagerUI ui = new RentalManagerUI();
+        ManagerUI ui = new ManagerUI();
         ui.mainMenu(manager, model);
 
         // Save all data back to CSV file

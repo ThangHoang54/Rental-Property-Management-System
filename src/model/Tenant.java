@@ -20,7 +20,7 @@ public class Tenant extends Person {
 
     // Getter
     public List<RentalAgreement> getRentalAgreements() {return rentalAgreements;}
-
+    // Adding payment to the paymentRecord
     public void addPayment(Payment payment) {
         paymentRecord.add(payment);
     }
