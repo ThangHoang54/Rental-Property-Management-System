@@ -27,7 +27,7 @@ public class ValidateInput {
                     return "Bank Transfer";
                 }
                 default -> {
-                    System.out.println("Invalid Method, " +
+                    System.out.print("Invalid Method, " +
                             "Please choose 1 from those methods (Credit Card, Cash, Bank Transfer)");
                     method = Input.getDataInput().getScanner().nextLine();
                 }
@@ -46,7 +46,7 @@ public class ValidateInput {
                 case "rented", "rent"-> {return "Rented";}
                 case "under maintenance" -> {return "Under Maintenance";}
                 default -> {
-                    System.out.println("Invalid Status, " +
+                    System.out.print("Invalid Status, " +
                             "Please choose 1 from those status (Available, Rented, Under Maintenance)");
                     status = Input.getDataInput().getScanner().nextLine();
                 }
@@ -68,7 +68,7 @@ public class ValidateInput {
                 case "warehouse" -> {return "Warehouse";}
                 case "factory" -> {return "Factory";}
                 default -> {
-                    System.out.println("Invalid type, " +
+                    System.out.print("Invalid type, " +
                             "Please choose from those business types (Retail, Office, Hotel, Factory, Warehouse)");
                     type = Input.getDataInput().getScanner().nextLine();
                 }
@@ -89,7 +89,7 @@ public class ValidateInput {
                 case "fortnightly" -> {return "Fortnightly";}
                 case "monthly" -> {return "Monthly";}
                 default -> {
-                    System.out.println("Invalid period, " +
+                    System.out.print("Invalid period, " +
                             "Please choose from those period for Rental (Daily, Weekly, Fortnightly, Monthly)");
                     period = Input.getDataInput().getScanner().nextLine();
                 }
@@ -109,7 +109,7 @@ public class ValidateInput {
                 case "active" -> {return "Active";}
                 case "completed" -> {return "Completed";}
                 default -> {
-                    System.out.println("Invalid Method, " +
+                    System.out.print("Invalid Method, " +
                             "Please choose 1 from those methods (New, Active, Completed)");
                     status = Input.getDataInput().getScanner().nextLine();
                 }

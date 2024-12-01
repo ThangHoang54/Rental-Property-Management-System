@@ -136,7 +136,6 @@ public class DataPersistenceImp implements DataPersistenceManager{
                     case "RP" -> {
                         ResidentialProperty property = new ResidentialProperty(data[0], data[1], Double.parseDouble(data[2]), data[3],
                                 getOwner(owners, data[4]), Integer.parseInt(data[6]), Boolean.parseBoolean(data[7]), Boolean.parseBoolean(data[8]));
-
                         // Read each the Host provide in "ResidentialProperty.csv" file
                         String[] owners_list = data[5].split("-");
 
@@ -149,7 +148,6 @@ public class DataPersistenceImp implements DataPersistenceManager{
                     case "CP" -> {
                         CommercialProperty property = new CommercialProperty(data[0], data[1], Double.parseDouble(data[2]), data[3],
                                 getOwner(owners, data[4]), data[6], Integer.parseInt(data[7]), Double.parseDouble(data[8]));
-
                         // Read each the Host provide in "CommercialProperty.csv" file
                         String[] owner_list = data[5].split("-");
 
