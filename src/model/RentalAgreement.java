@@ -12,7 +12,7 @@ import Build.BuilderRentalAgreement;
 
 public class RentalAgreement {
 
-    private String agreementID;
+    private final String agreementID;
     private Tenant mainTenant; // Reference to the main tenant
     private List<Tenant> subTenants; // List of sub-tenants
     private Property propertyLeased; // Reference to the property being leased

@@ -39,8 +39,16 @@ ___
 - Commercial Property (${src/data/CommercialProperty.csv}$) : Contains Property ID, Address, Pricing, Status, Owner ID, HostIDs, Business Type, Parking Spaces, Square Footage.
 - Residential Property (${src/data/ResidentialProperty.csv}$) : Contains Property ID, Address, Pricing, Status, Owner ID, HostIDs, Bedrooms, Garden Available, Pet-Friendly.
 - Rental Agreement (${src/data/RentalAgreement.csv}$): Contains Agreement ID, MainTenant ID, SubTenantIDs, PropertyID, Host ID, Owner ID, Period, ContractDate, RentingFee, Status.
-## Addition Note 🗒️
+
+## Addition Note ✍️
 ___
+- All report that admin had generated will be export as .csv in folder (${src/SaveReport/}$) after the program end.
+- The dats for this system limit to 999 instances for each entity. (Please refer to Appendix B in Report pdf)
+- This project uses emojis from [Emoji Library](https://emojipedia.org/)
+-
+## Author info 👨🏽‍🎓
+___
+- **Hoang Minh Thang** - [ThangHoang54](https://github.com/ThangHoang54)
 
 ## Acknowledgment 🙏
 ___
