@@ -621,7 +621,7 @@ public class RentalManagerImp implements RentalManager {
         // Generate report option
         System.out.println("\nImportance Note: If user type anything without y or yes, " +
                 "the data won't save back to load file.");
-        System.out.print("Do you want to generate the report and export into csv file? (Y/N): ");
+        System.out.print("Do you want to generate the report and export it into csv file? (Y/N): ");
         if (Input.getDataInput().getScanner().nextLine().toUpperCase().startsWith("Y")) {
             generateReport(agreements);
         }
@@ -634,6 +634,7 @@ public class RentalManagerImp implements RentalManager {
             System.out.println("No rental agreements available.");
             return;
         }
+        sortRentalAgreements(agreements);
         System.out.println("\n===== All Rental Agreement that have Owner name (" + ownerName + ") =====\n");
 
         // Generating the Heading
@@ -643,7 +644,7 @@ public class RentalManagerImp implements RentalManager {
 
         // Loop through rentalAgreement
         for (RentalAgreement a : agreements) {
-            if (a.getPropertyLeased().getOwner().getName().equals(ownerName)) {
+            if (a.getPropertyLeased().getOwner().getName().equalsIgnoreCase(ownerName)) {
                 System.out.println(a);
                 report.add(a);
             }
@@ -652,7 +653,7 @@ public class RentalManagerImp implements RentalManager {
         // Generate report option
         System.out.println("\nImportance Note: If user type anything without y or yes, " +
                 "the data won't save back to load file.");
-        System.out.print("Do you want to generate the report and export into csv file? (Y/N): ");
+        System.out.print("Do you want to generate the report and export it into csv file? (Y/N): ");
         if (Input.getDataInput().getScanner().nextLine().toUpperCase().startsWith("Y")) {
             generateReport(report);
         }
@@ -665,6 +666,7 @@ public class RentalManagerImp implements RentalManager {
             System.out.println("No rental agreements available.");
             return;
         }
+        sortRentalAgreements(agreements);
         System.out.println("\n===== All Rental Agreement that have Property address (" + address + ") =====\n");
 
         // Generating the Heading
@@ -674,7 +676,7 @@ public class RentalManagerImp implements RentalManager {
 
         // Loop through rentalAgreement
         for (RentalAgreement a : agreements) {
-            if (a.getPropertyLeased().getAddress().equals(address)) {
+            if (a.getPropertyLeased().getAddress().equalsIgnoreCase(address)) {
                 System.out.println(a);
                 report.add(a);
             }
@@ -683,7 +685,7 @@ public class RentalManagerImp implements RentalManager {
         // Generate report option
         System.out.println("\nImportance Note: If user type anything without y or yes, " +
                 "the data won't save back to load file.");
-        System.out.print("Do you want to generate the report and export into csv file? (Y/N): ");
+        System.out.print("Do you want to generate the report and export it into csv file? (Y/N): ");
         if (Input.getDataInput().getScanner().nextLine().toUpperCase().startsWith("Y")) {
             generateReport(report);
         }
@@ -697,6 +699,7 @@ public class RentalManagerImp implements RentalManager {
             System.out.println("No rental agreements available.");
             return;
         }
+        sortRentalAgreements(agreements);
         System.out.println("\n===== All Rental Agreement that have Status (" + status + ") =====\n");
 
         // Generating the Heading
@@ -715,7 +718,7 @@ public class RentalManagerImp implements RentalManager {
         // Generate report option
         System.out.println("\nImportance Note: If user type anything without y or yes, " +
                 "the data won't save back to load file.");
-        System.out.print("Do you want to generate the report and export into csv file? (Y/N): ");
+        System.out.print("Do you want to generate the report and export it into csv file? (Y/N): ");
         if (Input.getDataInput().getScanner().nextLine().toUpperCase().startsWith("Y")) {
             generateReport(report);
         }

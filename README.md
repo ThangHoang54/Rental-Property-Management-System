@@ -5,8 +5,8 @@ first individual assignment for COSC2440 Further Programming (S3_2024) course.
 ## Application Description ℹ️
 _____
 This repository contains the source code for a Rental Property Management System
-developed in Java. The system enables admin to efficiently manage, track,
-and process rental agreement. It includes functionalities such as adding, updating, and deleting rental agreement,
+developed in Java. The system enables admin to efficiently manage, track, 
+and process rental agreement. It includes functionalities such as adding, updating, and deleting rental agreement, 
 as well as retrieving model (Tenant, Host, Owner Property, RentalAgreement) details and generating reports.
 
 ## Key Features 🔑
@@ -23,7 +23,7 @@ ___
 
 ## Getting Started ✈️
 _____ 
-To get started with the Rental Property Management System:
+To get started with the Rental Property Management System: 
 
 1. Clone this repository to your local machine.
 2. Compile and run the Java source code provided.
@@ -52,7 +52,7 @@ ___
 
 ## Acknowledgment 🙏
 ___
-A heartfelt appreciation to the course instructors for their valuable guidance
+A heartfelt appreciation to the course instructors for their valuable guidance 
 and resources provided for this assignment.
 
 I appreciate your visit to the Rental Property

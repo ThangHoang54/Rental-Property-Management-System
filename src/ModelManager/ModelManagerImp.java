@@ -53,7 +53,7 @@ public class ModelManagerImp implements ModelManager {
         // Generate report option
         System.out.println("\nImportance Note: If user type anything without y or yes, " +
                 "the data won't save back to load file.");
-        System.out.print("Do you want to generate the report and export into csv file? (Y/N): ");
+        System.out.print("Do you want to generate the report and export it into csv file? (Y/N): ");
         if (Input.getDataInput().getScanner().nextLine().toUpperCase().startsWith("Y")) {
             reportTenant(tenants);
         }
@@ -77,7 +77,7 @@ public class ModelManagerImp implements ModelManager {
         // Generate report option
         System.out.println("\nImportance Note: If user type anything without y or yes, " +
                 "the data won't save back to load file.");
-        System.out.print("Do you want to generate the report and export into csv file? (Y/N): ");
+        System.out.print("Do you want to generate the report and export it into csv file? (Y/N): ");
         if (Input.getDataInput().getScanner().nextLine().toUpperCase().startsWith("Y")) {
             reportHost(hosts);
         }
@@ -101,9 +101,9 @@ public class ModelManagerImp implements ModelManager {
         // Generate report option
         System.out.println("\nImportance Note: If user type anything without y or yes, " +
                 "the data won't save back to load file.");
-        System.out.print("Do you want to generate the report and export into csv file? (Y/N): ");
+        System.out.print("Do you want to generate the report and export it into csv file? (Y/N): ");
         if (Input.getDataInput().getScanner().nextLine().toUpperCase().startsWith("Y")) {
-            reportOwners(owners);
+            reportOwner(owners);
         }
     }
     @Override
@@ -125,7 +125,7 @@ public class ModelManagerImp implements ModelManager {
         // Generate report option
         System.out.println("\nImportance Note: If user type anything without y or yes, " +
                 "the data won't save back to load file.");
-        System.out.print("Do you want to generate the report and export into csv file? (Y/N): ");
+        System.out.print("Do you want to generate the report and export it into csv file? (Y/N): ");
         if (Input.getDataInput().getScanner().nextLine().toUpperCase().startsWith("Y")) {
             reportResidentialProperties(residentialProperties);
         }
@@ -149,7 +149,7 @@ public class ModelManagerImp implements ModelManager {
         // Generate report option
         System.out.println("\nImportance Note: If user type anything without y or yes, " +
                 "the data won't save back to load file.");
-        System.out.print("Do you want to generate the report and export into csv file? (Y/N): ");
+        System.out.print("Do you want to generate the report and export it into csv file? (Y/N): ");
         if (Input.getDataInput().getScanner().nextLine().toUpperCase().startsWith("Y")) {
             reportCommercialProperties(commercialProperties);
         }
@@ -224,7 +224,7 @@ public class ModelManagerImp implements ModelManager {
         System.out.print("Please enter the name of the file you want to save into: ");
         String filename = Input.getDataInput().getScanner().nextLine();
         try (BufferedWriter writer = new BufferedWriter(new FileWriter("src/SaveReport/" + filename + ".csv"))) {
-            writer.write("TenantID,FullName,DateOfBirth,ContactInfo,PropertyID,OwnerID,AgreementID");
+            writer.write("HostID,FullName,DateOfBirth,ContactInfo,PropertiesID,OwnersID,AgreementID");
             writer.newLine();
             for (Host h : list) {
                 writer.write(h.toCSV());
@@ -241,11 +241,11 @@ public class ModelManagerImp implements ModelManager {
      *
      * @param list a List of Owner objects to be included in the report
      */
-    private static void reportOwners(List<Owner> list) {
+    private static void reportOwner(List<Owner> list) {
         System.out.print("Please enter the name of the file you want to save into: ");
         String filename = Input.getDataInput().getScanner().nextLine();
         try (BufferedWriter writer = new BufferedWriter(new FileWriter("src/SaveReport/" + filename + ".csv"))) {
-            writer.write("TenantID,FullName,DateOfBirth,ContactInfo,PropertyID,HostID,AgreementID");
+            writer.write("OwnerID,FullName,DateOfBirth,ContactInfo,PropertiesID,HostsID,AgreementsID");
             writer.newLine();
             for (Owner o : list) {
                 writer.write(o.toCSV());

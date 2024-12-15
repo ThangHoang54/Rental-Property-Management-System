@@ -18,7 +18,7 @@ public class RentalAgreement {
     private Property propertyLeased; // Reference to the property being leased
     private Host host; // Reference to the host managing the property
     private Owner owner;  // Reference to the owner of the property
-    private String period; // Rental period (e.g., "daily", "weekly", "monthly")
+    private String period; // Rental period (e.g., "daily", "weekly", "monthly", "fortnightly")
     private Date contractDate; // Date the contract was signed
     private double rentingFee; // Fee for renting the property
     private String status;  // Status of the agreement (e.g., "New", "Active", "Completed")

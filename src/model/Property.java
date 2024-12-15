@@ -9,7 +9,7 @@ import java.util.List;
 import until.ValidateInput;
 
 public abstract class Property {
-    private String propertyID;
+    private final String propertyID;
     private String address;
     private double price;
     private String status; /*"Available", "Rented", "Under Maintenance"*/
