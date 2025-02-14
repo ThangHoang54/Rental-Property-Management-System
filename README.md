@@ -50,6 +50,16 @@ ___
 ___
 - **Hoang Minh Thang** - [ThangHoang54](https://github.com/ThangHoang54).
 
+## Technologies Used 💻
+___
+Git, IntelliJ, Java
+
+<p align="center">
+  <a href="https://skillicons.dev">
+    <img src="https://skillicons.dev/icons?i=git,idea,java"/>
+  </a>
+</p>
+
 ## Acknowledgment 🙏
 ___
 A heartfelt appreciation to the course instructors for their valuable guidance 

@@ -5,8 +5,8 @@ import FileManager.DataPersistenceImp;
 import ModelManager.ModelManagerImp;
 import RentalAgreementManager.RentalManagerImp;
 import model.RentalAgreement;
-import until.ValidateInput;
-import until.Input;
+import util.ValidateInput;
+import util.Input;
 
 import java.util.Date;
 

@@ -11,7 +11,7 @@ import java.util.List;
 
 import FileManager.DataPersistenceImp;
 import model.*;
-import until.Input;
+import util.Input;
 
 public class ModelManagerImp implements ModelManager {
     private DataPersistenceImp model_list;

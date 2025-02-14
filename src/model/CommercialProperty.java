@@ -2,7 +2,7 @@ package model;
 /**
  * @author <Hoàng Minh Thắng - S3999925>
  */
-import until.ValidateInput;
+import util.ValidateInput;
 public class CommercialProperty extends Property {
     private String businessType; /*(Retail, Office, Hotel, Factory, Warehouse)*/
     private int parkingSpace;

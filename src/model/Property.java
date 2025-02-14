@@ -6,7 +6,7 @@ import java.util.List;
  *  @author <Hoàng Minh Thắng - S3999925>
  */
 
-import until.ValidateInput;
+import util.ValidateInput;
 
 public abstract class Property {
     private final String propertyID;
